@@ -13,6 +13,8 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/core/kernel.zep.c
 	phady/cache/cacheinterface.zep.c
 	phady/messaging/adapter/messaginginterface.zep.c
+	phady/security/core/authentication/authenticationmanagerinterface.zep.c
+	phady/security/core/user/userproviderinterface.zep.c
 	phady/cache/cachehandler.zep.c
 	phady/common/controllers/controllerbase.zep.c
 	phady/config/yaml.zep.c
@@ -28,8 +30,12 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/messaging/messaging.zep.c
 	phady/report/excel/template/excelmultitable.zep.c
 	phady/route/router.zep.c
-	phady/security/authentication/authhandler.zep.c
+	phady/security/core/authentication/authenticationprovidermanager.zep.c
+	phady/security/core/authentication/authhandler.zep.c
+	phady/security/core/authentication/token/tokeninterface.zep.c
 	phady/security/core/authorization/acl.zep.c
+	phady/security/core/exception/providernotfoundexception.zep.c
+	phady/security/core/exception/usernamenotfoundexception.zep.c
 	phady/security/core/models/entities/actions.zep.c
 	phady/security/core/models/entities/groups.zep.c
 	phady/security/core/models/entities/modules.zep.c
@@ -41,6 +47,8 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/models/exception.zep.c
 	phady/security/core/models/repositories/users.zep.c
 	phady/security/core/role/roles.zep.c
+	phady/security/core/user/inmemoryuserprovider.zep.c
+	phady/security/core/user/user.zep.c
 	phady/security/core/user/userinterface.zep.c
 	phady/security/core/user/users.zep.c
 	phady/security/exception.zep.c

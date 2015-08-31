@@ -16,14 +16,14 @@ namespace Phady\Security\Core\Exception;
 use Phalcon\Exception;
 
 /**
-  * @class Phady\Security\Core\Exception\UsernameNotFoundException
+  * @class Phady\Security\Core\Exception\ProviderNotFoundException
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class UsernameNotFoundException extends \Exception
+class ProviderNotFoundException extends \Exception
 {
 
     private $username;
@@ -36,38 +36,5 @@ class UsernameNotFoundException extends \Exception
         return sprintf("[Phady Security Error] %s", this->getMessage());
     }
     
-    /**
-     * {@inheritdoc}
-     */
-    public function getMessageKey()
-    {
-        return "Username could not be found.";
-    }
-    /**
-     * Get the username.
-     *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return this->username;
-    }
-    /**
-     * Set the username.
-     *
-     * @param string username
-     */
-    public function setUsername(string username)
-    {
-        let this->username = username;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMessageData()
-    {
-        return ["{{ username }}" : this->username];
-    }
 
 }

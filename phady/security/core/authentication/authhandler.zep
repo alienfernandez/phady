@@ -11,7 +11,7 @@
 +------------------------------------------------------------------------+
 */
 
-namespace Phady\Security\Authentication;
+namespace Phady\Security\Core\Authentication;
 
 /**
   * @class Phady\Security\Authentication\AuthHandler -  Authentication handlers for app

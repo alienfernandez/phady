@@ -1,7 +1,7 @@
-srcdir = /home/alien/project/phady/ext
-builddir = /home/alien/project/phady/ext
-top_srcdir = /home/alien/project/phady/ext
-top_builddir = /home/alien/project/phady/ext
+srcdir = /home/alien/Documentos/projects/phady/extension/phady/ext
+builddir = /home/alien/Documentos/projects/phady/extension/phady/ext
+top_srcdir = /home/alien/Documentos/projects/phady/extension/phady/ext
+top_builddir = /home/alien/Documentos/projects/phady/extension/phady/ext
 EGREP = /bin/grep -E
 SED = /bin/sed
 CONFIGURE_COMMAND = './configure' '--enable-phady'
@@ -11,7 +11,7 @@ SHLIB_DL_SUFFIX_NAME = so
 ZEND_EXT_TYPE = zend_extension
 RE2C = re2c
 AWK = gawk
-shared_objects_phady = phady.lo kernel/main.lo kernel/memory.lo kernel/exception.lo kernel/hash.lo kernel/debug.lo kernel/backtrace.lo kernel/object.lo kernel/array.lo kernel/extended/array.lo kernel/string.lo kernel/fcall.lo kernel/extended/fcall.lo kernel/require.lo kernel/file.lo kernel/operators.lo kernel/math.lo kernel/concat.lo kernel/variables.lo kernel/filter.lo kernel/iterator.lo kernel/time.lo kernel/exit.lo phady/common/entities/modelbase.lo phady/core/kernel.lo phady/cache/cacheinterface.lo phady/messaging/adapter/messaginginterface.lo phady/cache/cachehandler.lo phady/common/controllers/controllerbase.lo phady/config/yaml.lo phady/console/command.lo phady/core/kernelcli.lo phady/core/kernelmvc.lo phady/core/namespacehandler.lo phady/core/parameter.lo phady/db/databasehandler.lo phady/exception.lo phady/mail/mailreader.lo phady/messaging/adapter/rabbitmq.lo phady/messaging/messaging.lo phady/report/excel/template/excelmultitable.lo phady/route/router.lo phady/security/authentication/authhandler.lo phady/security/core/authorization/acl.lo phady/security/core/models/entities/actions.lo phady/security/core/models/entities/groups.lo phady/security/core/models/entities/modules.lo phady/security/core/models/entities/permissions.lo phady/security/core/models/entities/resources.lo phady/security/core/models/entities/roles.lo phady/security/core/models/entities/userrole.lo phady/security/core/models/entities/users.lo phady/security/core/models/exception.lo phady/security/core/models/repositories/users.lo phady/security/core/role/roles.lo phady/security/core/user/userinterface.lo phady/security/core/user/users.lo phady/security/exception.lo phady/security/groups/groupbase.lo phady/security/groups/groupinterface.lo phady/util/datetime.lo phady/util/file.lo phady/util/out.lo phady/util/random.lo phady/util/text.lo phady/util/tools.lo phady/util/uuid.lo phady/version.lo phady/0__closure.lo phady/1__closure.lo phady/2__closure.lo phady/3__closure.lo phady/4__closure.lo phady/5__closure.lo phady/6__closure.lo phady/7__closure.lo phady/8__closure.lo
+shared_objects_phady = phady.lo kernel/main.lo kernel/memory.lo kernel/exception.lo kernel/hash.lo kernel/debug.lo kernel/backtrace.lo kernel/object.lo kernel/array.lo kernel/extended/array.lo kernel/string.lo kernel/fcall.lo kernel/extended/fcall.lo kernel/require.lo kernel/file.lo kernel/operators.lo kernel/math.lo kernel/concat.lo kernel/variables.lo kernel/filter.lo kernel/iterator.lo kernel/time.lo kernel/exit.lo phady/common/entities/modelbase.lo phady/core/kernel.lo phady/cache/cacheinterface.lo phady/messaging/adapter/messaginginterface.lo phady/security/core/authentication/authenticationmanagerinterface.lo phady/security/core/user/userproviderinterface.lo phady/cache/cachehandler.lo phady/common/controllers/controllerbase.lo phady/config/yaml.lo phady/console/command.lo phady/core/kernelcli.lo phady/core/kernelmvc.lo phady/core/namespacehandler.lo phady/core/parameter.lo phady/db/databasehandler.lo phady/exception.lo phady/mail/mailreader.lo phady/messaging/adapter/rabbitmq.lo phady/messaging/messaging.lo phady/report/excel/template/excelmultitable.lo phady/route/router.lo phady/security/core/authentication/authenticationprovidermanager.lo phady/security/core/authentication/authhandler.lo phady/security/core/authentication/token/tokeninterface.lo phady/security/core/authorization/acl.lo phady/security/core/exception/providernotfoundexception.lo phady/security/core/exception/usernamenotfoundexception.lo phady/security/core/models/entities/actions.lo phady/security/core/models/entities/groups.lo phady/security/core/models/entities/modules.lo phady/security/core/models/entities/permissions.lo phady/security/core/models/entities/resources.lo phady/security/core/models/entities/roles.lo phady/security/core/models/entities/userrole.lo phady/security/core/models/entities/users.lo phady/security/core/models/exception.lo phady/security/core/models/repositories/users.lo phady/security/core/role/roles.lo phady/security/core/user/inmemoryuserprovider.lo phady/security/core/user/user.lo phady/security/core/user/userinterface.lo phady/security/core/user/users.lo phady/security/exception.lo phady/security/groups/groupbase.lo phady/security/groups/groupinterface.lo phady/util/datetime.lo phady/util/file.lo phady/util/out.lo phady/util/random.lo phady/util/text.lo phady/util/tools.lo phady/util/uuid.lo phady/version.lo phady/0__closure.lo phady/1__closure.lo phady/2__closure.lo phady/3__closure.lo phady/4__closure.lo phady/5__closure.lo phady/6__closure.lo phady/7__closure.lo phady/8__closure.lo
 PHP_PECL_EXTENSION = phady
 PHADY_SHARED_LIBADD =
 PHP_MODULES = $(phplibdir)/phady.la
@@ -22,7 +22,7 @@ prefix = /usr
 exec_prefix = $(prefix)
 libdir = ${exec_prefix}/lib
 prefix = /usr
-phplibdir = /home/alien/project/phady/ext/modules
+phplibdir = /home/alien/Documentos/projects/phady/extension/phady/ext/modules
 phpincludedir = /usr/include/php5
 CC = gcc
 CFLAGS = -O2 -fvisibility=hidden -Wparentheses -flto -DZEPHIR_RELEASE=1
@@ -177,160 +177,176 @@ distclean: clean
 
 .PHONY: all clean install distclean test
 .NOEXPORT:
-phady.lo: /home/alien/project/phady/ext/phady.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady.c -o phady.lo 
-kernel/main.lo: /home/alien/project/phady/ext/kernel/main.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/main.c -o kernel/main.lo 
-kernel/memory.lo: /home/alien/project/phady/ext/kernel/memory.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/memory.c -o kernel/memory.lo 
-kernel/exception.lo: /home/alien/project/phady/ext/kernel/exception.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/exception.c -o kernel/exception.lo 
-kernel/hash.lo: /home/alien/project/phady/ext/kernel/hash.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/hash.c -o kernel/hash.lo 
-kernel/debug.lo: /home/alien/project/phady/ext/kernel/debug.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/debug.c -o kernel/debug.lo 
-kernel/backtrace.lo: /home/alien/project/phady/ext/kernel/backtrace.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/backtrace.c -o kernel/backtrace.lo 
-kernel/object.lo: /home/alien/project/phady/ext/kernel/object.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/object.c -o kernel/object.lo 
-kernel/array.lo: /home/alien/project/phady/ext/kernel/array.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/array.c -o kernel/array.lo 
-kernel/extended/array.lo: /home/alien/project/phady/ext/kernel/extended/array.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/extended/array.c -o kernel/extended/array.lo 
-kernel/string.lo: /home/alien/project/phady/ext/kernel/string.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/string.c -o kernel/string.lo 
-kernel/fcall.lo: /home/alien/project/phady/ext/kernel/fcall.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/fcall.c -o kernel/fcall.lo 
-kernel/extended/fcall.lo: /home/alien/project/phady/ext/kernel/extended/fcall.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/extended/fcall.c -o kernel/extended/fcall.lo 
-kernel/require.lo: /home/alien/project/phady/ext/kernel/require.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/require.c -o kernel/require.lo 
-kernel/file.lo: /home/alien/project/phady/ext/kernel/file.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/file.c -o kernel/file.lo 
-kernel/operators.lo: /home/alien/project/phady/ext/kernel/operators.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/operators.c -o kernel/operators.lo 
-kernel/math.lo: /home/alien/project/phady/ext/kernel/math.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/math.c -o kernel/math.lo 
-kernel/concat.lo: /home/alien/project/phady/ext/kernel/concat.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/concat.c -o kernel/concat.lo 
-kernel/variables.lo: /home/alien/project/phady/ext/kernel/variables.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/variables.c -o kernel/variables.lo 
-kernel/filter.lo: /home/alien/project/phady/ext/kernel/filter.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/filter.c -o kernel/filter.lo 
-kernel/iterator.lo: /home/alien/project/phady/ext/kernel/iterator.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/iterator.c -o kernel/iterator.lo 
-kernel/time.lo: /home/alien/project/phady/ext/kernel/time.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/time.c -o kernel/time.lo 
-kernel/exit.lo: /home/alien/project/phady/ext/kernel/exit.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/kernel/exit.c -o kernel/exit.lo 
-phady/common/entities/modelbase.lo: /home/alien/project/phady/ext/phady/common/entities/modelbase.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/common/entities/modelbase.zep.c -o phady/common/entities/modelbase.lo 
-phady/core/kernel.lo: /home/alien/project/phady/ext/phady/core/kernel.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/core/kernel.zep.c -o phady/core/kernel.lo 
-phady/cache/cacheinterface.lo: /home/alien/project/phady/ext/phady/cache/cacheinterface.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/cache/cacheinterface.zep.c -o phady/cache/cacheinterface.lo 
-phady/messaging/adapter/messaginginterface.lo: /home/alien/project/phady/ext/phady/messaging/adapter/messaginginterface.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/messaging/adapter/messaginginterface.zep.c -o phady/messaging/adapter/messaginginterface.lo 
-phady/cache/cachehandler.lo: /home/alien/project/phady/ext/phady/cache/cachehandler.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/cache/cachehandler.zep.c -o phady/cache/cachehandler.lo 
-phady/common/controllers/controllerbase.lo: /home/alien/project/phady/ext/phady/common/controllers/controllerbase.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/common/controllers/controllerbase.zep.c -o phady/common/controllers/controllerbase.lo 
-phady/config/yaml.lo: /home/alien/project/phady/ext/phady/config/yaml.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/config/yaml.zep.c -o phady/config/yaml.lo 
-phady/console/command.lo: /home/alien/project/phady/ext/phady/console/command.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/console/command.zep.c -o phady/console/command.lo 
-phady/core/kernelcli.lo: /home/alien/project/phady/ext/phady/core/kernelcli.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/core/kernelcli.zep.c -o phady/core/kernelcli.lo 
-phady/core/kernelmvc.lo: /home/alien/project/phady/ext/phady/core/kernelmvc.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/core/kernelmvc.zep.c -o phady/core/kernelmvc.lo 
-phady/core/namespacehandler.lo: /home/alien/project/phady/ext/phady/core/namespacehandler.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/core/namespacehandler.zep.c -o phady/core/namespacehandler.lo 
-phady/core/parameter.lo: /home/alien/project/phady/ext/phady/core/parameter.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/core/parameter.zep.c -o phady/core/parameter.lo 
-phady/db/databasehandler.lo: /home/alien/project/phady/ext/phady/db/databasehandler.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/db/databasehandler.zep.c -o phady/db/databasehandler.lo 
-phady/exception.lo: /home/alien/project/phady/ext/phady/exception.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/exception.zep.c -o phady/exception.lo 
-phady/mail/mailreader.lo: /home/alien/project/phady/ext/phady/mail/mailreader.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/mail/mailreader.zep.c -o phady/mail/mailreader.lo 
-phady/messaging/adapter/rabbitmq.lo: /home/alien/project/phady/ext/phady/messaging/adapter/rabbitmq.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/messaging/adapter/rabbitmq.zep.c -o phady/messaging/adapter/rabbitmq.lo 
-phady/messaging/messaging.lo: /home/alien/project/phady/ext/phady/messaging/messaging.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/messaging/messaging.zep.c -o phady/messaging/messaging.lo 
-phady/report/excel/template/excelmultitable.lo: /home/alien/project/phady/ext/phady/report/excel/template/excelmultitable.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/report/excel/template/excelmultitable.zep.c -o phady/report/excel/template/excelmultitable.lo 
-phady/route/router.lo: /home/alien/project/phady/ext/phady/route/router.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/route/router.zep.c -o phady/route/router.lo 
-phady/security/authentication/authhandler.lo: /home/alien/project/phady/ext/phady/security/authentication/authhandler.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/authentication/authhandler.zep.c -o phady/security/authentication/authhandler.lo 
-phady/security/core/authorization/acl.lo: /home/alien/project/phady/ext/phady/security/core/authorization/acl.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/core/authorization/acl.zep.c -o phady/security/core/authorization/acl.lo 
-phady/security/core/models/entities/actions.lo: /home/alien/project/phady/ext/phady/security/core/models/entities/actions.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/core/models/entities/actions.zep.c -o phady/security/core/models/entities/actions.lo 
-phady/security/core/models/entities/groups.lo: /home/alien/project/phady/ext/phady/security/core/models/entities/groups.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/core/models/entities/groups.zep.c -o phady/security/core/models/entities/groups.lo 
-phady/security/core/models/entities/modules.lo: /home/alien/project/phady/ext/phady/security/core/models/entities/modules.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/core/models/entities/modules.zep.c -o phady/security/core/models/entities/modules.lo 
-phady/security/core/models/entities/permissions.lo: /home/alien/project/phady/ext/phady/security/core/models/entities/permissions.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/core/models/entities/permissions.zep.c -o phady/security/core/models/entities/permissions.lo 
-phady/security/core/models/entities/resources.lo: /home/alien/project/phady/ext/phady/security/core/models/entities/resources.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/core/models/entities/resources.zep.c -o phady/security/core/models/entities/resources.lo 
-phady/security/core/models/entities/roles.lo: /home/alien/project/phady/ext/phady/security/core/models/entities/roles.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/core/models/entities/roles.zep.c -o phady/security/core/models/entities/roles.lo 
-phady/security/core/models/entities/userrole.lo: /home/alien/project/phady/ext/phady/security/core/models/entities/userrole.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/core/models/entities/userrole.zep.c -o phady/security/core/models/entities/userrole.lo 
-phady/security/core/models/entities/users.lo: /home/alien/project/phady/ext/phady/security/core/models/entities/users.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/core/models/entities/users.zep.c -o phady/security/core/models/entities/users.lo 
-phady/security/core/models/exception.lo: /home/alien/project/phady/ext/phady/security/core/models/exception.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/core/models/exception.zep.c -o phady/security/core/models/exception.lo 
-phady/security/core/models/repositories/users.lo: /home/alien/project/phady/ext/phady/security/core/models/repositories/users.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/core/models/repositories/users.zep.c -o phady/security/core/models/repositories/users.lo 
-phady/security/core/role/roles.lo: /home/alien/project/phady/ext/phady/security/core/role/roles.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/core/role/roles.zep.c -o phady/security/core/role/roles.lo 
-phady/security/core/user/userinterface.lo: /home/alien/project/phady/ext/phady/security/core/user/userinterface.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/core/user/userinterface.zep.c -o phady/security/core/user/userinterface.lo 
-phady/security/core/user/users.lo: /home/alien/project/phady/ext/phady/security/core/user/users.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/core/user/users.zep.c -o phady/security/core/user/users.lo 
-phady/security/exception.lo: /home/alien/project/phady/ext/phady/security/exception.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/exception.zep.c -o phady/security/exception.lo 
-phady/security/groups/groupbase.lo: /home/alien/project/phady/ext/phady/security/groups/groupbase.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/groups/groupbase.zep.c -o phady/security/groups/groupbase.lo 
-phady/security/groups/groupinterface.lo: /home/alien/project/phady/ext/phady/security/groups/groupinterface.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/security/groups/groupinterface.zep.c -o phady/security/groups/groupinterface.lo 
-phady/util/datetime.lo: /home/alien/project/phady/ext/phady/util/datetime.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/util/datetime.zep.c -o phady/util/datetime.lo 
-phady/util/file.lo: /home/alien/project/phady/ext/phady/util/file.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/util/file.zep.c -o phady/util/file.lo 
-phady/util/out.lo: /home/alien/project/phady/ext/phady/util/out.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/util/out.zep.c -o phady/util/out.lo 
-phady/util/random.lo: /home/alien/project/phady/ext/phady/util/random.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/util/random.zep.c -o phady/util/random.lo 
-phady/util/text.lo: /home/alien/project/phady/ext/phady/util/text.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/util/text.zep.c -o phady/util/text.lo 
-phady/util/tools.lo: /home/alien/project/phady/ext/phady/util/tools.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/util/tools.zep.c -o phady/util/tools.lo 
-phady/util/uuid.lo: /home/alien/project/phady/ext/phady/util/uuid.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/util/uuid.zep.c -o phady/util/uuid.lo 
-phady/version.lo: /home/alien/project/phady/ext/phady/version.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/version.zep.c -o phady/version.lo 
-phady/0__closure.lo: /home/alien/project/phady/ext/phady/0__closure.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/0__closure.zep.c -o phady/0__closure.lo 
-phady/1__closure.lo: /home/alien/project/phady/ext/phady/1__closure.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/1__closure.zep.c -o phady/1__closure.lo 
-phady/2__closure.lo: /home/alien/project/phady/ext/phady/2__closure.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/2__closure.zep.c -o phady/2__closure.lo 
-phady/3__closure.lo: /home/alien/project/phady/ext/phady/3__closure.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/3__closure.zep.c -o phady/3__closure.lo 
-phady/4__closure.lo: /home/alien/project/phady/ext/phady/4__closure.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/4__closure.zep.c -o phady/4__closure.lo 
-phady/5__closure.lo: /home/alien/project/phady/ext/phady/5__closure.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/5__closure.zep.c -o phady/5__closure.lo 
-phady/6__closure.lo: /home/alien/project/phady/ext/phady/6__closure.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/6__closure.zep.c -o phady/6__closure.lo 
-phady/7__closure.lo: /home/alien/project/phady/ext/phady/7__closure.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/7__closure.zep.c -o phady/7__closure.lo 
-phady/8__closure.lo: /home/alien/project/phady/ext/phady/8__closure.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/project/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/project/phady/ext/phady/8__closure.zep.c -o phady/8__closure.lo 
+phady.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady.c -o phady.lo 
+kernel/main.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/main.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/main.c -o kernel/main.lo 
+kernel/memory.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/memory.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/memory.c -o kernel/memory.lo 
+kernel/exception.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/exception.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/exception.c -o kernel/exception.lo 
+kernel/hash.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/hash.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/hash.c -o kernel/hash.lo 
+kernel/debug.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/debug.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/debug.c -o kernel/debug.lo 
+kernel/backtrace.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/backtrace.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/backtrace.c -o kernel/backtrace.lo 
+kernel/object.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/object.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/object.c -o kernel/object.lo 
+kernel/array.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/array.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/array.c -o kernel/array.lo 
+kernel/extended/array.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/extended/array.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/extended/array.c -o kernel/extended/array.lo 
+kernel/string.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/string.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/string.c -o kernel/string.lo 
+kernel/fcall.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/fcall.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/fcall.c -o kernel/fcall.lo 
+kernel/extended/fcall.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/extended/fcall.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/extended/fcall.c -o kernel/extended/fcall.lo 
+kernel/require.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/require.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/require.c -o kernel/require.lo 
+kernel/file.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/file.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/file.c -o kernel/file.lo 
+kernel/operators.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/operators.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/operators.c -o kernel/operators.lo 
+kernel/math.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/math.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/math.c -o kernel/math.lo 
+kernel/concat.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/concat.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/concat.c -o kernel/concat.lo 
+kernel/variables.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/variables.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/variables.c -o kernel/variables.lo 
+kernel/filter.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/filter.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/filter.c -o kernel/filter.lo 
+kernel/iterator.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/iterator.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/iterator.c -o kernel/iterator.lo 
+kernel/time.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/time.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/time.c -o kernel/time.lo 
+kernel/exit.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/exit.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/kernel/exit.c -o kernel/exit.lo 
+phady/common/entities/modelbase.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/common/entities/modelbase.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/common/entities/modelbase.zep.c -o phady/common/entities/modelbase.lo 
+phady/core/kernel.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/core/kernel.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/core/kernel.zep.c -o phady/core/kernel.lo 
+phady/cache/cacheinterface.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/cache/cacheinterface.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/cache/cacheinterface.zep.c -o phady/cache/cacheinterface.lo 
+phady/messaging/adapter/messaginginterface.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/messaging/adapter/messaginginterface.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/messaging/adapter/messaginginterface.zep.c -o phady/messaging/adapter/messaginginterface.lo 
+phady/security/core/authentication/authenticationmanagerinterface.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/authentication/authenticationmanagerinterface.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/authentication/authenticationmanagerinterface.zep.c -o phady/security/core/authentication/authenticationmanagerinterface.lo 
+phady/security/core/user/userproviderinterface.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/user/userproviderinterface.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/user/userproviderinterface.zep.c -o phady/security/core/user/userproviderinterface.lo 
+phady/cache/cachehandler.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/cache/cachehandler.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/cache/cachehandler.zep.c -o phady/cache/cachehandler.lo 
+phady/common/controllers/controllerbase.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/common/controllers/controllerbase.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/common/controllers/controllerbase.zep.c -o phady/common/controllers/controllerbase.lo 
+phady/config/yaml.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/config/yaml.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/config/yaml.zep.c -o phady/config/yaml.lo 
+phady/console/command.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/console/command.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/console/command.zep.c -o phady/console/command.lo 
+phady/core/kernelcli.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/core/kernelcli.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/core/kernelcli.zep.c -o phady/core/kernelcli.lo 
+phady/core/kernelmvc.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/core/kernelmvc.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/core/kernelmvc.zep.c -o phady/core/kernelmvc.lo 
+phady/core/namespacehandler.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/core/namespacehandler.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/core/namespacehandler.zep.c -o phady/core/namespacehandler.lo 
+phady/core/parameter.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/core/parameter.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/core/parameter.zep.c -o phady/core/parameter.lo 
+phady/db/databasehandler.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/db/databasehandler.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/db/databasehandler.zep.c -o phady/db/databasehandler.lo 
+phady/exception.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/exception.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/exception.zep.c -o phady/exception.lo 
+phady/mail/mailreader.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/mail/mailreader.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/mail/mailreader.zep.c -o phady/mail/mailreader.lo 
+phady/messaging/adapter/rabbitmq.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/messaging/adapter/rabbitmq.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/messaging/adapter/rabbitmq.zep.c -o phady/messaging/adapter/rabbitmq.lo 
+phady/messaging/messaging.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/messaging/messaging.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/messaging/messaging.zep.c -o phady/messaging/messaging.lo 
+phady/report/excel/template/excelmultitable.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/report/excel/template/excelmultitable.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/report/excel/template/excelmultitable.zep.c -o phady/report/excel/template/excelmultitable.lo 
+phady/route/router.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/route/router.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/route/router.zep.c -o phady/route/router.lo 
+phady/security/core/authentication/authenticationprovidermanager.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/authentication/authenticationprovidermanager.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/authentication/authenticationprovidermanager.zep.c -o phady/security/core/authentication/authenticationprovidermanager.lo 
+phady/security/core/authentication/authhandler.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/authentication/authhandler.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/authentication/authhandler.zep.c -o phady/security/core/authentication/authhandler.lo 
+phady/security/core/authentication/token/tokeninterface.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/authentication/token/tokeninterface.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/authentication/token/tokeninterface.zep.c -o phady/security/core/authentication/token/tokeninterface.lo 
+phady/security/core/authorization/acl.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/authorization/acl.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/authorization/acl.zep.c -o phady/security/core/authorization/acl.lo 
+phady/security/core/exception/providernotfoundexception.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/exception/providernotfoundexception.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/exception/providernotfoundexception.zep.c -o phady/security/core/exception/providernotfoundexception.lo 
+phady/security/core/exception/usernamenotfoundexception.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/exception/usernamenotfoundexception.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/exception/usernamenotfoundexception.zep.c -o phady/security/core/exception/usernamenotfoundexception.lo 
+phady/security/core/models/entities/actions.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/actions.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/actions.zep.c -o phady/security/core/models/entities/actions.lo 
+phady/security/core/models/entities/groups.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/groups.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/groups.zep.c -o phady/security/core/models/entities/groups.lo 
+phady/security/core/models/entities/modules.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/modules.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/modules.zep.c -o phady/security/core/models/entities/modules.lo 
+phady/security/core/models/entities/permissions.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/permissions.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/permissions.zep.c -o phady/security/core/models/entities/permissions.lo 
+phady/security/core/models/entities/resources.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/resources.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/resources.zep.c -o phady/security/core/models/entities/resources.lo 
+phady/security/core/models/entities/roles.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/roles.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/roles.zep.c -o phady/security/core/models/entities/roles.lo 
+phady/security/core/models/entities/userrole.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/userrole.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/userrole.zep.c -o phady/security/core/models/entities/userrole.lo 
+phady/security/core/models/entities/users.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/users.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/entities/users.zep.c -o phady/security/core/models/entities/users.lo 
+phady/security/core/models/exception.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/exception.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/exception.zep.c -o phady/security/core/models/exception.lo 
+phady/security/core/models/repositories/users.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/repositories/users.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/models/repositories/users.zep.c -o phady/security/core/models/repositories/users.lo 
+phady/security/core/role/roles.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/role/roles.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/role/roles.zep.c -o phady/security/core/role/roles.lo 
+phady/security/core/user/inmemoryuserprovider.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/user/inmemoryuserprovider.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/user/inmemoryuserprovider.zep.c -o phady/security/core/user/inmemoryuserprovider.lo 
+phady/security/core/user/user.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/user/user.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/user/user.zep.c -o phady/security/core/user/user.lo 
+phady/security/core/user/userinterface.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/user/userinterface.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/user/userinterface.zep.c -o phady/security/core/user/userinterface.lo 
+phady/security/core/user/users.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/user/users.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/core/user/users.zep.c -o phady/security/core/user/users.lo 
+phady/security/exception.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/exception.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/exception.zep.c -o phady/security/exception.lo 
+phady/security/groups/groupbase.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/groups/groupbase.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/groups/groupbase.zep.c -o phady/security/groups/groupbase.lo 
+phady/security/groups/groupinterface.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/groups/groupinterface.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/security/groups/groupinterface.zep.c -o phady/security/groups/groupinterface.lo 
+phady/util/datetime.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/util/datetime.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/util/datetime.zep.c -o phady/util/datetime.lo 
+phady/util/file.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/util/file.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/util/file.zep.c -o phady/util/file.lo 
+phady/util/out.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/util/out.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/util/out.zep.c -o phady/util/out.lo 
+phady/util/random.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/util/random.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/util/random.zep.c -o phady/util/random.lo 
+phady/util/text.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/util/text.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/util/text.zep.c -o phady/util/text.lo 
+phady/util/tools.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/util/tools.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/util/tools.zep.c -o phady/util/tools.lo 
+phady/util/uuid.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/util/uuid.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/util/uuid.zep.c -o phady/util/uuid.lo 
+phady/version.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/version.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/version.zep.c -o phady/version.lo 
+phady/0__closure.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/0__closure.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/0__closure.zep.c -o phady/0__closure.lo 
+phady/1__closure.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/1__closure.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/1__closure.zep.c -o phady/1__closure.lo 
+phady/2__closure.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/2__closure.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/2__closure.zep.c -o phady/2__closure.lo 
+phady/3__closure.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/3__closure.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/3__closure.zep.c -o phady/3__closure.lo 
+phady/4__closure.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/4__closure.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/4__closure.zep.c -o phady/4__closure.lo 
+phady/5__closure.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/5__closure.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/5__closure.zep.c -o phady/5__closure.lo 
+phady/6__closure.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/6__closure.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/6__closure.zep.c -o phady/6__closure.lo 
+phady/7__closure.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/7__closure.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/7__closure.zep.c -o phady/7__closure.lo 
+phady/8__closure.lo: /home/alien/Documentos/projects/phady/extension/phady/ext/phady/8__closure.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/Documentos/projects/phady/extension/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/Documentos/projects/phady/extension/phady/ext/phady/8__closure.zep.c -o phady/8__closure.lo 
 $(phplibdir)/phady.la: ./phady.la
 	$(LIBTOOL) --mode=install cp ./phady.la $(phplibdir)
 
