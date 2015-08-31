@@ -1,0 +1,15 @@
+
+extern zend_class_entry *phady_security_core_models_entities_resources_ce;
+
+ZEPHIR_INIT_CLASS(Phady_Security_Core_Models_Entities_Resources);
+
+PHP_METHOD(Phady_Security_Core_Models_Entities_Resources, initialize);
+PHP_METHOD(Phady_Security_Core_Models_Entities_Resources, getSource);
+PHP_METHOD(Phady_Security_Core_Models_Entities_Resources, init);
+
+ZEPHIR_INIT_FUNCS(phady_security_core_models_entities_resources_method_entry) {
+	PHP_ME(Phady_Security_Core_Models_Entities_Resources, initialize, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(Phady_Security_Core_Models_Entities_Resources, getSource, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(Phady_Security_Core_Models_Entities_Resources, init, NULL, ZEND_ACC_PROTECTED)
+	PHP_FE_END
+};

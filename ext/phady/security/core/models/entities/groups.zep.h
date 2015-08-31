@@ -1,0 +1,5 @@
+
+extern zend_class_entry *phady_security_core_models_entities_groups_ce;
+
+ZEPHIR_INIT_CLASS(Phady_Security_Core_Models_Entities_Groups);
+

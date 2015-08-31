@@ -1,0 +1,38 @@
+ARG_ENABLE("phady", "enable phady", "no");
+
+if (PHP_PHADY != "no") {
+  EXTENSION("phady", "phady.c", null, "-I"+configure_module_dirname);
+  ADD_SOURCES(configure_module_dirname + "/kernel", "main.c memory.c exception.c hash.c debug.c backtrace.c object.c array.c string.c fcall.c require.c file.c operators.c math.c concat.c variables.c filter.c iterator.c exit.c time.c", "phady");
+  ADD_SOURCES(configure_module_dirname + "/kernel/extended", "array.c fcall.c", "phady");
+  /* PCRE is always included on WIN32 */
+  AC_DEFINE("ZEPHIR_USE_PHP_PCRE", 1, "Whether PHP pcre extension is present at compile time");
+  if (PHP_JSON != "no") {
+    ADD_EXTENSION_DEP("phady", "json");
+    AC_DEFINE("ZEPHIR_USE_PHP_JSON", 1, "Whether PHP json extension is present at compile time");
+  }
+  
+  ADD_SOURCES(configure_module_dirname + "/phady/common/entities", "modelbase.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/core", "kernel.zep.c kernelcli.zep.c kernelmvc.zep.c namespacehandler.zep.c parameter.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/cache", "cacheinterface.zep.c cachehandler.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/messaging/adapter", "messaginginterface.zep.c rabbitmq.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/common/controllers", "controllerbase.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/config", "yaml.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/console", "command.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/db", "databasehandler.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady", "exception.zep.c version.zep.c 0__closure.zep.c 1__closure.zep.c 2__closure.zep.c 3__closure.zep.c 4__closure.zep.c 5__closure.zep.c 6__closure.zep.c 7__closure.zep.c 8__closure.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/mail", "mailreader.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/messaging", "messaging.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/report/excel/template", "excelmultitable.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/route", "router.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security/authentication", "authhandler.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security/core/authorization", "acl.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security/core/models/entities", "actions.zep.c groups.zep.c modules.zep.c permissions.zep.c resources.zep.c roles.zep.c userrole.zep.c users.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security/core/models", "exception.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security/core/models/repositories", "users.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security/core/role", "roles.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security/core/user", "userinterface.zep.c users.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security", "exception.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security/groups", "groupbase.zep.c groupinterface.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/util", "datetime.zep.c file.zep.c out.zep.c random.zep.c text.zep.c tools.zep.c uuid.zep.c", "phady");
+  ADD_FLAG("CFLAGS_PHADY", "/D ZEPHIR_RELEASE");
+}

@@ -1,0 +1,28 @@
+
+extern zend_class_entry *phady_security_core_models_repositories_users_ce;
+
+ZEPHIR_INIT_CLASS(Phady_Security_Core_Models_Repositories_Users);
+
+PHP_METHOD(Phady_Security_Core_Models_Repositories_Users, getFilter);
+PHP_METHOD(Phady_Security_Core_Models_Repositories_Users, getUsers);
+PHP_METHOD(Phady_Security_Core_Models_Repositories_Users, getTotalUsers);
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phady_security_core_models_repositories_users_getfilter, 0, 0, 1)
+	ZEND_ARG_INFO(0, arrData)
+	ZEND_ARG_INFO(0, select)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phady_security_core_models_repositories_users_getusers, 0, 0, 1)
+	ZEND_ARG_ARRAY_INFO(0, arrDataFilter, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phady_security_core_models_repositories_users_gettotalusers, 0, 0, 1)
+	ZEND_ARG_ARRAY_INFO(0, arrDataFilter, 0)
+ZEND_END_ARG_INFO()
+
+ZEPHIR_INIT_FUNCS(phady_security_core_models_repositories_users_method_entry) {
+	PHP_ME(Phady_Security_Core_Models_Repositories_Users, getFilter, arginfo_phady_security_core_models_repositories_users_getfilter, ZEND_ACC_STATIC|ZEND_ACC_PUBLIC)
+	PHP_ME(Phady_Security_Core_Models_Repositories_Users, getUsers, arginfo_phady_security_core_models_repositories_users_getusers, ZEND_ACC_PUBLIC)
+	PHP_ME(Phady_Security_Core_Models_Repositories_Users, getTotalUsers, arginfo_phady_security_core_models_repositories_users_gettotalusers, ZEND_ACC_PUBLIC)
+	PHP_FE_END
+};

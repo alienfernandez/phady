@@ -1,0 +1,26 @@
+
+extern zend_class_entry *phady_report_excel_template_excelmultitable_ce;
+
+ZEPHIR_INIT_CLASS(Phady_Report_Excel_Template_ExcelMultiTable);
+
+PHP_METHOD(Phady_Report_Excel_Template_ExcelMultiTable, __construct);
+PHP_METHOD(Phady_Report_Excel_Template_ExcelMultiTable, getExcelInstance);
+PHP_METHOD(Phady_Report_Excel_Template_ExcelMultiTable, getStartRow);
+PHP_METHOD(Phady_Report_Excel_Template_ExcelMultiTable, getColumnLetter);
+PHP_METHOD(Phady_Report_Excel_Template_ExcelMultiTable, getStartColumn);
+PHP_METHOD(Phady_Report_Excel_Template_ExcelMultiTable, getEndColumn);
+static zend_object_value zephir_init_properties_Phady_Report_Excel_Template_ExcelMultiTable(zend_class_entry *class_type TSRMLS_DC);
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phady_report_excel_template_excelmultitable___construct, 0, 0, 1)
+	ZEND_ARG_ARRAY_INFO(0, config, 0)
+ZEND_END_ARG_INFO()
+
+ZEPHIR_INIT_FUNCS(phady_report_excel_template_excelmultitable_method_entry) {
+	PHP_ME(Phady_Report_Excel_Template_ExcelMultiTable, __construct, arginfo_phady_report_excel_template_excelmultitable___construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
+	PHP_ME(Phady_Report_Excel_Template_ExcelMultiTable, getExcelInstance, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(Phady_Report_Excel_Template_ExcelMultiTable, getStartRow, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(Phady_Report_Excel_Template_ExcelMultiTable, getColumnLetter, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(Phady_Report_Excel_Template_ExcelMultiTable, getStartColumn, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(Phady_Report_Excel_Template_ExcelMultiTable, getEndColumn, NULL, ZEND_ACC_PUBLIC)
+	PHP_FE_END
+};
