@@ -72,7 +72,7 @@ class InMemoryUserProvider implements UserProviderInterface
     {
         var ex, user;
         if (!isset(this->users[strtolower(username)])) {
-            let ex = new UsernameNotFoundException(sprintf("Username '%s' does not exist.", username));
+            let ex = new UsernameNotFoundException(sprintf("Username %s does not exist.", username));
             ex->setUsername(username);
             throw ex;
         }
@@ -87,18 +87,18 @@ class InMemoryUserProvider implements UserProviderInterface
      */
     public function refreshUser(<UserInterface> user)
     {
-        //if (!user instanceof UserCore) {
-            //throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class(user)));
-        //}
+        if (!(user instanceof UserCore)) {
+            throw new \Phady\Security\Exception(sprintf("Instances of %s are not supported.", get_class(user)));
+        }
         return this->loadUserByUsername(user->getUsername());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function supportsClass(string _class)
+    public function supportsClass(string classSuport)
     {
-        return (_class === "Phady\Security\Core\User\User");
+        return (classSuport == "Phady\\Security\\Core\\User\\User");
     }
 
 }

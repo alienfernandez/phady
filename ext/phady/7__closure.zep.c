@@ -36,9 +36,9 @@ PHP_METHOD(phady_7__closure, __invoke) {
 	ZEPHIR_INIT_VAR(cache);
 	object_init_ex(cache, phady_cache_cachehandler_ce);
 	zephir_array_fetch_string(&_0, _SERVER, SL("configApp"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 332 TSRMLS_CC);
-	ZEPHIR_CALL_METHOD(NULL, cache, "__construct", NULL, 87, _0);
+	ZEPHIR_CALL_METHOD(NULL, cache, "__construct", NULL, 98, _0);
 	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_METHOD(cache, "getadapter", NULL, 88);
+	ZEPHIR_RETURN_CALL_METHOD(cache, "getadapter", NULL, 99);
 	zephir_check_call_status();
 	RETURN_MM();
 

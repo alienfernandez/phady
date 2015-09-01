@@ -13,6 +13,8 @@
 
 namespace Phady\Security\Core\Authentication;
 
+use Phady\Security\Core\Authentication\Token\TokenInterface;
+
 /**
  * Phady\Security\Core\Authentication\AuthenticationManagerInterface
  *
@@ -28,7 +30,6 @@ interface AuthenticationManagerInterface
      *
      * @return TokenInterface An authenticated TokenInterface instance, never null
      *
-     * @throws AuthenticationException if the authentication fails
      */
     public function authenticate(<TokenInterface> token);
 }

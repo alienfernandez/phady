@@ -26,7 +26,7 @@ use Phalcon\Exception;
 class UsernameNotFoundException extends \Exception
 {
 
-    private $username;
+    private username;
 
     /**
      * Rewrite the error message

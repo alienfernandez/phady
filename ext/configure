@@ -4036,10 +4036,19 @@ if test "$PHP_PHADY" = "yes"; then
 $as_echo "#define HAVE_PHADY 1" >>confdefs.h
 
 	phady_sources="phady.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c phady/common/entities/modelbase.zep.c
+	phady/security/core/authentication/authenticationmanagerinterface.zep.c
 	phady/core/kernel.zep.c
+	phady/security/core/authentication/provider/authenticationproviderinterface.zep.c
+	phady/security/core/authentication/token/tokeninterface.zep.c
+	phady/security/core/role/roleinterface.zep.c
 	phady/cache/cacheinterface.zep.c
 	phady/messaging/adapter/messaginginterface.zep.c
-	phady/security/core/authentication/authenticationmanagerinterface.zep.c
+	phady/security/core/authentication/provider/userauthenticationprovider.zep.c
+	phady/security/core/authentication/token/abstracttoken.zep.c
+	phady/security/core/exception/authenticationexception.zep.c
+	phady/security/core/role/role.zep.c
+	phady/security/core/user/usercheckerinterface.zep.c
+	phady/security/core/user/userinterface.zep.c
 	phady/security/core/user/userproviderinterface.zep.c
 	phady/cache/cachehandler.zep.c
 	phady/common/controllers/controllerbase.zep.c
@@ -4058,8 +4067,11 @@ $as_echo "#define HAVE_PHADY 1" >>confdefs.h
 	phady/route/router.zep.c
 	phady/security/core/authentication/authenticationprovidermanager.zep.c
 	phady/security/core/authentication/authhandler.zep.c
-	phady/security/core/authentication/token/tokeninterface.zep.c
+	phady/security/core/authentication/provider/daoauthenticationprovider.zep.c
+	phady/security/core/authentication/token/usernamepasswordtoken.zep.c
 	phady/security/core/authorization/acl.zep.c
+	phady/security/core/exception/accessdeniedexception.zep.c
+	phady/security/core/exception/badcredentialsexception.zep.c
 	phady/security/core/exception/providernotfoundexception.zep.c
 	phady/security/core/exception/usernamenotfoundexception.zep.c
 	phady/security/core/models/entities/actions.zep.c
@@ -4072,10 +4084,13 @@ $as_echo "#define HAVE_PHADY 1" >>confdefs.h
 	phady/security/core/models/entities/users.zep.c
 	phady/security/core/models/exception.zep.c
 	phady/security/core/models/repositories/users.zep.c
+	phady/security/core/role/rolehierarchyinterface.zep.c
 	phady/security/core/role/roles.zep.c
+	phady/security/core/role/switchuserrole.zep.c
+	phady/security/core/user/advanceduserinterface.zep.c
 	phady/security/core/user/inmemoryuserprovider.zep.c
 	phady/security/core/user/user.zep.c
-	phady/security/core/user/userinterface.zep.c
+	phady/security/core/user/userchecker.zep.c
 	phady/security/core/user/users.zep.c
 	phady/security/exception.zep.c
 	phady/security/groups/groupbase.zep.c

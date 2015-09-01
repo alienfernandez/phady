@@ -13,8 +13,10 @@
 
 namespace Phady\Security\Core\Authentication;
 
-use Phady\Security\Core\Authentication\AuthenticationManagerInterface;
+//use Phady\Security\Core\Authentication\AuthenticationManagerInterface;
 use Phady\Security\Core\Authentication\Token\TokenInterface;
+use Phady\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
+use Phady\Security\Core\Exception\AuthenticationException;
 
 /**
   * @class Phady\Security\Core\User\User -  Core user for app
@@ -24,7 +26,7 @@ use Phady\Security\Core\Authentication\Token\TokenInterface;
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class AuthenticationProviderManager implements AuthenticationManagerInterface
+class AuthenticationProviderManager// implements AuthenticationManagerInterface
 {
     private providers;
     private eraseCredentials;
@@ -40,45 +42,40 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
      */
     public function __construct(providers, eraseCredentials = true)
     {
+        var provider;
         if (!providers) {
             throw new \InvalidArgumentException("You must at least add one authentication provider.");
         }
-        /*
-        foreach (providers as provider) {
-            if (!provider instanceof AuthenticationProviderInterface) {
-                throw new \InvalidArgumentException(sprintf("Provider "%s" must implement the AuthenticationProviderInterface.", get_class(provider)));
+        for provider in providers {
+            if (!(provider instanceof AuthenticationProviderInterface)) {
+                throw new \InvalidArgumentException(sprintf("Provider %s must implement the AuthenticationProviderInterface.", get_class(provider)));
             }
-        }*/
+        }
         let this->providers = providers;
         let this->eraseCredentials = (bool) eraseCredentials;
     }
-
 
     /**
      * {@inheritdoc}
      */
     public function authenticate(<TokenInterface> token)
     {
-        var lastException, result, provider;
+        var e, lastException, result, provider;
         let lastException = null;
         let result = null;
         for provider in this->providers {
             if (!provider->supports(token)) {
                 continue;
             }
-            //try {
+            try {
                 let result = provider->authenticate(token);
                 if (null !== result) {
                     break;
                 }
-            /*
             }
-            catch (AccountStatusException e) {
-                e->setToken(token);
-                throw e;
-            } catch (AuthenticationException e) {
-                lastException = e;
-            }*/
+            catch AuthenticationException, e {
+                let lastException = e;
+            }
         }
         if (null !== result) {
             if (true === this->eraseCredentials) {
@@ -90,7 +87,7 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
             return result;
         }
         if (null === lastException) {
-            let lastException = new ProviderNotFoundException(sprintf("No Authentication Provider found for token of class '%s'.", get_class(token)));
+            let lastException = new \Phady\Security\Exception(sprintf("No Authentication Provider found for token of class %s.", get_class(token)));
         }
         if (null !== this->eventDispatcher) {
             //this->eventDispatcher->dispatch(AuthenticationEvents::AUTHENTICATION_FAILURE, new AuthenticationFailureEvent(token, lastException));

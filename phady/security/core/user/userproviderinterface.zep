@@ -13,7 +13,7 @@
 
 namespace Phady\Security\Core\User;
 
-use \Phady\Security\Core\User\UserInterface;
+use Phady\Security\Core\User\UserInterface;
 
 /**
  * Phady\Security\Core\User\UserProviderInterface
@@ -51,9 +51,9 @@ interface UserProviderInterface
      *
      * @return UserInterface
      *
-     * @throws UnsupportedUserException if the account is not supported
+     * @throws \Phady\Security\Exception if the account is not supported
      */
-    public function refreshUser(user);
+    public function refreshUser(<UserInterface> user);
 
     /**
      * Whether this provider supports the given user class.
