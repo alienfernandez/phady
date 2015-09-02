@@ -252,6 +252,7 @@ abstract class Kernel
         let _SERVER["rootDirOk"] = this->rootDir;
         let _SERVER["environment"] = this->environment;
         let _SERVER["configApp"] = this->config;
+        let _SERVER["containerApp"] = this->container;
 
         if (this->scope == self::SCOPE_MVC) {
             this->container->set("router", function () {
@@ -264,12 +265,23 @@ abstract class Kernel
 
             //Register the events manager service
             this->container->setShared("dispatcher", function () {
-                var dispatcher;
+                var dispatcher, eventsManager;
+
+                let eventsManager = new \Phalcon\Events\Manager();
+
+                /**
+                 * Check if the user is allowed to access certain action using the AuthenticationListener
+                 */
+                eventsManager->attach("dispatch:beforeDispatch", new \Phady\Security\Core\Authentication\EventListener\AuthenticationListener());
                 let dispatcher = new \Phalcon\Mvc\Dispatcher();
+                //echo "<pre>";print_r(dispatcher);
+                eventsManager->fire("dispatch:beforeDispatch", dispatcher);
                 //dispatcher->setEventsManager(eventsManager);
                 return dispatcher;
             });
         }
+
+
         //Register component database service
         this->container->set("db", function () {
             var dbCore, exception;
@@ -353,6 +365,14 @@ abstract class Kernel
             }
             return session;
         });*/
+
+        //Register component login manager service
+        this->container->set("loginManager", function () {
+            var loginManager, userChecker;
+            let userChecker = new \Phady\Security\Core\User\UserChecker();
+            let loginManager = new \Phady\Security\Core\Authentication\LoginManager(null, userChecker, _SERVER["containerApp"]);
+            return loginManager;
+        });
 
     }
 

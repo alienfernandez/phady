@@ -12,24 +12,27 @@ if (PHP_PHADY != "no") {
   }
   
   ADD_SOURCES(configure_module_dirname + "/phady/common/entities", "modelbase.zep.c", "phady");
-	ADD_SOURCES(configure_module_dirname + "/phady/security/core/authentication", "authenticationmanagerinterface.zep.c authenticationprovidermanager.zep.c authhandler.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security/core/authentication", "authenticationmanagerinterface.zep.c loginmanagerinterface.zep.c authenticationprovidermanager.zep.c authhandler.zep.c loginmanager.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security/core/exception", "authenticationexception.zep.c authenticationserviceexception.zep.c accessdeniedexception.zep.c badcredentialsexception.zep.c providernotfoundexception.zep.c unsupporteduserexception.zep.c usernamenotfoundexception.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security/core/user", "userinterface.zep.c advanceduserinterface.zep.c userproviderinterface.zep.c usercheckerinterface.zep.c inmemoryuserprovider.zep.c user.zep.c userchecker.zep.c users.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/core", "kernel.zep.c kernelcli.zep.c kernelmvc.zep.c namespacehandler.zep.c parameter.zep.c", "phady");
-	ADD_SOURCES(configure_module_dirname + "/phady/security/core/authentication/provider", "authenticationproviderinterface.zep.c userauthenticationprovider.zep.c daoauthenticationprovider.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security/core/authentication/provider", "authenticationproviderinterface.zep.c userauthenticationprovider.zep.c daoauthenticationprovider.zep.c userprovider.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/security/core/authentication/token", "tokeninterface.zep.c abstracttoken.zep.c usernamepasswordtoken.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/security/core/role", "roleinterface.zep.c role.zep.c rolehierarchyinterface.zep.c roles.zep.c switchuserrole.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/cache", "cacheinterface.zep.c cachehandler.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/messaging/adapter", "messaginginterface.zep.c rabbitmq.zep.c", "phady");
-	ADD_SOURCES(configure_module_dirname + "/phady/security/core/exception", "authenticationexception.zep.c accessdeniedexception.zep.c badcredentialsexception.zep.c providernotfoundexception.zep.c usernamenotfoundexception.zep.c", "phady");
-	ADD_SOURCES(configure_module_dirname + "/phady/security/core/user", "usercheckerinterface.zep.c userinterface.zep.c userproviderinterface.zep.c advanceduserinterface.zep.c inmemoryuserprovider.zep.c user.zep.c userchecker.zep.c users.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security/core/authentication/model", "userinterface.zep.c user.zep.c usermanagerinterface.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security/core/authentication/token/storage", "tokenstorageinterface.zep.c tokenstorage.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/common/controllers", "controllerbase.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/config", "yaml.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/console", "command.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/db", "databasehandler.zep.c", "phady");
-	ADD_SOURCES(configure_module_dirname + "/phady", "exception.zep.c version.zep.c 0__closure.zep.c 1__closure.zep.c 2__closure.zep.c 3__closure.zep.c 4__closure.zep.c 5__closure.zep.c 6__closure.zep.c 7__closure.zep.c 8__closure.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady", "exception.zep.c version.zep.c 0__closure.zep.c 1__closure.zep.c 2__closure.zep.c 3__closure.zep.c 4__closure.zep.c 5__closure.zep.c 6__closure.zep.c 7__closure.zep.c 8__closure.zep.c 9__closure.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/mail", "mailreader.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/messaging", "messaging.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/report/excel/template", "excelmultitable.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/route", "router.zep.c", "phady");
+	ADD_SOURCES(configure_module_dirname + "/phady/security/core/authentication/eventlistener", "authenticationlistener.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/security/core/authorization", "acl.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/security/core/models/entities", "actions.zep.c groups.zep.c modules.zep.c permissions.zep.c resources.zep.c roles.zep.c userrole.zep.c users.zep.c", "phady");
 	ADD_SOURCES(configure_module_dirname + "/phady/security/core/models", "exception.zep.c", "phady");

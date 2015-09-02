@@ -47,13 +47,13 @@ PHP_METHOD(phady_4__closure, __invoke) {
 	}
 	ZEPHIR_INIT_VAR(voltOptions);
 	zephir_create_array(voltOptions, 2, 0 TSRMLS_CC);
-	zephir_array_fetch_string(&_0, _SERVER, SL("rootDirOk"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 302 TSRMLS_CC);
-	zephir_array_fetch_string(&_1, _SERVER, SL("environment"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 302 TSRMLS_CC);
+	zephir_array_fetch_string(&_0, _SERVER, SL("rootDirOk"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 314 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, _SERVER, SL("environment"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 314 TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_2);
 	ZEPHIR_CONCAT_VSVS(_2, _0, "/cache/", _1, "/volt/");
 	zephir_array_update_string(&voltOptions, SL("compiledPath"), &_2, PH_COPY | PH_SEPARATE);
 	add_assoc_stringl_ex(voltOptions, SS("compiledSeparator"), SL("_"), 1);
-	zephir_array_fetch_string(&_3, _SERVER, SL("environment"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 305 TSRMLS_CC);
+	zephir_array_fetch_string(&_3, _SERVER, SL("environment"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 317 TSRMLS_CC);
 	if (ZEPHIR_IS_STRING(_3, "dev")) {
 		zephir_array_update_string(&voltOptions, SL("compileAlways"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
 	}

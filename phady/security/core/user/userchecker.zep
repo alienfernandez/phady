@@ -18,7 +18,7 @@ use Phady\Security\Core\User\UserInterface;
 use Phady\Security\Core\User\AdvancedUserInterface;
 
 /**
-  * @class Phady\Security\Core\User\User -  Core user for app
+  * @class Phady\Security\Core\User\UserChecker
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core
