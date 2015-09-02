@@ -91,6 +91,7 @@ zend_class_entry *phady_security_core_authentication_token_usernamepasswordtoken
 zend_class_entry *phady_security_core_authorization_acl_ce;
 zend_class_entry *phady_security_core_exception_accessdeniedexception_ce;
 zend_class_entry *phady_security_core_exception_badcredentialsexception_ce;
+zend_class_entry *phady_security_core_exception_invalidcsrftokenexception_ce;
 zend_class_entry *phady_security_core_exception_providernotfoundexception_ce;
 zend_class_entry *phady_security_core_exception_unsupporteduserexception_ce;
 zend_class_entry *phady_security_core_exception_usernamenotfoundexception_ce;
@@ -106,6 +107,7 @@ zend_class_entry *phady_security_core_models_exception_ce;
 zend_class_entry *phady_security_core_models_repositories_users_ce;
 zend_class_entry *phady_security_core_role_roles_ce;
 zend_class_entry *phady_security_core_role_switchuserrole_ce;
+zend_class_entry *phady_security_core_security_ce;
 zend_class_entry *phady_security_core_user_inmemoryuserprovider_ce;
 zend_class_entry *phady_security_core_user_user_ce;
 zend_class_entry *phady_security_core_user_userchecker_ce;
@@ -200,6 +202,7 @@ static PHP_MINIT_FUNCTION(phady)
 	ZEPHIR_INIT(Phady_Security_Core_Authorization_Acl);
 	ZEPHIR_INIT(Phady_Security_Core_Exception_AccessDeniedException);
 	ZEPHIR_INIT(Phady_Security_Core_Exception_BadCredentialsException);
+	ZEPHIR_INIT(Phady_Security_Core_Exception_InvalidCsrfTokenException);
 	ZEPHIR_INIT(Phady_Security_Core_Exception_ProviderNotFoundException);
 	ZEPHIR_INIT(Phady_Security_Core_Exception_UnsupportedUserException);
 	ZEPHIR_INIT(Phady_Security_Core_Exception_UsernameNotFoundException);
@@ -215,6 +218,7 @@ static PHP_MINIT_FUNCTION(phady)
 	ZEPHIR_INIT(Phady_Security_Core_Models_Repositories_Users);
 	ZEPHIR_INIT(Phady_Security_Core_Role_Roles);
 	ZEPHIR_INIT(Phady_Security_Core_Role_SwitchUserRole);
+	ZEPHIR_INIT(Phady_Security_Core_Security);
 	ZEPHIR_INIT(Phady_Security_Core_User_InMemoryUserProvider);
 	ZEPHIR_INIT(Phady_Security_Core_User_User);
 	ZEPHIR_INIT(Phady_Security_Core_User_UserChecker);

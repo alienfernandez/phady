@@ -20,6 +20,8 @@ use Phady\Security\Core\Authentication\AuthenticationManagerInterface;
 use Phady\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Phady\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Phalcon\Http\Request;
+use Phady\Security\Core\Exception\InvalidCsrfTokenException;
+use Phady\Security\Core\Security;
 
 /**
   * @class Phady\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener
@@ -72,14 +74,10 @@ private csrfTokenManager;
      */
     protected function attemptAuthentication(<Request> request)
     {
-        var username, password;
-        if (null !== this->csrfTokenManager) {
-            //let csrfToken = request->get(this->options["csrf_parameter"], null, true);
-
-            /*
-            if (false === this->csrfTokenManager->isTokenValid(new CsrfToken(this->options["intention"], csrfToken))) {
-                throw new InvalidCsrfTokenException("Invalid CSRF token.");
-            }*/
+        var username, password, di;
+        let di = this->getDI();
+        if (!di->get("security")->checkToken()) {
+             throw new InvalidCsrfTokenException("Invalid CSRF token.");
         }
 
         if (this->options["post_only"]) {
@@ -90,7 +88,7 @@ private csrfTokenManager;
             let password = request->getPost(this->options["password_parameter"], null, true);
         }
 
-        //request->getSession()->set(Security::LAST_USERNAME, username);
+        di->get("session")->set(Security::LAST_USERNAME, username);
 
         return this->authenticationManager->authenticate(new UsernamePasswordToken(username, password, this->providerKey));
     }

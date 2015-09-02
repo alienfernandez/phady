@@ -59,6 +59,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/authorization/acl.zep.c
 	phady/security/core/exception/accessdeniedexception.zep.c
 	phady/security/core/exception/badcredentialsexception.zep.c
+	phady/security/core/exception/invalidcsrftokenexception.zep.c
 	phady/security/core/exception/providernotfoundexception.zep.c
 	phady/security/core/exception/unsupporteduserexception.zep.c
 	phady/security/core/exception/usernamenotfoundexception.zep.c
@@ -75,6 +76,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/role/rolehierarchyinterface.zep.c
 	phady/security/core/role/roles.zep.c
 	phady/security/core/role/switchuserrole.zep.c
+	phady/security/core/security.zep.c
 	phady/security/core/user/inmemoryuserprovider.zep.c
 	phady/security/core/user/user.zep.c
 	phady/security/core/user/userchecker.zep.c

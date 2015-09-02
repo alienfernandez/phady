@@ -144,6 +144,8 @@ phady/security/core/exception/accessdeniedexception.lo: /home/alien/PhpstormProj
 	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/PhpstormProjects/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/PhpstormProjects/phady/ext/phady/security/core/exception/accessdeniedexception.zep.c -o phady/security/core/exception/accessdeniedexception.lo 
 phady/security/core/exception/badcredentialsexception.lo: /home/alien/PhpstormProjects/phady/ext/phady/security/core/exception/badcredentialsexception.zep.c
 	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/PhpstormProjects/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/PhpstormProjects/phady/ext/phady/security/core/exception/badcredentialsexception.zep.c -o phady/security/core/exception/badcredentialsexception.lo 
+phady/security/core/exception/invalidcsrftokenexception.lo: /home/alien/PhpstormProjects/phady/ext/phady/security/core/exception/invalidcsrftokenexception.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/PhpstormProjects/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/PhpstormProjects/phady/ext/phady/security/core/exception/invalidcsrftokenexception.zep.c -o phady/security/core/exception/invalidcsrftokenexception.lo 
 phady/security/core/exception/providernotfoundexception.lo: /home/alien/PhpstormProjects/phady/ext/phady/security/core/exception/providernotfoundexception.zep.c
 	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/PhpstormProjects/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/PhpstormProjects/phady/ext/phady/security/core/exception/providernotfoundexception.zep.c -o phady/security/core/exception/providernotfoundexception.lo 
 phady/security/core/exception/unsupporteduserexception.lo: /home/alien/PhpstormProjects/phady/ext/phady/security/core/exception/unsupporteduserexception.zep.c
@@ -176,6 +178,8 @@ phady/security/core/role/roles.lo: /home/alien/PhpstormProjects/phady/ext/phady/
 	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/PhpstormProjects/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/PhpstormProjects/phady/ext/phady/security/core/role/roles.zep.c -o phady/security/core/role/roles.lo 
 phady/security/core/role/switchuserrole.lo: /home/alien/PhpstormProjects/phady/ext/phady/security/core/role/switchuserrole.zep.c
 	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/PhpstormProjects/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/PhpstormProjects/phady/ext/phady/security/core/role/switchuserrole.zep.c -o phady/security/core/role/switchuserrole.lo 
+phady/security/core/security.lo: /home/alien/PhpstormProjects/phady/ext/phady/security/core/security.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/PhpstormProjects/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/PhpstormProjects/phady/ext/phady/security/core/security.zep.c -o phady/security/core/security.lo 
 phady/security/core/user/inmemoryuserprovider.lo: /home/alien/PhpstormProjects/phady/ext/phady/security/core/user/inmemoryuserprovider.zep.c
 	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/alien/PhpstormProjects/phady/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/alien/PhpstormProjects/phady/ext/phady/security/core/user/inmemoryuserprovider.zep.c -o phady/security/core/user/inmemoryuserprovider.lo 
 phady/security/core/user/user.lo: /home/alien/PhpstormProjects/phady/ext/phady/security/core/user/user.zep.c

@@ -137,8 +137,6 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
             }
 
             if (returnValue instanceof TokenInterface) {
-                //this->sessionStrategy->onAuthentication(request, returnValue);
-
                 let response = this->onSuccess(request, returnValue);
             } elseif (returnValue instanceof Response) {
                 let response = returnValue;
@@ -148,8 +146,6 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
         } catch AuthenticationException, e {
             let response = this->onFailure(request, e);
         }
-
-        //event->setResponse(response);
     }
 
 
