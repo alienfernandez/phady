@@ -33,7 +33,7 @@ use Phady\Security\Core\Security;
   */
 class UsernamePasswordFormAuthenticationListener extends AbstractAuthenticationListener
 {
-private csrfTokenManager;
+    private csrfTokenManager;
 
     public function __construct(<TokenStorageInterface> tokenStorage, <AuthenticationManagerInterface> authenticationManager,
         providerKey, <AuthenticationSuccessHandlerInterface> successHandler, <AuthenticationFailureHandlerInterface> failureHandler,
@@ -72,13 +72,13 @@ private csrfTokenManager;
     /**
      * {@inheritdoc}
      */
-    protected function attemptAuthentication(<Request> request)
+    public function attemptAuthentication(<Request> request)
     {
         var username, password, di;
         let di = this->getDI();
-        if (!di->get("security")->checkToken()) {
-             throw new InvalidCsrfTokenException("Invalid CSRF token.");
-        }
+        //if (!di->get("security")->checkToken()) {
+         //    throw new InvalidCsrfTokenException("Invalid CSRF token.");
+       // }
 
         if (this->options["post_only"]) {
             let username = trim(request->getPost(this->options["username_parameter"], null, true));

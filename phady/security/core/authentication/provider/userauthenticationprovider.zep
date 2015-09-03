@@ -23,7 +23,7 @@ use Phady\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Phady\Security\Core\User\UserInterface;
 
 /**
- * Phady\Security\Core\Authentication\Provider\AuthenticationProviderInterface
+ * Phady\Security\Core\Authentication\Provider\UserAuthenticationProvider
  *
  */
 abstract class UserAuthenticationProvider implements AuthenticationProviderInterface

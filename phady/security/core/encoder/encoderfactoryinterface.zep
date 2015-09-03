@@ -11,28 +11,25 @@
 +------------------------------------------------------------------------+
 */
 
-namespace Phady\Security\Http\Authentication;
+namespace Phady\Security\Core\Encoder;
 
-use Phady\Security\Core\Exception\AuthenticationException;
-use \Phalcon\Http\Request;
 
 /**
- * Phady\Security\Http\Authentication\AuthenticationFailureHandlerInterface
+ * Phady\Security\Core\Encoder\EncoderFactoryInterface
  *
  * Interface
  */
-interface AuthenticationFailureHandlerInterface
+interface EncoderFactoryInterface
 {
 
     /**
-     * This is called when an interactive authentication attempt fails. This is
-     * called by authentication listeners inheriting from
-     * AbstractAuthenticationListener.
+     * Returns the password encoder to use for the given account.
      *
-     * @param Request                 $request
-     * @param AuthenticationException $exception
+     * @param UserInterface|string $user A UserInterface instance or a class name
      *
-     * @return Response The response to return, never null
+     * @return PasswordEncoderInterface
+     *
+     * @throws \RuntimeException when no password encoder could be found for the user
      */
-    public function onAuthenticationFailure(<Request> request, <AuthenticationException> exception);
+    public function getEncoder(user);
 }

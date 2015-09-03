@@ -241,9 +241,10 @@ abstract class Kernel
      *
      */
     protected function initializeDefaultService() {
-        var di, config;
+        var di, config, securityConfig;
         let di = this->container;
         let config = this->config;
+        let securityConfig = this->security;
         if (is_array(config)){
 
         }
@@ -252,6 +253,7 @@ abstract class Kernel
         let _SERVER["rootDirOk"] = this->rootDir;
         let _SERVER["environment"] = this->environment;
         let _SERVER["configApp"] = this->config;
+        let _SERVER["securityConfigApp"] = this->security;
         let _SERVER["containerApp"] = this->container;
 
         if (this->scope == self::SCOPE_MVC) {
@@ -366,14 +368,10 @@ abstract class Kernel
             return session;
         });*/
 
-        //Register component login manager service
-        this->container->set("loginManager", function () {
-            var loginManager, userChecker;
-            let userChecker = new \Phady\Security\Core\User\UserChecker();
-            let loginManager = new \Phady\Security\Core\Authentication\LoginManager(null, userChecker, _SERVER["containerApp"]);
-            return loginManager;
-        });
 
+        var securityListener;
+        let securityListener = new \Phady\Security\EventListener\SecurityListener();
+        securityListener->addSecurityListeners();
     }
 
     /**

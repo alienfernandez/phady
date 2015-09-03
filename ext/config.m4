@@ -12,9 +12,9 @@ if test "$PHP_PHADY" = "yes"; then
 	phady_sources="phady.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c phady/common/entities/modelbase.zep.c
 	phady/security/core/authentication/authenticationmanagerinterface.zep.c
 	phady/security/core/exception/authenticationexception.zep.c
+	phady/security/core/authentication/provider/authenticationproviderinterface.zep.c
 	phady/security/core/user/userinterface.zep.c
 	phady/core/kernel.zep.c
-	phady/security/core/authentication/provider/authenticationproviderinterface.zep.c
 	phady/security/core/authentication/token/tokeninterface.zep.c
 	phady/security/core/role/roleinterface.zep.c
 	phady/security/core/user/advanceduserinterface.zep.c
@@ -27,9 +27,12 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/authentication/provider/userauthenticationprovider.zep.c
 	phady/security/core/authentication/token/abstracttoken.zep.c
 	phady/security/core/authentication/token/storage/tokenstorageinterface.zep.c
+	phady/security/core/encoder/encoderfactoryinterface.zep.c
 	phady/security/core/exception/authenticationserviceexception.zep.c
 	phady/security/core/role/role.zep.c
 	phady/security/core/user/usercheckerinterface.zep.c
+	phady/security/http/authentication/authenticationfailurehandlerinterface.zep.c
+	phady/security/http/authentication/authenticationsuccesshandlerinterface.zep.c
 	phady/security/http/firewall/abstractauthenticationlistener.zep.c
 	phady/cache/cachehandler.zep.c
 	phady/common/controllers/controllerbase.zep.c
@@ -53,10 +56,14 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/authentication/model/user.zep.c
 	phady/security/core/authentication/model/usermanagerinterface.zep.c
 	phady/security/core/authentication/provider/daoauthenticationprovider.zep.c
+	phady/security/core/authentication/provider/simpleauthenticationprovider.zep.c
 	phady/security/core/authentication/provider/userprovider.zep.c
+	phady/security/core/authentication/simpleauthenticatorinterface.zep.c
 	phady/security/core/authentication/token/storage/tokenstorage.zep.c
 	phady/security/core/authentication/token/usernamepasswordtoken.zep.c
 	phady/security/core/authorization/acl.zep.c
+	phady/security/core/encoder/encoderawareinterface.zep.c
+	phady/security/core/encoder/encoderfactory.zep.c
 	phady/security/core/exception/accessdeniedexception.zep.c
 	phady/security/core/exception/badcredentialsexception.zep.c
 	phady/security/core/exception/invalidcsrftokenexception.zep.c
@@ -81,11 +88,12 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/user/user.zep.c
 	phady/security/core/user/userchecker.zep.c
 	phady/security/core/user/users.zep.c
+	phady/security/eventlistener/securitylistener.zep.c
 	phady/security/exception.zep.c
 	phady/security/groups/groupbase.zep.c
 	phady/security/groups/groupinterface.zep.c
-	phady/security/http/authentication/authenticationfailurehandlerinterface.zep.c
-	phady/security/http/authentication/authenticationsuccesshandlerinterface.zep.c
+	phady/security/http/authentication/defaultauthenticationfailurehandler.zep.c
+	phady/security/http/authentication/defaultauthenticationsuccesshandler.zep.c
 	phady/security/http/firewall/usernamepasswordformauthenticationlistener.zep.c
 	phady/util/datetime.zep.c
 	phady/util/file.zep.c
@@ -104,7 +112,14 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/6__closure.zep.c
 	phady/7__closure.zep.c
 	phady/8__closure.zep.c
-	phady/9__closure.zep.c "
+	phady/9__closure.zep.c
+	phady/10__closure.zep.c
+	phady/11__closure.zep.c
+	phady/12__closure.zep.c
+	phady/13__closure.zep.c
+	phady/14__closure.zep.c
+	phady/15__closure.zep.c
+	phady/16__closure.zep.c "
 	PHP_NEW_EXTENSION(phady, $phady_sources, $ext_shared,, )
 	PHP_SUBST(PHADY_SHARED_LIBADD)
 

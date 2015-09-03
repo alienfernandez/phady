@@ -40,10 +40,10 @@ PHP_METHOD(phady_2__closure, __invoke) {
 
 		ZEPHIR_INIT_VAR(dbCore);
 		object_init_ex(dbCore, phady_db_databasehandler_ce);
-		zephir_array_fetch_string(&_0, _SERVER, SL("configApp"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 289 TSRMLS_CC);
-		ZEPHIR_CALL_METHOD(NULL, dbCore, "__construct", NULL, 109, _0);
+		zephir_array_fetch_string(&_0, _SERVER, SL("configApp"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 291 TSRMLS_CC);
+		ZEPHIR_CALL_METHOD(NULL, dbCore, "__construct", NULL, 116, _0);
 		zephir_check_call_status_or_jump(try_end_1);
-		ZEPHIR_RETURN_CALL_METHOD(dbCore, "getadapter", NULL, 110);
+		ZEPHIR_RETURN_CALL_METHOD(dbCore, "getadapter", NULL, 117);
 		zephir_check_call_status_or_jump(try_end_1);
 		RETURN_MM();
 

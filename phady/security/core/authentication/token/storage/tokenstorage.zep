@@ -17,7 +17,7 @@ use Phady\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Phady\Security\Core\Authentication\Token\TokenInterface;
 
 /**
- * Phady\Security\Core\Authentication\Token\Storage\AbstractToken
+ * Phady\Security\Core\Authentication\Token\Storage\TokenStorage
  *
  * Interface
  */

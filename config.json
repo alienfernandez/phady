@@ -58,7 +58,7 @@
     "version": "0.0.1",
     "verbose": false,
     "external-dependencies": {
-        "phalcon": "/home/alien/Documentos/Work/projects/others/libs/cphalcon"
+        "phalcon": "/opt/cphalcon"
     },
     "requires": {
         "extensions": ["phalcon"]

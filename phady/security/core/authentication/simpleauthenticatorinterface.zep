@@ -11,28 +11,20 @@
 +------------------------------------------------------------------------+
 */
 
-namespace Phady\Security\Http\Authentication;
+namespace Phady\Security\Core\Authentication;
 
-use Phady\Security\Core\Exception\AuthenticationException;
-use \Phalcon\Http\Request;
+use Phady\Security\Core\Authentication\Token\TokenInterface;
+use Phady\Security\Core\User\UserProviderInterface;
 
 /**
- * Phady\Security\Http\Authentication\AuthenticationFailureHandlerInterface
+ * Phady\Security\Core\Authentication\SimpleAuthenticatorInterface
  *
  * Interface
  */
-interface AuthenticationFailureHandlerInterface
+interface SimpleAuthenticatorInterface
 {
 
-    /**
-     * This is called when an interactive authentication attempt fails. This is
-     * called by authentication listeners inheriting from
-     * AbstractAuthenticationListener.
-     *
-     * @param Request                 $request
-     * @param AuthenticationException $exception
-     *
-     * @return Response The response to return, never null
-     */
-    public function onAuthenticationFailure(<Request> request, <AuthenticationException> exception);
+    public function authenticateToken(<TokenInterface> token, <UserProviderInterface> userProvider, providerKey);
+
+    public function supportsToken(<TokenInterface> token, providerKey);
 }

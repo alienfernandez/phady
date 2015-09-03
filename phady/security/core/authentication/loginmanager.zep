@@ -39,7 +39,7 @@ class LoginManager implements LoginManagerInterface
     private userChecker;
     private container;
 
-    public function __construct(tokenStorage, <UserCheckerInterface> userChecker,
+    public function __construct(<TokenStorageInterface> tokenStorage, <UserCheckerInterface> userChecker,
                                 <InjectionAwareInterface> container)
     {
         if (!(tokenStorage instanceof TokenStorageInterface)) {
