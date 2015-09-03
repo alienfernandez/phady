@@ -76,7 +76,7 @@ PHP_METHOD(Phady_Console_Command, background) {
 	}
 
 
-	ZEPHIR_CALL_FUNCTION(&_0, "php_uname", NULL, 25);
+	ZEPHIR_CALL_FUNCTION(&_0, "php_uname", NULL, 27);
 	zephir_check_call_status();
 	ZEPHIR_SINIT_VAR(_1);
 	ZVAL_LONG(&_1, 0);
@@ -89,9 +89,9 @@ PHP_METHOD(Phady_Console_Command, background) {
 		ZEPHIR_CONCAT_SV(_4, "start /B ", command);
 		ZEPHIR_SINIT_VAR(_5);
 		ZVAL_STRING(&_5, "r", 0);
-		ZEPHIR_CALL_FUNCTION(&_6, "popen", NULL, 26, _4, &_5);
+		ZEPHIR_CALL_FUNCTION(&_6, "popen", NULL, 28, _4, &_5);
 		zephir_check_call_status();
-		ZEPHIR_CALL_FUNCTION(NULL, "pclose", NULL, 27, _6);
+		ZEPHIR_CALL_FUNCTION(NULL, "pclose", NULL, 29, _6);
 		zephir_check_call_status();
 	} else {
 		if (priority) {
@@ -99,12 +99,12 @@ PHP_METHOD(Phady_Console_Command, background) {
 			ZVAL_LONG(&_5, priority);
 			ZEPHIR_INIT_LNVAR(_4);
 			ZEPHIR_CONCAT_SVS(_4, "nohup nice -n ", &_5, "command > /dev/null & echo $!");
-			ZEPHIR_CALL_FUNCTION(&pID, "shell_exec", &_7, 28, _4);
+			ZEPHIR_CALL_FUNCTION(&pID, "shell_exec", &_7, 30, _4);
 			zephir_check_call_status();
 		} else {
 			ZEPHIR_INIT_VAR(_8);
 			ZEPHIR_CONCAT_SVS(_8, "nohup ", command, " > /dev/null & echo $!");
-			ZEPHIR_CALL_FUNCTION(&pID, "shell_exec", &_7, 28, _8);
+			ZEPHIR_CALL_FUNCTION(&pID, "shell_exec", &_7, 30, _8);
 			zephir_check_call_status();
 		}
 	}
@@ -135,7 +135,7 @@ PHP_METHOD(Phady_Console_Command, isRunning) {
 	ZEPHIR_INIT_VAR(_0);
 	ZEPHIR_CONCAT_SV(_0, "ps ", pID);
 	Z_SET_ISREF_P(processState);
-	ZEPHIR_CALL_FUNCTION(NULL, "exec", NULL, 29, _0, processState);
+	ZEPHIR_CALL_FUNCTION(NULL, "exec", NULL, 31, _0, processState);
 	Z_UNSET_ISREF_P(processState);
 	zephir_check_call_status();
 	RETURN_MM_BOOL((zephir_fast_count_int(processState TSRMLS_CC) >= 2));
@@ -165,7 +165,7 @@ PHP_METHOD(Phady_Console_Command, kill) {
 	if (zephir_is_true(_0)) {
 		ZEPHIR_INIT_VAR(_1);
 		ZEPHIR_CONCAT_SV(_1, "kill -KILL ", pID);
-		ZEPHIR_CALL_FUNCTION(NULL, "exec", NULL, 29, _1);
+		ZEPHIR_CALL_FUNCTION(NULL, "exec", NULL, 31, _1);
 		zephir_check_call_status();
 		RETURN_MM_BOOL(1);
 	}

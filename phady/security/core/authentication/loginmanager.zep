@@ -43,7 +43,7 @@ class LoginManager implements LoginManagerInterface
                                 <InjectionAwareInterface> container)
     {
         if (!(tokenStorage instanceof TokenStorageInterface)) {
-            throw new \InvalidArgumentException("Argument 1 should be an instance of Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface");
+            throw new \InvalidArgumentException("Argument 1 should be an instance of Phady\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface");
         }
         let this->tokenStorage = tokenStorage;
         let this->userChecker = userChecker;

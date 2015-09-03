@@ -26,7 +26,7 @@ use Phady\Security\Core\Exception\AuthenticationException;
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class AuthenticationProviderManager// implements AuthenticationManagerInterface
+class AuthenticationProviderManager implements AuthenticationManagerInterface
 {
     private providers;
     private eraseCredentials;
