@@ -60,15 +60,9 @@ class SecurityListener extends \Phalcon\Di\Injectable
             for keyGroup, providerGroup in securityConfigApp["security"]["providers"] {
                 for keyProvider, provider in providerGroup {
                     if (keyProvider === "memory") {
-                        for usersData in provider {
-                        //Phady\Security\Core\Authentication\Provider\DaoAuthenticationProvider
-                            let providersList[] = new \Phady\Security\Core\Authentication\Provider\DaoAuthenticationProvider(
-                                null, container->get("security.user_checker"), "key", container->get("security.encoder_factory.generic")
-                            );
-                        }
+                        let providersList[] = new \Phady\Security\Core\User\InMemoryUserProvider(provider);
                     }
                 }
-
             }
 
             print_r(providersList);

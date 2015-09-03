@@ -14,11 +14,11 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/exception/authenticationexception.zep.c
 	phady/security/core/authentication/provider/authenticationproviderinterface.zep.c
 	phady/security/core/user/userinterface.zep.c
+	phady/security/core/user/userproviderinterface.zep.c
 	phady/core/kernel.zep.c
 	phady/security/core/authentication/token/tokeninterface.zep.c
 	phady/security/core/role/roleinterface.zep.c
 	phady/security/core/user/advanceduserinterface.zep.c
-	phady/security/core/user/userproviderinterface.zep.c
 	phady/security/http/firewall/listenerinterface.zep.c
 	phady/cache/cacheinterface.zep.c
 	phady/messaging/adapter/messaginginterface.zep.c
@@ -84,6 +84,8 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/role/roles.zep.c
 	phady/security/core/role/switchuserrole.zep.c
 	phady/security/core/security.zep.c
+	phady/security/core/user/chainuserprovider.zep.c
+	phady/security/core/user/equatableinterface.zep.c
 	phady/security/core/user/inmemoryuserprovider.zep.c
 	phady/security/core/user/user.zep.c
 	phady/security/core/user/userchecker.zep.c
@@ -95,6 +97,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/http/authentication/defaultauthenticationfailurehandler.zep.c
 	phady/security/http/authentication/defaultauthenticationsuccesshandler.zep.c
 	phady/security/http/firewall/usernamepasswordformauthenticationlistener.zep.c
+	phady/security/securityextension.zep.c
 	phady/util/datetime.zep.c
 	phady/util/file.zep.c
 	phady/util/out.zep.c

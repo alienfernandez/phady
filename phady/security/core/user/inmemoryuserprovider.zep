@@ -17,6 +17,7 @@ use Phady\Security\Core\User\UserProviderInterface;
 use Phady\Security\Core\User\UserInterface;
 use Phady\Security\Core\User\User as UserCore;
 use Phady\Security\Core\Exception\UsernameNotFoundException;
+use Phady\Security\Core\Exception\UnsupportedUserException;
 
 /**
   * @class Phady\Security\Core\User\InMemoryUserProvider
@@ -88,7 +89,7 @@ class InMemoryUserProvider implements UserProviderInterface
     public function refreshUser(<UserInterface> user)
     {
         if (!(user instanceof UserCore)) {
-            throw new \Phady\Security\Exception(sprintf("Instances of %s are not supported.", get_class(user)));
+            throw new UnsupportedUserException(sprintf("Instances of %s are not supported.", get_class(user)));
         }
         return this->loadUserByUsername(user->getUsername());
     }
