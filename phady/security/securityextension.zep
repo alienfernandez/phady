@@ -63,13 +63,38 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         var encoderMap, classEncoder, encoder;
         let encoderMap = [];
         for classEncoder, encoder in encoders {
-            //let encoderMap[classEncoder] = this->createEncoder(encoder, container);
+            let encoderMap[classEncoder] = this->createEncoder(encoder);
         }
-        //copy namespace Symfony\Bundle\SecurityBundle\DependencyInjection;
-        /*
-        container
-            ->getDefinition("security.encoder_factory.generic")
-            ->setArguments(array(encoderMap))
-        ;*/
+        this->getDI()->set("security.encoder_factory.generic", function (encoderMap) {
+            print_r(encoderMap);
+            return new \Phady\Security\Core\Encoder\EncoderFactory(encoderMap);
+         });
     }
+
+    private function createEncoder(array config)
+    {
+        // a custom encoder service
+        /*
+        if (isset(config["id"])) {
+            return new Reference(config["id"]);
+        }*/
+
+        // plaintext encoder
+        if ("plaintext" === config["algorithm"]) {
+            this->getDI()->set("security.encoder.plain.class", function (config) {
+                return \Phady\Security\Core\Encoder\PlaintextPasswordEncoder(config["ignore_case"]);
+             });
+            return this->getDI()->get("security.encoder.plain.class");
+        }
+
+        // bcrypt encoder
+        if ("bcrypt" === config["algorithm"]) {
+            this->getDI()->set("security.encoder.bcrypt.class", function (config) {
+                return new \Phady\Security\Core\Encoder\BCryptPasswordEncoder(config["cost"]);
+             });
+            return this->getDI()->get("security.encoder.bcrypt.class");
+        }
+    }
+    //copy namespace Symfony\Bundle\SecurityBundle\DependencyInjection;
+
 }

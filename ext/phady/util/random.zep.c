@@ -61,7 +61,7 @@ PHP_METHOD(Phady_Util_Random, getSeed) {
 	zephir_array_fetch_long(&_1, expMicrotime, 0, PH_NOISY, "phady/util/random.zep", 40 TSRMLS_CC);
 	ZEPHIR_SINIT_VAR(_2);
 	ZVAL_DOUBLE(&_2, zephir_safe_div_long_double((double) (zephir_get_numberval(_1) * factor), 3.1415926535898 TSRMLS_CC));
-	ZEPHIR_CALL_FUNCTION(&_3, "strrev", NULL, 95, &_2);
+	ZEPHIR_CALL_FUNCTION(&_3, "strrev", NULL, 100, &_2);
 	zephir_check_call_status();
 	RETURN_MM_DOUBLE(zephir_get_doubleval(_3));
 
@@ -242,7 +242,7 @@ PHP_METHOD(Phady_Util_Random, getString) {
 		ZVAL_LONG(&_0, 0);
 		ZEPHIR_SINIT_VAR(_1);
 		ZVAL_DOUBLE(&_1, (zephir_safe_mod_long_long(zephir_fast_strlen_ev(chars), 10 TSRMLS_CC)));
-		ZEPHIR_CALL_FUNCTION(&_2, "range", &_3, 44, &_0, &_1);
+		ZEPHIR_CALL_FUNCTION(&_2, "range", &_3, 45, &_0, &_1);
 		zephir_check_call_status();
 		zephir_is_iterable(_2, &_5, &_4, 0, 0, "phady/util/random.zep", 124);
 		for (
@@ -358,7 +358,7 @@ PHP_METHOD(Phady_Util_Random, getStringForPassword) {
 	ZVAL_LONG(_3, minLength);
 	ZEPHIR_INIT_VAR(_4);
 	ZVAL_LONG(_4, 25);
-	ZEPHIR_CALL_FUNCTION(&_5, "min", &_6, 96, _3, _4);
+	ZEPHIR_CALL_FUNCTION(&_5, "min", &_6, 101, _3, _4);
 	zephir_check_call_status();
 	minLength = zephir_get_numberval(_5);
 	ZEPHIR_SINIT_VAR(_7);
@@ -382,7 +382,7 @@ PHP_METHOD(Phady_Util_Random, getStringForPassword) {
 		ZVAL_LONG(_3, maxLength);
 		ZEPHIR_INIT_NVAR(_4);
 		ZVAL_LONG(_4, 25);
-		ZEPHIR_CALL_FUNCTION(&_10, "min", &_6, 96, _3, _4);
+		ZEPHIR_CALL_FUNCTION(&_10, "min", &_6, 101, _3, _4);
 		zephir_check_call_status();
 		maxLength = zephir_get_numberval(_10);
 	}

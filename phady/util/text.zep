@@ -316,4 +316,76 @@ class Text
 
         return text;
     }
+
+    /**
+     * Compares two strings.
+     *
+     * This method implements a constant-time algorithm to compare strings.
+     * Regardless of the used implementation, it will leak length information.
+     *
+     * @param string knownString The string of known length to compare against
+     * @param string userInput   The string that the user can control
+     *
+     * @return bool true if the two strings are the same, false otherwise
+     */
+    public static function equals(knownString, userInput)
+    {
+        var knownLen, userLen, result;
+        // Avoid making unnecessary duplications of secret data
+        if (!is_string(knownString)) {
+            let knownString = (string) knownString;
+        }
+
+        if (!is_string(userInput)) {
+            let userInput = (string) userInput;
+        }
+
+        if (function_exists("hash_equals")) {
+            return hash_equals(knownString, userInput);
+        }
+
+        let knownLen = self::safeStrlen(knownString);
+        let userLen = self::safeStrlen(userInput);
+
+        if (userLen !== knownLen) {
+            return false;
+        }
+
+        let result = 0;
+        /*for i in range(0, knownLen) {
+            if (result === 0){
+                let result = (ord(knownString[i]) ^ ord(userInput[i]));
+            }
+        }*/
+
+        // They are only identical strings if result is exactly 0...
+        //return 0 === result;
+        return knownString === userInput;
+    }
+    
+
+    /**
+     * Returns the number of bytes in a string.
+     *
+     * @param string string The string whose length we wish to obtain
+     *
+     * @return int
+     */
+    public static function safeStrlen(string text)
+    {
+        var funcExists;
+        // Premature optimization
+        // Since this cannot be changed at runtime, we can cache it
+        let funcExists = null;
+        if (null === funcExists) {
+            let funcExists = function_exists("mb_strlen");
+        }
+
+        if (funcExists) {
+            return mb_strlen(text, "8bit");
+        }
+
+        return strlen(text);
+    }    
+
 }

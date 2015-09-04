@@ -13,10 +13,12 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/authentication/authenticationmanagerinterface.zep.c
 	phady/security/core/exception/authenticationexception.zep.c
 	phady/security/core/authentication/provider/authenticationproviderinterface.zep.c
+	phady/security/core/encoder/passwordencoderinterface.zep.c
 	phady/security/core/user/userinterface.zep.c
 	phady/security/core/user/userproviderinterface.zep.c
 	phady/core/kernel.zep.c
 	phady/security/core/authentication/token/tokeninterface.zep.c
+	phady/security/core/encoder/basepasswordencoder.zep.c
 	phady/security/core/role/roleinterface.zep.c
 	phady/security/core/user/advanceduserinterface.zep.c
 	phady/security/http/firewall/listenerinterface.zep.c
@@ -62,8 +64,10 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/authentication/token/storage/tokenstorage.zep.c
 	phady/security/core/authentication/token/usernamepasswordtoken.zep.c
 	phady/security/core/authorization/acl.zep.c
+	phady/security/core/encoder/bcryptpasswordencoder.zep.c
 	phady/security/core/encoder/encoderawareinterface.zep.c
 	phady/security/core/encoder/encoderfactory.zep.c
+	phady/security/core/encoder/plaintextpasswordencoder.zep.c
 	phady/security/core/exception/accessdeniedexception.zep.c
 	phady/security/core/exception/badcredentialsexception.zep.c
 	phady/security/core/exception/invalidcsrftokenexception.zep.c
@@ -122,7 +126,9 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/13__closure.zep.c
 	phady/14__closure.zep.c
 	phady/15__closure.zep.c
-	phady/16__closure.zep.c "
+	phady/16__closure.zep.c
+	phady/17__closure.zep.c
+	phady/18__closure.zep.c "
 	PHP_NEW_EXTENSION(phady, $phady_sources, $ext_shared,, )
 	PHP_SUBST(PHADY_SHARED_LIBADD)
 

@@ -45,7 +45,7 @@ PHP_METHOD(Phady_Exception, __toString) {
 	zephir_check_call_status();
 	ZEPHIR_SINIT_VAR(_1);
 	ZVAL_STRING(&_1, "[Phady Error] %s", 0);
-	ZEPHIR_RETURN_CALL_FUNCTION("sprintf", NULL, 22, &_1, _0);
+	ZEPHIR_RETURN_CALL_FUNCTION("sprintf", NULL, 24, &_1, _0);
 	zephir_check_call_status();
 	RETURN_MM();
 
