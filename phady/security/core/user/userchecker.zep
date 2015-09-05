@@ -32,18 +32,20 @@ class UserChecker implements UserCheckerInterface {
      */
     public function checkPreAuth(<UserInterface> user)
     {
-        if (!(user instanceof AdvancedUserInterface)) {
-            return;
+        if (user instanceof AdvancedUserInterface) {
+            if (!user->isAccountNonLocked()) {
+                throw new \Phady\Security\Exception("User account is locked.");
+            }
+            if (!user->isEnabled()) {
+                throw new \Phady\Security\Exception("User account is disabled.");
+            }
+            if (!user->isAccountNonExpired()) {
+                throw new \Phady\Security\Exception("User account has expired.");
+            }
+        } else {
+            return false;
         }
-        if (!user->isAccountNonLocked()) {
-            throw new \Phady\Security\Exception("User account is locked.");
-        }
-        if (!user->isEnabled()) {
-            throw new \Phady\Security\Exception("User account is disabled.");
-        }
-        if (!user->isAccountNonExpired()) {
-            throw new \Phady\Security\Exception("User account has expired.");
-        }
+        return true;
     }
 
     /**
@@ -51,11 +53,13 @@ class UserChecker implements UserCheckerInterface {
      */
     public function checkPostAuth(<UserInterface> user)
     {
-        if (!(user instanceof AdvancedUserInterface)) {
-            return;
+        if (user instanceof AdvancedUserInterface) {
+            if (!user->isCredentialsNonExpired()) {
+                throw new \Phady\Security\Exception("User credentials have expired.");
+            }
+        }else {
+            return false;
         }
-        if (!user->isCredentialsNonExpired()) {
-            throw new \Phady\Security\Exception("User credentials have expired.");
-        }
+        return true;
     }
 }

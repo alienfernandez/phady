@@ -65,6 +65,7 @@ abstract class UserAuthenticationProvider implements AuthenticationProviderInter
         if ("" === username || null === username) {
             let username = "NONE_PROVIDED";
         }
+
         try {
             let user = this->retrieveUser(username, token);
         } catch UsernameNotFoundException, e {
@@ -77,7 +78,9 @@ abstract class UserAuthenticationProvider implements AuthenticationProviderInter
         if (!(user instanceof UserInterface)) {
             throw new \Phady\Security\Exception("retrieveUser() must return a UserInterface.");
         }
+
         try {
+
             this->userChecker->checkPreAuth(user);
             this->checkAuthentication(user, token);
             this->userChecker->checkPostAuth(user);
@@ -108,7 +111,7 @@ abstract class UserAuthenticationProvider implements AuthenticationProviderInter
      *
      * @return array The user roles
      */
-    private function getRoles(<UserInterface> user, <TokenInterface> token)
+    public function getRoles(<UserInterface> user, <TokenInterface> token)
     {
         var role, roles;
         let roles = user->getRoles();

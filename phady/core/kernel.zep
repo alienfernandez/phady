@@ -355,6 +355,11 @@ abstract class Kernel
             return cookies;
         });
 
+        //Init registry service
+        this->container->set("registry", function () {
+            return new \Phalcon\Registry();
+        });
+
         /**
          * Init session service
          * Inicia la sesión la primera vez que algun componente solicita el servicio "session"

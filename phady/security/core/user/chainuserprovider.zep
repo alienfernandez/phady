@@ -20,7 +20,7 @@ use Phady\Security\Core\Exception\UsernameNotFoundException;
 use Phady\Security\Core\Exception\UnsupportedUserException;
 
 /**
-  * @class Phady\Security\Core\User\InMemoryUserProvider
+  * @class Phady\Security\Core\User\ChainUserProvider
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core

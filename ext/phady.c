@@ -28,13 +28,14 @@
 
 
 zend_class_entry *phady_security_core_authentication_authenticationmanagerinterface_ce;
-zend_class_entry *phady_security_core_authentication_provider_authenticationproviderinterface_ce;
-zend_class_entry *phady_security_core_encoder_passwordencoderinterface_ce;
 zend_class_entry *phady_security_core_user_userinterface_ce;
 zend_class_entry *phady_security_core_user_userproviderinterface_ce;
+zend_class_entry *phady_security_core_authentication_provider_authenticationproviderinterface_ce;
+zend_class_entry *phady_security_core_encoder_passwordencoderinterface_ce;
+zend_class_entry *phady_security_core_user_advanceduserinterface_ce;
 zend_class_entry *phady_security_core_authentication_token_tokeninterface_ce;
 zend_class_entry *phady_security_core_role_roleinterface_ce;
-zend_class_entry *phady_security_core_user_advanceduserinterface_ce;
+zend_class_entry *phady_security_core_user_factory_userproviderfactoryinterface_ce;
 zend_class_entry *phady_security_http_firewall_listenerinterface_ce;
 zend_class_entry *phady_cache_cacheinterface_ce;
 zend_class_entry *phady_messaging_adapter_messaginginterface_ce;
@@ -70,7 +71,10 @@ zend_class_entry *phady_15__closure_ce;
 zend_class_entry *phady_16__closure_ce;
 zend_class_entry *phady_17__closure_ce;
 zend_class_entry *phady_18__closure_ce;
+zend_class_entry *phady_19__closure_ce;
 zend_class_entry *phady_1__closure_ce;
+zend_class_entry *phady_20__closure_ce;
+zend_class_entry *phady_21__closure_ce;
 zend_class_entry *phady_2__closure_ce;
 zend_class_entry *phady_3__closure_ce;
 zend_class_entry *phady_4__closure_ce;
@@ -100,6 +104,7 @@ zend_class_entry *phady_security_core_authentication_eventlistener_authenticatio
 zend_class_entry *phady_security_core_authentication_loginmanager_ce;
 zend_class_entry *phady_security_core_authentication_model_user_ce;
 zend_class_entry *phady_security_core_authentication_provider_daoauthenticationprovider_ce;
+zend_class_entry *phady_security_core_authentication_provider_entityuserprovider_ce;
 zend_class_entry *phady_security_core_authentication_provider_simpleauthenticationprovider_ce;
 zend_class_entry *phady_security_core_authentication_provider_userprovider_ce;
 zend_class_entry *phady_security_core_authentication_token_storage_tokenstorage_ce;
@@ -128,6 +133,8 @@ zend_class_entry *phady_security_core_role_roles_ce;
 zend_class_entry *phady_security_core_role_switchuserrole_ce;
 zend_class_entry *phady_security_core_security_ce;
 zend_class_entry *phady_security_core_user_chainuserprovider_ce;
+zend_class_entry *phady_security_core_user_factory_entityfactory_ce;
+zend_class_entry *phady_security_core_user_factory_inmemoryfactory_ce;
 zend_class_entry *phady_security_core_user_inmemoryuserprovider_ce;
 zend_class_entry *phady_security_core_user_user_ce;
 zend_class_entry *phady_security_core_user_userchecker_ce;
@@ -173,13 +180,14 @@ static PHP_MINIT_FUNCTION(phady)
 #endif
 	REGISTER_INI_ENTRIES();
 	ZEPHIR_INIT(Phady_Security_Core_Authentication_AuthenticationManagerInterface);
-	ZEPHIR_INIT(Phady_Security_Core_Authentication_Provider_AuthenticationProviderInterface);
-	ZEPHIR_INIT(Phady_Security_Core_Encoder_PasswordEncoderInterface);
 	ZEPHIR_INIT(Phady_Security_Core_User_UserInterface);
 	ZEPHIR_INIT(Phady_Security_Core_User_UserProviderInterface);
+	ZEPHIR_INIT(Phady_Security_Core_Authentication_Provider_AuthenticationProviderInterface);
+	ZEPHIR_INIT(Phady_Security_Core_Encoder_PasswordEncoderInterface);
+	ZEPHIR_INIT(Phady_Security_Core_User_AdvancedUserInterface);
 	ZEPHIR_INIT(Phady_Security_Core_Authentication_Token_TokenInterface);
 	ZEPHIR_INIT(Phady_Security_Core_Role_RoleInterface);
-	ZEPHIR_INIT(Phady_Security_Core_User_AdvancedUserInterface);
+	ZEPHIR_INIT(Phady_Security_Core_User_Factory_UserProviderFactoryInterface);
 	ZEPHIR_INIT(Phady_Security_Http_Firewall_ListenerInterface);
 	ZEPHIR_INIT(Phady_Cache_CacheInterface);
 	ZEPHIR_INIT(Phady_Messaging_Adapter_MessagingInterface);
@@ -226,6 +234,7 @@ static PHP_MINIT_FUNCTION(phady)
 	ZEPHIR_INIT(Phady_Security_Core_Authentication_LoginManager);
 	ZEPHIR_INIT(Phady_Security_Core_Authentication_Model_User);
 	ZEPHIR_INIT(Phady_Security_Core_Authentication_Provider_DaoAuthenticationProvider);
+	ZEPHIR_INIT(Phady_Security_Core_Authentication_Provider_EntityUserProvider);
 	ZEPHIR_INIT(Phady_Security_Core_Authentication_Provider_SimpleAuthenticationProvider);
 	ZEPHIR_INIT(Phady_Security_Core_Authentication_Provider_UserProvider);
 	ZEPHIR_INIT(Phady_Security_Core_Authentication_Token_Storage_TokenStorage);
@@ -254,6 +263,8 @@ static PHP_MINIT_FUNCTION(phady)
 	ZEPHIR_INIT(Phady_Security_Core_Role_SwitchUserRole);
 	ZEPHIR_INIT(Phady_Security_Core_Security);
 	ZEPHIR_INIT(Phady_Security_Core_User_ChainUserProvider);
+	ZEPHIR_INIT(Phady_Security_Core_User_Factory_EntityFactory);
+	ZEPHIR_INIT(Phady_Security_Core_User_Factory_InMemoryFactory);
 	ZEPHIR_INIT(Phady_Security_Core_User_InMemoryUserProvider);
 	ZEPHIR_INIT(Phady_Security_Core_User_User);
 	ZEPHIR_INIT(Phady_Security_Core_User_UserChecker);
@@ -283,7 +294,10 @@ static PHP_MINIT_FUNCTION(phady)
 	ZEPHIR_INIT(phady_16__closure);
 	ZEPHIR_INIT(phady_17__closure);
 	ZEPHIR_INIT(phady_18__closure);
+	ZEPHIR_INIT(phady_19__closure);
 	ZEPHIR_INIT(phady_1__closure);
+	ZEPHIR_INIT(phady_20__closure);
+	ZEPHIR_INIT(phady_21__closure);
 	ZEPHIR_INIT(phady_2__closure);
 	ZEPHIR_INIT(phady_3__closure);
 	ZEPHIR_INIT(phady_4__closure);

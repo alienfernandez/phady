@@ -64,6 +64,7 @@ class DaoAuthenticationProvider extends UserAuthenticationProvider
                 throw new BadCredentialsException("The credentials were changed from another session.");
             }
         } else {
+
             let presentedPassword = token->getCredentials();
             if ("" === presentedPassword) {
                 throw new BadCredentialsException("The presented password cannot be empty.");
@@ -80,6 +81,7 @@ class DaoAuthenticationProvider extends UserAuthenticationProvider
      */
     protected function retrieveUser(username, <UsernamePasswordToken> token)
     {
+
         var user, e, ex;
         let user = token->getUser();
         if (user instanceof UserInterface) {
@@ -89,11 +91,13 @@ class DaoAuthenticationProvider extends UserAuthenticationProvider
         try {
             let user = this->userProvider->loadUserByUsername(username);
 
-            if (!(user instanceof UserInterface)) {
+
+            if (user instanceof UserInterface) {
+                return user;
+            }else {
                 throw new AuthenticationServiceException("The user provider must return a UserInterface object.");
             }
 
-            return user;
         } catch UsernameNotFoundException, e {
             e->setUsername(username);
             throw e;

@@ -12,15 +12,16 @@ if test "$PHP_PHADY" = "yes"; then
 	phady_sources="phady.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c phady/common/entities/modelbase.zep.c
 	phady/security/core/authentication/authenticationmanagerinterface.zep.c
 	phady/security/core/exception/authenticationexception.zep.c
-	phady/security/core/authentication/provider/authenticationproviderinterface.zep.c
-	phady/security/core/encoder/passwordencoderinterface.zep.c
 	phady/security/core/user/userinterface.zep.c
 	phady/security/core/user/userproviderinterface.zep.c
+	phady/security/core/authentication/provider/authenticationproviderinterface.zep.c
+	phady/security/core/encoder/passwordencoderinterface.zep.c
+	phady/security/core/user/advanceduserinterface.zep.c
 	phady/core/kernel.zep.c
 	phady/security/core/authentication/token/tokeninterface.zep.c
 	phady/security/core/encoder/basepasswordencoder.zep.c
 	phady/security/core/role/roleinterface.zep.c
-	phady/security/core/user/advanceduserinterface.zep.c
+	phady/security/core/user/factory/userproviderfactoryinterface.zep.c
 	phady/security/http/firewall/listenerinterface.zep.c
 	phady/cache/cacheinterface.zep.c
 	phady/messaging/adapter/messaginginterface.zep.c
@@ -58,6 +59,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/authentication/model/user.zep.c
 	phady/security/core/authentication/model/usermanagerinterface.zep.c
 	phady/security/core/authentication/provider/daoauthenticationprovider.zep.c
+	phady/security/core/authentication/provider/entityuserprovider.zep.c
 	phady/security/core/authentication/provider/simpleauthenticationprovider.zep.c
 	phady/security/core/authentication/provider/userprovider.zep.c
 	phady/security/core/authentication/simpleauthenticatorinterface.zep.c
@@ -90,6 +92,8 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/security.zep.c
 	phady/security/core/user/chainuserprovider.zep.c
 	phady/security/core/user/equatableinterface.zep.c
+	phady/security/core/user/factory/entityfactory.zep.c
+	phady/security/core/user/factory/inmemoryfactory.zep.c
 	phady/security/core/user/inmemoryuserprovider.zep.c
 	phady/security/core/user/user.zep.c
 	phady/security/core/user/userchecker.zep.c
@@ -128,7 +132,10 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/15__closure.zep.c
 	phady/16__closure.zep.c
 	phady/17__closure.zep.c
-	phady/18__closure.zep.c "
+	phady/18__closure.zep.c
+	phady/19__closure.zep.c
+	phady/20__closure.zep.c
+	phady/21__closure.zep.c "
 	PHP_NEW_EXTENSION(phady, $phady_sources, $ext_shared,, )
 	PHP_SUBST(PHADY_SHARED_LIBADD)
 

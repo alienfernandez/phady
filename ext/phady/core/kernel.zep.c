@@ -397,7 +397,7 @@ PHP_METHOD(Phady_Core_Kernel, initializeNamespace) {
 PHP_METHOD(Phady_Core_Kernel, initializeDefaultService) {
 
 	int _1, _3, _5, _7, _9, ZEPHIR_LAST_CALL_STATUS;
-	zval *di, *config = NULL, *securityConfig, *_0, *_SERVER, *_2, *_4, *_6, *_8, *_10, *_11, *_12 = NULL, *_13 = NULL, *_14, *_15 = NULL, *_16, *_17 = NULL, *_18 = NULL, *_19, *_20, *_21 = NULL, *_22, *_23 = NULL, *_24, *_25, *securityListener;
+	zval *di, *config = NULL, *securityConfig, *_0, *_SERVER, *_2, *_4, *_6, *_8, *_10, *_11, *_12 = NULL, *_13 = NULL, *_14, *_15 = NULL, *_16, *_17 = NULL, *_18 = NULL, *_19, *_20, *_21 = NULL, *_22, *_23 = NULL, *_24, *_25 = NULL, *_26, *_27, *securityListener;
 
 	ZEPHIR_MM_GROW();
 	zephir_get_global(&_SERVER, SS("_SERVER") TSRMLS_CC);
@@ -526,6 +526,15 @@ PHP_METHOD(Phady_Core_Kernel, initializeDefaultService) {
 	ZEPHIR_CALL_METHOD(NULL, _24, "set", NULL, 0, _25, _23);
 	zephir_check_temp_parameter(_25);
 	zephir_check_call_status();
+	_26 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
+	ZEPHIR_INIT_NVAR(_25);
+	ZEPHIR_INIT_NVAR(_25);
+	zephir_create_closure_ex(_25, NULL, phady_9__closure_ce, SS("__invoke") TSRMLS_CC);
+	ZEPHIR_INIT_VAR(_27);
+	ZVAL_STRING(_27, "registry", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(NULL, _26, "set", NULL, 0, _27, _25);
+	zephir_check_temp_parameter(_27);
+	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(securityListener);
 	object_init_ex(securityListener, phady_security_eventlistener_securitylistener_ce);
 	ZEPHIR_CALL_METHOD(NULL, securityListener, "__construct", NULL, 10);
@@ -553,20 +562,20 @@ PHP_METHOD(Phady_Core_Kernel, getCoreParameters) {
 	ZEPHIR_INIT_VAR(modules);
 	array_init(modules);
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("modules"), PH_NOISY_CC);
-	zephir_is_iterable(_0, &_2, &_1, 0, 0, "phady/core/kernel.zep", 391);
+	zephir_is_iterable(_0, &_2, &_1, 0, 0, "phady/core/kernel.zep", 396);
 	for (
 	  ; zephir_hash_get_current_data_ex(_2, (void**) &_3, &_1) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_2, &_1)
 	) {
 		ZEPHIR_GET_HVALUE(module, _3);
-		zephir_is_iterable(module, &_5, &_4, 0, 0, "phady/core/kernel.zep", 390);
+		zephir_is_iterable(module, &_5, &_4, 0, 0, "phady/core/kernel.zep", 395);
 		for (
 		  ; zephir_hash_get_current_data_ex(_5, (void**) &_6, &_4) == SUCCESS
 		  ; zephir_hash_move_forward_ex(_5, &_4)
 		) {
 			ZEPHIR_GET_HMKEY(name, _5, _4);
 			ZEPHIR_GET_HVALUE(data, _6);
-			zephir_array_fetch_string(&_7, data, SL("className"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 388 TSRMLS_CC);
+			zephir_array_fetch_string(&_7, data, SL("className"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 393 TSRMLS_CC);
 			zephir_array_update_zval(&modules, name, &_7, PH_COPY | PH_SEPARATE);
 		}
 	}
@@ -655,37 +664,37 @@ PHP_METHOD(Phady_Core_Kernel, getCoreParameters) {
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	_17 = zephir_fetch_nproperty_this(this_ptr, SL("config"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_7, _17, SL("framework"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 406 TSRMLS_CC);
-	zephir_array_fetch_string(&_18, _7, SL("catalog"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 406 TSRMLS_CC);
+	zephir_array_fetch_string(&_7, _17, SL("framework"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 411 TSRMLS_CC);
+	zephir_array_fetch_string(&_18, _7, SL("catalog"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 411 TSRMLS_CC);
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "catalog", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _18);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	_19 = zephir_fetch_nproperty_this(this_ptr, SL("config"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_20, _19, SL("framework"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 407 TSRMLS_CC);
-	zephir_array_fetch_string(&_21, _20, SL("datetime"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 407 TSRMLS_CC);
+	zephir_array_fetch_string(&_20, _19, SL("framework"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 412 TSRMLS_CC);
+	zephir_array_fetch_string(&_21, _20, SL("datetime"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 412 TSRMLS_CC);
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "datetime", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _21);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	_22 = zephir_fetch_nproperty_this(this_ptr, SL("config"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_23, _22, SL("mail"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 408 TSRMLS_CC);
+	zephir_array_fetch_string(&_23, _22, SL("mail"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 413 TSRMLS_CC);
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "mail", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _23);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	_24 = zephir_fetch_nproperty_this(this_ptr, SL("config"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_25, _24, SL("pdf"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 409 TSRMLS_CC);
+	zephir_array_fetch_string(&_25, _24, SL("pdf"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 414 TSRMLS_CC);
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "pdf", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _25);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	_26 = zephir_fetch_nproperty_this(this_ptr, SL("config"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_27, _26, SL("files"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 410 TSRMLS_CC);
+	zephir_array_fetch_string(&_27, _26, SL("files"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 415 TSRMLS_CC);
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "files", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _27);
@@ -716,16 +725,16 @@ PHP_METHOD(Phady_Core_Kernel, getRootDir) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("rootDir"), PH_NOISY_CC);
 	if (Z_TYPE_P(_0) == IS_NULL) {
 		ZEPHIR_OBS_VAR(document_root);
-		zephir_array_fetch_string(&document_root, _SERVER, SL("DOCUMENT_ROOT"), PH_NOISY, "phady/core/kernel.zep", 425 TSRMLS_CC);
+		zephir_array_fetch_string(&document_root, _SERVER, SL("DOCUMENT_ROOT"), PH_NOISY, "phady/core/kernel.zep", 430 TSRMLS_CC);
 		ZEPHIR_INIT_VAR(document_root_spl);
 		zephir_fast_explode_str(document_root_spl, SL("web"), document_root, LONG_MAX TSRMLS_CC);
 		if (zephir_fast_count_int(document_root_spl TSRMLS_CC) > 0) {
-			zephir_array_fetch_long(&_1, document_root_spl, 0, PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 428 TSRMLS_CC);
+			zephir_array_fetch_long(&_1, document_root_spl, 0, PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 433 TSRMLS_CC);
 			ZEPHIR_INIT_VAR(_2);
 			ZEPHIR_CONCAT_VS(_2, _1, "app");
 			zephir_update_property_this(this_ptr, SL("rootDir"), _2 TSRMLS_CC);
 		} else {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phady_exception_ce, "No found root directory.", "phady/core/kernel.zep", 430);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phady_exception_ce, "No found root directory.", "phady/core/kernel.zep", 435);
 			return;
 		}
 	}

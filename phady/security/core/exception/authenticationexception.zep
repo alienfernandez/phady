@@ -13,6 +13,8 @@
 
 namespace Phady\Security\Core\Exception;
 
+use Phady\Security\Core\Authentication\Token\TokenInterface;
+
 /**
   * @class Phady\Security\Core\Exception\AuthenticationException
   *

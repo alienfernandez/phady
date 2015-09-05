@@ -40,12 +40,13 @@ class EncoderFactory implements EncoderFactoryInterface
     {
         var encoderKey, encoderName, classEncoder, encoder;
         let encoderKey = null;
-        let encoderName = user->getEncoderName();
-        if (user instanceof EncoderAwareInterface && (null !== encoderName)) {
-            if (!array_key_exists(encoderName, this->encoders)) {
-                throw new \RuntimeException(sprintf("The encoder %s was not configured.", encoderName));
+        if (user instanceof EncoderAwareInterface) {
+            let encoderName = user->getEncoderName();
+            if (null !== encoderName) {
+                if (!array_key_exists(encoderName, this->encoders))  {
+                    throw new \RuntimeException(sprintf("The encoder %s was not configured.", encoderName));
+                }
             }
-
             let encoderKey = encoderName;
         } else {
             for classEncoder, encoder in this->encoders {

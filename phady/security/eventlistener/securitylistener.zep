@@ -15,6 +15,7 @@ namespace Phady\Security\EventListener;
 
 use Phalcon\Events\Event;
 use Phalcon\Mvc\Dispatcher;
+use Phady\Security\SecurityExtension;
 
 /**
   * @class Phady\Security\EventListener\SecurityListener
@@ -28,6 +29,7 @@ class SecurityListener extends \Phalcon\Di\Injectable
 {
 
     private container;
+    private securityExtension;
 
     public function __construct()
     {
@@ -41,33 +43,6 @@ class SecurityListener extends \Phalcon\Di\Injectable
         //Register component security.user_checker
         this->container->set("security.user_checker", function () {
             return new \Phady\Security\Core\User\UserChecker();
-        });
-
-        //Register component security.encoder_factory.generic
-        this->container->set("security.encoder_factory.generic", function () {
-            return new \Phady\Security\Core\Encoder\EncoderFactory([]);
-        });
-
-
-        //Register component security.authentication.manager
-        this->container->set("security.authentication.manager", function () {
-            var authProvider, usersData, keyProvider, provider, keyGroup, providerGroup, container, securityConfigApp, providersList;
-            let container = _SERVER["containerApp"];
-            let securityConfigApp = _SERVER["securityConfigApp"];
-            let providersList = [];
-            //Phady\Security\Core\Authentication\Provider\UserAuthenticationProvider
-
-            for keyGroup, providerGroup in securityConfigApp["security"]["providers"] {
-                for keyProvider, provider in providerGroup {
-                    if (keyProvider === "memory") {
-                        let providersList[] = new \Phady\Security\Core\User\InMemoryUserProvider(provider);
-                    }
-                }
-            }
-
-            print_r(providersList);
-            let authProvider = new \Phady\Security\Core\Authentication\AuthenticationProviderManager(providersList);
-            return authProvider;
         });
 
         //Register component security.token_storage
@@ -94,19 +69,7 @@ class SecurityListener extends \Phalcon\Di\Injectable
             return loginManager;
         });
 
-        //Register component login manager service
-        this->container->set("security.authentication.listener.form", function () {
-            var container, listenForm;
-            let container = _SERVER["containerApp"];
-
-            let listenForm = new \Phady\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener(
-                    container->get("security.token_storage"), container->get("security.authentication.manager"),
-                    "key", container->get("security.authentication.success_handler"), container->get("security.authentication.failure_handler"),
-                    [], null);
-            return listenForm;
-        });
-
-
+        let this->securityExtension = new SecurityExtension();
 
     }
 

@@ -13,6 +13,7 @@
 
 namespace Phady\Security\Core\User;
 
+use Phady\Security\Core\User\AdvancedUserInterface;
 
 /**
   * @class Phady\Security\Core\User\User -  Core user for app
@@ -22,7 +23,7 @@ namespace Phady\Security\Core\User;
   * @copyright (c) 2015
   * @version 1.0.0
   */
-final class User {
+final class User implements AdvancedUserInterface {
     
     private username;
     private password;
@@ -46,6 +47,11 @@ final class User {
         let this->credentialsNonExpired = credentialsNonExpired;
         let this->accountNonLocked = userNonLocked;
         let this->roles = roles;
+    }
+
+    public function __toString()
+    {
+        return this->getUsername();
     }
 
     /**

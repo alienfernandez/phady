@@ -46,7 +46,6 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
         if (!providers) {
             throw new \InvalidArgumentException("You must at least add one authentication provider.");
         }
-        print_r(providers);
         for provider in providers {
             if (!(provider instanceof AuthenticationProviderInterface)) {
                 throw new \InvalidArgumentException(sprintf("Provider %s must implement the AuthenticationProviderInterface.", get_class(provider)));
@@ -64,6 +63,8 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
         var e, lastException, result, provider;
         let lastException = null;
         let result = null;
+        //echo "<pre>"; print_r(this->providers);
+        //die("end provider...");
         for provider in this->providers {
             if (!provider->supports(token)) {
                 continue;
@@ -78,8 +79,6 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
                 let lastException = e;
             }
         }
-        print_r(result);
-        die("die token...");
 
         if (null !== result) {
             if (true === this->eraseCredentials) {

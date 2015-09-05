@@ -88,8 +88,6 @@ class UsernamePasswordFormAuthenticationListener extends AbstractAuthenticationL
             let password = request->getPost(this->options["password_parameter"], null, true);
         }
 
-        di->get("session")->set(Security::LAST_USERNAME, username);
-
         return this->authenticationManager->authenticate(new UsernamePasswordToken(username, password, this->providerKey));
     }
 }
