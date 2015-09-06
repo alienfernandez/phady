@@ -107,7 +107,7 @@ PHP_METHOD(Phady_Util_File, downloadFile) {
 	}
 
 
-	ZEPHIR_CALL_FUNCTION(&_0, "is_file", NULL, 116, path);
+	ZEPHIR_CALL_FUNCTION(&_0, "is_file", NULL, 115, path);
 	zephir_check_call_status();
 	ZEPHIR_SINIT_VAR(statusDownload);
 	if (zephir_is_true(_0)) {
@@ -115,37 +115,37 @@ PHP_METHOD(Phady_Util_File, downloadFile) {
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(_2);
 		ZEPHIR_CONCAT_SV(_2, "Content-type: ", _1);
-		ZEPHIR_CALL_FUNCTION(NULL, "header", &_3, 117, _2);
+		ZEPHIR_CALL_FUNCTION(NULL, "header", &_3, 116, _2);
 		zephir_check_call_status();
 		if (ZEPHIR_IS_STRING(contentDisposition, "attachment")) {
 			ZEPHIR_SINIT_VAR(_4);
 			ZVAL_STRING(&_4, "Content-Type: application/force-download", 0);
-			ZEPHIR_CALL_FUNCTION(NULL, "header", &_3, 117, &_4);
+			ZEPHIR_CALL_FUNCTION(NULL, "header", &_3, 116, &_4);
 			zephir_check_call_status();
 			ZEPHIR_SINIT_NVAR(_4);
 			ZVAL_STRING(&_4, "Content-Type: application/download", 0);
-			ZEPHIR_CALL_FUNCTION(NULL, "header", &_3, 117, &_4);
+			ZEPHIR_CALL_FUNCTION(NULL, "header", &_3, 116, &_4);
 			zephir_check_call_status();
 		}
 		ZEPHIR_INIT_VAR(_5);
 		ZEPHIR_CONCAT_SVSV(_5, "Content-Disposition: ", contentDisposition, "; filename=", name);
-		ZEPHIR_CALL_FUNCTION(NULL, "header", &_3, 117, _5);
+		ZEPHIR_CALL_FUNCTION(NULL, "header", &_3, 116, _5);
 		zephir_check_call_status();
 		ZEPHIR_SINIT_NVAR(_4);
 		ZVAL_STRING(&_4, "Content-Transfer-Encoding: binary", 0);
-		ZEPHIR_CALL_FUNCTION(NULL, "header", &_3, 117, &_4);
+		ZEPHIR_CALL_FUNCTION(NULL, "header", &_3, 116, &_4);
 		zephir_check_call_status();
-		ZEPHIR_CALL_FUNCTION(&_6, "filesize", NULL, 118, path);
+		ZEPHIR_CALL_FUNCTION(&_6, "filesize", NULL, 117, path);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(_7);
 		ZEPHIR_CONCAT_SV(_7, "Content-Length: ", _6);
-		ZEPHIR_CALL_FUNCTION(NULL, "header", &_3, 117, _7);
+		ZEPHIR_CALL_FUNCTION(NULL, "header", &_3, 116, _7);
 		zephir_check_call_status();
 		ZEPHIR_SINIT_NVAR(_4);
 		ZVAL_STRING(&_4, "Accept-Ranges: bytes", 0);
-		ZEPHIR_CALL_FUNCTION(NULL, "header", &_3, 117, &_4);
+		ZEPHIR_CALL_FUNCTION(NULL, "header", &_3, 116, &_4);
 		zephir_check_call_status();
-		ZEPHIR_CALL_FUNCTION(NULL, "readfile", NULL, 119, path);
+		ZEPHIR_CALL_FUNCTION(NULL, "readfile", NULL, 118, path);
 		zephir_check_call_status();
 		ZVAL_BOOL(&statusDownload, 1);
 	} else {

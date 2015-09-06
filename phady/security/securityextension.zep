@@ -73,7 +73,6 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
         let _SERVER["security.encoder_factory.generic"] = new \Phady\Security\Core\Encoder\EncoderFactory(encoderMap);
         this->container->set("security.encoder_factory.generic", function (encoderMap) {
-            print_r(encoderMap);
             return new \Phady\Security\Core\Encoder\EncoderFactory(encoderMap);
          });
     }
@@ -114,10 +113,10 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
         for access in config["access_control"] {
             let matcher = this->createRequestMatcher(
-                access["path"],
-                access["host"],
-                access["methods"],
-                access["ips"]
+                (array_key_exists("path", access)) ? access["path"] : "",
+                (array_key_exists("host", access)) ? access["host"] : "",
+                (array_key_exists("methods", access)) ? access["methods"] : "",
+                (array_key_exists("ips", access)) ? access["ips"] : ""
             );
 
             let attributes = access["roles"];
@@ -133,8 +132,8 @@ class SecurityExtension extends \Phalcon\Di\Injectable
                 accessMap->add(accessParams[0], accessParams[1], accessParams[2]);
                 return accessMap;
              });
-             print_r(this->container->get("security.access_map", [accessParams]));
-             die();
+             //print_r(this->container->get("security.access_map", [accessParams]));
+             //die();
         }
     }
 
@@ -178,14 +177,14 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         let firewalls = config["firewalls"];
         let providerIds = this->createUserProviders(config);
         
-        let userProviders = [];
+        /*let userProviders = [];
         for userProviderId in providerIds {
-            let userProviders[] = new Reference(userProviderId);
+            let userProviders[] = userProviderId;
         }
         
 
         // load firewall map
-        /*mapDef = container->getDefinition("security.firewall.map");
+        mapDef = container->getDefinition("security.firewall.map");
         let map = [];
         let authenticationProviders = [];
         for name, firewall in firewalls {
