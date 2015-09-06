@@ -192,7 +192,6 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         // Doctrine Entity and In-memory DAO provider are managed by factories
         for factory in this->userProviderFactories {
             let key = str_replace("-", "_", factory->getKey());
-
             if (!empty(provider[key])) {
                 factory->create(name, provider[key]);
                 let arrReturn["name"] = name;

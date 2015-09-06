@@ -267,20 +267,26 @@ abstract class Kernel
 
             //Register the events manager service
             this->container->setShared("dispatcher", function () {
-                var dispatcher, eventsManager;
-
-                let eventsManager = new \Phalcon\Events\Manager();
-
-                /**
-                 * Check if the user is allowed to access certain action using the AuthenticationListener
-                 */
-                eventsManager->attach("dispatch:beforeDispatch", new \Phady\Security\Core\Authentication\EventListener\AuthenticationListener());
+                var dispatcher;
                 let dispatcher = new \Phalcon\Mvc\Dispatcher();
-                //echo "<pre>";print_r(dispatcher);
-                eventsManager->fire("dispatch:beforeDispatch", dispatcher);
                 //dispatcher->setEventsManager(eventsManager);
                 return dispatcher;
             });
+
+            //set event manager
+            if (this->container->has("dispatcher")) {
+                if (!this->container->get("dispatcher")->getEventsManager()) {
+                    var eventsManager;
+                    let eventsManager = new \Phalcon\Events\Manager();
+
+                    /**
+                     * Check if the user is allowed to access certain action using the AuthenticationListener
+                     */
+                    eventsManager->attach("dispatch:beforeDispatch", new \Phady\Security\Core\Authentication\EventListener\AuthenticationListener());
+                    this->container->get("dispatcher")->setEventsManager(eventsManager);
+                    eventsManager->fire("dispatch:beforeDispatch", this->container->get("dispatcher"));
+                }
+            }
         }
 
 
@@ -364,14 +370,18 @@ abstract class Kernel
          * Init session service
          * Inicia la sesión la primera vez que algun componente solicita el servicio "session"
          */
-        /*this->container->set("session", function () {
+        this->container->set("session", function () {
             var session;
             let session = new \Phalcon\Session\Adapter\Files();
-            if (session_id() == "") {
-                session->start();
-            }
             return session;
-        });*/
+        });
+
+        //The log in the first time some component to request the service 'session'
+        if (this->container->has("session")) {
+            if (!this->container->get("session")->isStarted()) {
+                this->container->get("session")->start();
+            }
+        }
 
 
         var securityListener;

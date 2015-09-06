@@ -90,7 +90,10 @@ abstract class BasePasswordEncoder implements PasswordEncoderInterface
      */
     protected function comparePasswords(password1, password2)
     {
-        return \Phady\Util\Text::equals(password1, password2);
+        //return \Phady\Util\Text::equals(password1, password2);
+        //print_r("password1: " . password1 . " | password2: " . password2 );
+        //die("  .........passs......");
+        return password1 === password2;
     }
 
     /**

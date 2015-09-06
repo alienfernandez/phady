@@ -576,7 +576,7 @@ PHP_METHOD(Phady_Mail_MailReader, getRecDate) {
 	zephir_check_call_status();
 	ZEPHIR_SINIT_VAR(_3);
 	ZVAL_STRING(&_3, "m-d-Y", 0);
-	ZEPHIR_RETURN_CALL_FUNCTION("date", NULL, 4, &_3, timestamp);
+	ZEPHIR_RETURN_CALL_FUNCTION("date", NULL, 5, &_3, timestamp);
 	zephir_check_call_status();
 	RETURN_MM();
 

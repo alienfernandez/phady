@@ -23,6 +23,9 @@ use Phalcon\Http\Request;
 use Phady\Security\Core\Exception\AuthenticationException;
 use Phady\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Phady\Security\Core\Authentication\Token\TokenInterface;
+use Phady\Security\Core\Security;
+use Phady\Security\Http\Event\InteractiveLoginEvent;
+use Phady\Security\Http\SecurityEvents;
 
 /**
   * @class Phady\Security\Http\Firewall\AbstractAuthenticationListener
@@ -89,7 +92,6 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
            "require_previous_session" : true
        ], options);
        //let this->logger = logger;
-       //let this->dispatcher = dispatcher;
        let this->dispatcher = this->getDI()->get("dispatcher");
        //let this->httpUtils = httpUtils;
    }
@@ -120,10 +122,9 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
             return;
         }
 
-        /*
-        if (!request->hasSession()) {
+        if (!this->getDI()->has("session")) {
             throw new \RuntimeException("This authentication method requires a session.");
-        }*/
+        }
 
         try {
             /*
@@ -200,24 +201,24 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
     }
 
 
-    private function onSuccess(<Request> request, <TokenInterface> token)
+    public function onSuccess(<Request> request, <TokenInterface> token)
     {
-        var session, response;
-        if (null !== this->logger) {
-            this->logger->info("User has been authenticated successfully.", ["username" : token->getUsername()]);
-        }
+        var session, response, loginEvent;
+        //if (null !== this->logger) {
+        //    this->logger->info("User has been authenticated successfully.", ["username" : token->getUsername()]);
+        //}
 
         this->tokenStorage->setToken(token);
 
-        //let session = request->getSession();
-        //session->remove(Security::AUTHENTICATION_ERROR);
-        //session->remove(Security::LAST_USERNAME);
+        let session = this->getDI()->get("session");
+        session->remove(Security::AUTHENTICATION_ERROR);
+        session->remove(Security::LAST_USERNAME);
 
-        /*
-        if (null !== this->dispatcher) {
-            loginEvent = new InteractiveLoginEvent(request, token);
-            this->dispatcher->dispatch(SecurityEvents::INTERACTIVE_LOGIN, loginEvent);
-        }*/
+
+        if (this->getDI()->has("dispatcher")) {
+            let loginEvent = new InteractiveLoginEvent(request, token);
+            this->getDI()->get("dispatcher")->getEventsManager()->attach(SecurityEvents::INTERACTIVE_LOGIN, loginEvent);
+        }
 
         let response = this->successHandler->onAuthenticationSuccess(request, token);
 

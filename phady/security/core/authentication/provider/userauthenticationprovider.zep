@@ -21,6 +21,7 @@ use Phady\Security\Core\Exception\BadCredentialsException;
 use Phady\Security\Core\Role\SwitchUserRole;
 use Phady\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Phady\Security\Core\User\UserInterface;
+use Phady\Security\Core\Exception\AuthenticationServiceException;
 
 /**
  * Phady\Security\Core\Authentication\Provider\UserAuthenticationProvider
@@ -75,8 +76,14 @@ abstract class UserAuthenticationProvider implements AuthenticationProviderInter
             e->setUsername(username);
             throw e;
         }
-        if (!(user instanceof UserInterface)) {
-            throw new \Phady\Security\Exception("retrieveUser() must return a UserInterface.");
+
+        boolean userInstanceof;
+        let userInstanceof = false;
+        if (user instanceof UserInterface) {
+            let userInstanceof = true;
+        }
+        if (!userInstanceof) {
+            throw new AuthenticationServiceException("retrieveUser() must return a UserInterface.");
         }
 
         try {

@@ -33,8 +33,8 @@ class AuthenticationListener extends \Phalcon\Di\Injectable
 
     public function beforeDispatch(<Event> event, <Dispatcher> dispatcher, exception)
     {
-        let this->loginManager = this->getDI()->get("security.login_manager");
-        let this->firewallName = "firewall_default";
+        //let this->loginManager = this->getDI()->get("security.login_manager");
+        //let this->firewallName = "firewall_default";
         //echo "<pre>";
         //print_r(this->getDI());
         //print_r(dispatcher);

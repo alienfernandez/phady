@@ -13,17 +13,17 @@
 
 namespace Phady\Security\Core\Exception;
 
-use Phady\Security\Core\Exception\AuthenticationException;
+use Phady\Security\Core\Exception\AccountStatusException;
 
 /**
-  * @class Phady\Security\Core\Exception\ProviderNotFoundException
+  * @class Phady\Security\Core\Exception\DisabledException
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class ProviderNotFoundException extends AuthenticationException
+class DisabledException extends AccountStatusException
 {
 
     /**
@@ -31,7 +31,7 @@ class ProviderNotFoundException extends AuthenticationException
      */
     public function getMessageKey()
     {
-        return "No authentication provider found to support the authentication token.";
+        return "Account is disabled.";
     }
 
 }

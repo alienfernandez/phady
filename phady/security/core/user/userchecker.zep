@@ -16,6 +16,10 @@ namespace Phady\Security\Core\User;
 use Phady\Security\Core\User\UserCheckerInterface;
 use Phady\Security\Core\User\UserInterface;
 use Phady\Security\Core\User\AdvancedUserInterface;
+use Phady\Security\Core\Exception\LockedException;
+use Phady\Security\Core\Exception\DisabledException;
+use Phady\Security\Core\Exception\AccountExpiredException;
+use Phady\Security\Core\Exception\CredentialsExpiredException;
 
 /**
   * @class Phady\Security\Core\User\UserChecker
@@ -32,20 +36,28 @@ class UserChecker implements UserCheckerInterface {
      */
     public function checkPreAuth(<UserInterface> user)
     {
+        var ex;
         if (user instanceof AdvancedUserInterface) {
+
             if (!user->isAccountNonLocked()) {
-                throw new \Phady\Security\Exception("User account is locked.");
+                let ex = new LockedException("User account is locked.");
+                ex->setUser(user);
+                throw ex;
             }
+
             if (!user->isEnabled()) {
-                throw new \Phady\Security\Exception("User account is disabled.");
+                let ex = new DisabledException("User account is disabled.");
+                ex->setUser(user);
+                throw ex;
             }
             if (!user->isAccountNonExpired()) {
-                throw new \Phady\Security\Exception("User account has expired.");
+                let ex = new AccountExpiredException("User account has expired.");
+                ex->setUser(user);
+                throw ex;
             }
         } else {
-            return false;
+            return;
         }
-        return true;
     }
 
     /**
@@ -55,11 +67,10 @@ class UserChecker implements UserCheckerInterface {
     {
         if (user instanceof AdvancedUserInterface) {
             if (!user->isCredentialsNonExpired()) {
-                throw new \Phady\Security\Exception("User credentials have expired.");
+                throw new CredentialsExpiredException("User credentials have expired.");
             }
         }else {
-            return false;
+            return;
         }
-        return true;
     }
 }

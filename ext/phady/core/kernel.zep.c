@@ -27,6 +27,7 @@
 #include "ext/phalcon/phalcon/di/factorydefault.zep.h"
 #include "ext/phalcon/phalcon/di/factorydefault/cli.zep.h"
 #include "ext/phalcon/phalcon/loader.zep.h"
+#include "ext/phalcon/phalcon/events/manager.zep.h"
 
 
 /**
@@ -304,7 +305,7 @@ PHP_METHOD(Phady_Core_Kernel, validateExternalLibrary) {
 
 	ZEPHIR_SINIT_VAR(_0);
 	ZVAL_STRING(&_0, "phalcon", 0);
-	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", NULL, 6, &_0);
+	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", NULL, 7, &_0);
 	zephir_check_call_status();
 	if (!zephir_is_true(_1)) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phady_exception_ce, "Phalcon extension isn\\'t installed, follow these instructions to install it: http://docs.phalconphp.com/en/latest/reference/install.html", "phady/core/kernel.zep", 198);
@@ -334,7 +335,7 @@ PHP_METHOD(Phady_Core_Kernel, readConfigFiles) {
 	ZEPHIR_CONCAT_VS(securityFile, _1, "/config/security.yml");
 	ZEPHIR_SINIT_VAR(_2);
 	ZVAL_STRING(&_2, "yaml", 0);
-	ZEPHIR_CALL_FUNCTION(&_3, "extension_loaded", NULL, 6, &_2);
+	ZEPHIR_CALL_FUNCTION(&_3, "extension_loaded", NULL, 7, &_2);
 	zephir_check_call_status();
 	if (!zephir_is_true(_3)) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phady_exception_ce, "Yaml extension isn\\'t installed.", "phady/core/kernel.zep", 211);
@@ -348,10 +349,10 @@ PHP_METHOD(Phady_Core_Kernel, readConfigFiles) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phady_exception_ce, "Security file isn\\'t found.", "phady/core/kernel.zep", 218);
 		return;
 	}
-	ZEPHIR_CALL_CE_STATIC(&_4, phady_config_yaml_ce, "parse", &_5, 7, configFile);
+	ZEPHIR_CALL_CE_STATIC(&_4, phady_config_yaml_ce, "parse", &_5, 8, configFile);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("config"), _4 TSRMLS_CC);
-	ZEPHIR_CALL_CE_STATIC(&_6, phady_config_yaml_ce, "parse", &_5, 7, securityFile);
+	ZEPHIR_CALL_CE_STATIC(&_6, phady_config_yaml_ce, "parse", &_5, 8, securityFile);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("security"), _6 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
@@ -378,9 +379,9 @@ PHP_METHOD(Phady_Core_Kernel, initializeNamespace) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("scope"), PH_NOISY_CC);
 	_1 = zephir_fetch_nproperty_this(this_ptr, SL("rootDir"), PH_NOISY_CC);
 	_2 = zephir_fetch_nproperty_this(this_ptr, SL("modules"), PH_NOISY_CC);
-	ZEPHIR_CALL_METHOD(NULL, nsCore, "__construct", NULL, 8, _0, _1, _2);
+	ZEPHIR_CALL_METHOD(NULL, nsCore, "__construct", NULL, 9, _0, _1, _2);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&_3, nsCore, "getallnamespaceapp", NULL, 9);
+	ZEPHIR_CALL_METHOD(&_3, nsCore, "getallnamespaceapp", NULL, 10);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(NULL, loader, "registernamespaces", NULL, 0, _3);
 	zephir_check_call_status();
@@ -397,7 +398,7 @@ PHP_METHOD(Phady_Core_Kernel, initializeNamespace) {
 PHP_METHOD(Phady_Core_Kernel, initializeDefaultService) {
 
 	int _1, _3, _5, _7, _9, ZEPHIR_LAST_CALL_STATUS;
-	zval *di, *config = NULL, *securityConfig, *_0, *_SERVER, *_2, *_4, *_6, *_8, *_10, *_11, *_12 = NULL, *_13 = NULL, *_14, *_15 = NULL, *_16, *_17 = NULL, *_18 = NULL, *_19, *_20, *_21 = NULL, *_22, *_23 = NULL, *_24, *_25 = NULL, *_26, *_27, *securityListener;
+	zval *di, *config = NULL, *securityConfig, *_0, *_SERVER, *_2, *_4, *_6, *_8, *_10, *_11, *_12 = NULL, *_13 = NULL, *_14, *_15 = NULL, *_16, *_17 = NULL, *_18, *_19 = NULL, *_20 = NULL, *eventsManager, *_21 = NULL, *_22, *_23 = NULL, *_24, *_25 = NULL, *_26 = NULL, *_27 = NULL, *_28 = NULL, *_29, *_30 = NULL, *_31, *_32 = NULL, *_33, *_34 = NULL, *_35, *_36, *_37, *securityListener;
 
 	ZEPHIR_MM_GROW();
 	zephir_get_global(&_SERVER, SS("_SERVER") TSRMLS_CC);
@@ -460,6 +461,60 @@ PHP_METHOD(Phady_Core_Kernel, initializeDefaultService) {
 		ZEPHIR_CALL_METHOD(NULL, _14, "setshared", NULL, 0, _15, _13);
 		zephir_check_temp_parameter(_15);
 		zephir_check_call_status();
+		_16 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
+		ZEPHIR_INIT_NVAR(_15);
+		ZVAL_STRING(_15, "dispatcher", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_CALL_METHOD(&_17, _16, "has", NULL, 0, _15);
+		zephir_check_temp_parameter(_15);
+		zephir_check_call_status();
+		if (zephir_is_true(_17)) {
+			_18 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
+			ZEPHIR_INIT_NVAR(_15);
+			ZVAL_STRING(_15, "dispatcher", ZEPHIR_TEMP_PARAM_COPY);
+			ZEPHIR_CALL_METHOD(&_19, _18, "get", NULL, 0, _15);
+			zephir_check_temp_parameter(_15);
+			zephir_check_call_status();
+			ZEPHIR_CALL_METHOD(&_20, _19, "geteventsmanager", NULL, 0);
+			zephir_check_call_status();
+			if (!zephir_is_true(_20)) {
+				ZEPHIR_INIT_VAR(eventsManager);
+				object_init_ex(eventsManager, phalcon_events_manager_ce);
+				if (zephir_has_constructor(eventsManager TSRMLS_CC)) {
+					ZEPHIR_CALL_METHOD(NULL, eventsManager, "__construct", NULL, 0);
+					zephir_check_call_status();
+				}
+				ZEPHIR_INIT_NVAR(_15);
+				object_init_ex(_15, phady_security_core_authentication_eventlistener_authenticationlistener_ce);
+				if (zephir_has_constructor(_15 TSRMLS_CC)) {
+					ZEPHIR_CALL_METHOD(NULL, _15, "__construct", NULL, 0);
+					zephir_check_call_status();
+				}
+				ZEPHIR_INIT_VAR(_21);
+				ZVAL_STRING(_21, "dispatch:beforeDispatch", ZEPHIR_TEMP_PARAM_COPY);
+				ZEPHIR_CALL_METHOD(NULL, eventsManager, "attach", NULL, 0, _21, _15);
+				zephir_check_temp_parameter(_21);
+				zephir_check_call_status();
+				_22 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
+				ZEPHIR_INIT_NVAR(_21);
+				ZVAL_STRING(_21, "dispatcher", ZEPHIR_TEMP_PARAM_COPY);
+				ZEPHIR_CALL_METHOD(&_23, _22, "get", NULL, 0, _21);
+				zephir_check_temp_parameter(_21);
+				zephir_check_call_status();
+				ZEPHIR_CALL_METHOD(NULL, _23, "seteventsmanager", NULL, 0, eventsManager);
+				zephir_check_call_status();
+				_24 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
+				ZEPHIR_INIT_NVAR(_21);
+				ZVAL_STRING(_21, "dispatcher", ZEPHIR_TEMP_PARAM_COPY);
+				ZEPHIR_CALL_METHOD(&_25, _24, "get", NULL, 0, _21);
+				zephir_check_temp_parameter(_21);
+				zephir_check_call_status();
+				ZEPHIR_INIT_NVAR(_21);
+				ZVAL_STRING(_21, "dispatch:beforeDispatch", ZEPHIR_TEMP_PARAM_COPY);
+				ZEPHIR_CALL_METHOD(NULL, eventsManager, "fire", NULL, 0, _21, _25);
+				zephir_check_temp_parameter(_21);
+				zephir_check_call_status();
+			}
+		}
 	}
 	_11 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
 	ZEPHIR_INIT_NVAR(_12);
@@ -483,63 +538,98 @@ PHP_METHOD(Phady_Core_Kernel, initializeDefaultService) {
 	ZEPHIR_INIT_NVAR(_15);
 	ZEPHIR_INIT_NVAR(_15);
 	zephir_create_closure_ex(_15, NULL, phady_4__closure_ce, SS("__invoke") TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_17);
-	ZVAL_STRING(_17, "volt", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_VAR(_18);
-	ZVAL_BOOL(_18, 1);
-	ZEPHIR_CALL_METHOD(NULL, _16, "set", NULL, 0, _17, _15, _18);
-	zephir_check_temp_parameter(_17);
-	zephir_check_call_status();
-	_19 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
-	ZEPHIR_INIT_NVAR(_17);
-	ZEPHIR_INIT_NVAR(_17);
-	zephir_create_closure_ex(_17, NULL, phady_5__closure_ce, SS("__invoke") TSRMLS_CC);
-	ZEPHIR_INIT_NVAR(_18);
-	ZVAL_STRING(_18, "flash", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, _19, "set", NULL, 0, _18, _17);
-	zephir_check_temp_parameter(_18);
-	zephir_check_call_status();
-	_20 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
-	ZEPHIR_INIT_NVAR(_18);
-	ZEPHIR_INIT_NVAR(_18);
-	zephir_create_closure_ex(_18, NULL, phady_6__closure_ce, SS("__invoke") TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_21);
-	ZVAL_STRING(_21, "parameters", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, _20, "set", NULL, 0, _21, _18);
+	ZEPHIR_INIT_NVAR(_21);
+	ZVAL_STRING(_21, "volt", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_INIT_VAR(_26);
+	ZVAL_BOOL(_26, 1);
+	ZEPHIR_CALL_METHOD(NULL, _16, "set", NULL, 0, _21, _15, _26);
 	zephir_check_temp_parameter(_21);
 	zephir_check_call_status();
+	_18 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
+	ZEPHIR_INIT_NVAR(_21);
+	ZEPHIR_INIT_NVAR(_21);
+	zephir_create_closure_ex(_21, NULL, phady_5__closure_ce, SS("__invoke") TSRMLS_CC);
+	ZEPHIR_INIT_NVAR(_26);
+	ZVAL_STRING(_26, "flash", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(NULL, _18, "set", NULL, 0, _26, _21);
+	zephir_check_temp_parameter(_26);
+	zephir_check_call_status();
 	_22 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
-	ZEPHIR_INIT_NVAR(_21);
-	ZEPHIR_INIT_NVAR(_21);
-	zephir_create_closure_ex(_21, NULL, phady_7__closure_ce, SS("__invoke") TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_23);
-	ZVAL_STRING(_23, "cache", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, _22, "set", NULL, 0, _23, _21);
-	zephir_check_temp_parameter(_23);
-	zephir_check_call_status();
-	_24 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
-	ZEPHIR_INIT_NVAR(_23);
-	ZEPHIR_INIT_NVAR(_23);
-	zephir_create_closure_ex(_23, NULL, phady_8__closure_ce, SS("__invoke") TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_25);
-	ZVAL_STRING(_25, "cookies", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, _24, "set", NULL, 0, _25, _23);
-	zephir_check_temp_parameter(_25);
-	zephir_check_call_status();
-	_26 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
-	ZEPHIR_INIT_NVAR(_25);
-	ZEPHIR_INIT_NVAR(_25);
-	zephir_create_closure_ex(_25, NULL, phady_9__closure_ce, SS("__invoke") TSRMLS_CC);
+	ZEPHIR_INIT_NVAR(_26);
+	ZEPHIR_INIT_NVAR(_26);
+	zephir_create_closure_ex(_26, NULL, phady_6__closure_ce, SS("__invoke") TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_27);
-	ZVAL_STRING(_27, "registry", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, _26, "set", NULL, 0, _27, _25);
+	ZVAL_STRING(_27, "parameters", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(NULL, _22, "set", NULL, 0, _27, _26);
 	zephir_check_temp_parameter(_27);
 	zephir_check_call_status();
+	_24 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
+	ZEPHIR_INIT_NVAR(_27);
+	ZEPHIR_INIT_NVAR(_27);
+	zephir_create_closure_ex(_27, NULL, phady_7__closure_ce, SS("__invoke") TSRMLS_CC);
+	ZEPHIR_INIT_VAR(_28);
+	ZVAL_STRING(_28, "cache", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(NULL, _24, "set", NULL, 0, _28, _27);
+	zephir_check_temp_parameter(_28);
+	zephir_check_call_status();
+	_29 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
+	ZEPHIR_INIT_NVAR(_28);
+	ZEPHIR_INIT_NVAR(_28);
+	zephir_create_closure_ex(_28, NULL, phady_8__closure_ce, SS("__invoke") TSRMLS_CC);
+	ZEPHIR_INIT_VAR(_30);
+	ZVAL_STRING(_30, "cookies", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(NULL, _29, "set", NULL, 0, _30, _28);
+	zephir_check_temp_parameter(_30);
+	zephir_check_call_status();
+	_31 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
+	ZEPHIR_INIT_NVAR(_30);
+	ZEPHIR_INIT_NVAR(_30);
+	zephir_create_closure_ex(_30, NULL, phady_9__closure_ce, SS("__invoke") TSRMLS_CC);
+	ZEPHIR_INIT_VAR(_32);
+	ZVAL_STRING(_32, "registry", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(NULL, _31, "set", NULL, 0, _32, _30);
+	zephir_check_temp_parameter(_32);
+	zephir_check_call_status();
+	_33 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
+	ZEPHIR_INIT_NVAR(_32);
+	ZEPHIR_INIT_NVAR(_32);
+	zephir_create_closure_ex(_32, NULL, phady_10__closure_ce, SS("__invoke") TSRMLS_CC);
+	ZEPHIR_INIT_VAR(_34);
+	ZVAL_STRING(_34, "session", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(NULL, _33, "set", NULL, 0, _34, _32);
+	zephir_check_temp_parameter(_34);
+	zephir_check_call_status();
+	_35 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
+	ZEPHIR_INIT_NVAR(_34);
+	ZVAL_STRING(_34, "session", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(&_17, _35, "has", NULL, 0, _34);
+	zephir_check_temp_parameter(_34);
+	zephir_check_call_status();
+	if (zephir_is_true(_17)) {
+		_36 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
+		ZEPHIR_INIT_NVAR(_34);
+		ZVAL_STRING(_34, "session", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_CALL_METHOD(&_19, _36, "get", NULL, 0, _34);
+		zephir_check_temp_parameter(_34);
+		zephir_check_call_status();
+		ZEPHIR_CALL_METHOD(&_20, _19, "isstarted", NULL, 0);
+		zephir_check_call_status();
+		if (!zephir_is_true(_20)) {
+			_37 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
+			ZEPHIR_INIT_NVAR(_34);
+			ZVAL_STRING(_34, "session", ZEPHIR_TEMP_PARAM_COPY);
+			ZEPHIR_CALL_METHOD(&_23, _37, "get", NULL, 0, _34);
+			zephir_check_temp_parameter(_34);
+			zephir_check_call_status();
+			ZEPHIR_CALL_METHOD(NULL, _23, "start", NULL, 0);
+			zephir_check_call_status();
+		}
+	}
 	ZEPHIR_INIT_VAR(securityListener);
 	object_init_ex(securityListener, phady_security_eventlistener_securitylistener_ce);
-	ZEPHIR_CALL_METHOD(NULL, securityListener, "__construct", NULL, 10);
+	ZEPHIR_CALL_METHOD(NULL, securityListener, "__construct", NULL, 11);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, securityListener, "addsecuritylisteners", NULL, 11);
+	ZEPHIR_CALL_METHOD(NULL, securityListener, "addsecuritylisteners", NULL, 12);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 
@@ -562,20 +652,20 @@ PHP_METHOD(Phady_Core_Kernel, getCoreParameters) {
 	ZEPHIR_INIT_VAR(modules);
 	array_init(modules);
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("modules"), PH_NOISY_CC);
-	zephir_is_iterable(_0, &_2, &_1, 0, 0, "phady/core/kernel.zep", 396);
+	zephir_is_iterable(_0, &_2, &_1, 0, 0, "phady/core/kernel.zep", 406);
 	for (
 	  ; zephir_hash_get_current_data_ex(_2, (void**) &_3, &_1) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_2, &_1)
 	) {
 		ZEPHIR_GET_HVALUE(module, _3);
-		zephir_is_iterable(module, &_5, &_4, 0, 0, "phady/core/kernel.zep", 395);
+		zephir_is_iterable(module, &_5, &_4, 0, 0, "phady/core/kernel.zep", 405);
 		for (
 		  ; zephir_hash_get_current_data_ex(_5, (void**) &_6, &_4) == SUCCESS
 		  ; zephir_hash_move_forward_ex(_5, &_4)
 		) {
 			ZEPHIR_GET_HMKEY(name, _5, _4);
 			ZEPHIR_GET_HVALUE(data, _6);
-			zephir_array_fetch_string(&_7, data, SL("className"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 393 TSRMLS_CC);
+			zephir_array_fetch_string(&_7, data, SL("className"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 403 TSRMLS_CC);
 			zephir_array_update_zval(&modules, name, &_7, PH_COPY | PH_SEPARATE);
 		}
 	}
@@ -593,117 +683,117 @@ PHP_METHOD(Phady_Core_Kernel, getCoreParameters) {
 	}
 	_8 = zephir_fetch_nproperty_this(this_ptr, SL("scope"), PH_NOISY_CC);
 	if (ZEPHIR_IS_STRING(_8, "mvc")) {
-		ZEPHIR_CALL_METHOD(&_9, tools, "gethttphost", NULL, 12);
+		ZEPHIR_CALL_METHOD(&_9, tools, "gethttphost", NULL, 13);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(_10);
 		ZVAL_STRING(_10, "http_host", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _9);
+		ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, _9);
 		zephir_check_temp_parameter(_10);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_11, tools, "getrequestprotocol", NULL, 14);
+		ZEPHIR_CALL_METHOD(&_11, tools, "getrequestprotocol", NULL, 15);
 		zephir_check_call_status();
 		ZEPHIR_INIT_NVAR(_10);
 		ZVAL_STRING(_10, "request_protocol", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _11);
+		ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, _11);
 		zephir_check_temp_parameter(_10);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_12, tools, "getrequestprotocol", NULL, 14);
+		ZEPHIR_CALL_METHOD(&_12, tools, "getrequestprotocol", NULL, 15);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_13, tools, "gethttphost", NULL, 12);
+		ZEPHIR_CALL_METHOD(&_13, tools, "gethttphost", NULL, 13);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(url);
 		ZEPHIR_CONCAT_VSV(url, _12, "://", _13);
 		ZEPHIR_INIT_NVAR(_10);
 		ZVAL_STRING(_10, "url", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, url);
+		ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, url);
 		zephir_check_temp_parameter(_10);
 		zephir_check_call_status();
 	}
 	_14 = zephir_fetch_nproperty_this(this_ptr, SL("rootDir"), PH_NOISY_CC);
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "root_dir", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _14);
+	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, _14);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	_15 = zephir_fetch_nproperty_this(this_ptr, SL("environment"), PH_NOISY_CC);
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "environment", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _15);
+	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, _15);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	_16 = zephir_fetch_nproperty_this(this_ptr, SL("debug"), PH_NOISY_CC);
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "debug", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _16);
+	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, _16);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_9, this_ptr, "getcachedir", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "cache_dir", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _9);
+	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, _9);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_11, this_ptr, "getlogdir", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "log_dir", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _11);
+	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, _11);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "modules", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, modules);
+	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, modules);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_12, this_ptr, "getcharset", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "charset", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _12);
+	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, _12);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	_17 = zephir_fetch_nproperty_this(this_ptr, SL("config"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_7, _17, SL("framework"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 411 TSRMLS_CC);
-	zephir_array_fetch_string(&_18, _7, SL("catalog"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 411 TSRMLS_CC);
+	zephir_array_fetch_string(&_7, _17, SL("framework"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 421 TSRMLS_CC);
+	zephir_array_fetch_string(&_18, _7, SL("catalog"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 421 TSRMLS_CC);
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "catalog", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _18);
+	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, _18);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	_19 = zephir_fetch_nproperty_this(this_ptr, SL("config"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_20, _19, SL("framework"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 412 TSRMLS_CC);
-	zephir_array_fetch_string(&_21, _20, SL("datetime"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 412 TSRMLS_CC);
+	zephir_array_fetch_string(&_20, _19, SL("framework"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 422 TSRMLS_CC);
+	zephir_array_fetch_string(&_21, _20, SL("datetime"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 422 TSRMLS_CC);
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "datetime", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _21);
+	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, _21);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	_22 = zephir_fetch_nproperty_this(this_ptr, SL("config"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_23, _22, SL("mail"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 413 TSRMLS_CC);
+	zephir_array_fetch_string(&_23, _22, SL("mail"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 423 TSRMLS_CC);
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "mail", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _23);
+	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, _23);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	_24 = zephir_fetch_nproperty_this(this_ptr, SL("config"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_25, _24, SL("pdf"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 414 TSRMLS_CC);
+	zephir_array_fetch_string(&_25, _24, SL("pdf"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 424 TSRMLS_CC);
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "pdf", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _25);
+	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, _25);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	_26 = zephir_fetch_nproperty_this(this_ptr, SL("config"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_27, _26, SL("files"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 415 TSRMLS_CC);
+	zephir_array_fetch_string(&_27, _26, SL("files"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 425 TSRMLS_CC);
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "files", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _27);
+	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, _27);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	_28 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "container", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 13, _10, _28);
+	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 14, _10, _28);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	RETURN_CCTOR(parameters);
@@ -725,16 +815,16 @@ PHP_METHOD(Phady_Core_Kernel, getRootDir) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("rootDir"), PH_NOISY_CC);
 	if (Z_TYPE_P(_0) == IS_NULL) {
 		ZEPHIR_OBS_VAR(document_root);
-		zephir_array_fetch_string(&document_root, _SERVER, SL("DOCUMENT_ROOT"), PH_NOISY, "phady/core/kernel.zep", 430 TSRMLS_CC);
+		zephir_array_fetch_string(&document_root, _SERVER, SL("DOCUMENT_ROOT"), PH_NOISY, "phady/core/kernel.zep", 440 TSRMLS_CC);
 		ZEPHIR_INIT_VAR(document_root_spl);
 		zephir_fast_explode_str(document_root_spl, SL("web"), document_root, LONG_MAX TSRMLS_CC);
 		if (zephir_fast_count_int(document_root_spl TSRMLS_CC) > 0) {
-			zephir_array_fetch_long(&_1, document_root_spl, 0, PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 433 TSRMLS_CC);
+			zephir_array_fetch_long(&_1, document_root_spl, 0, PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 443 TSRMLS_CC);
 			ZEPHIR_INIT_VAR(_2);
 			ZEPHIR_CONCAT_VS(_2, _1, "app");
 			zephir_update_property_this(this_ptr, SL("rootDir"), _2 TSRMLS_CC);
 		} else {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phady_exception_ce, "No found root directory.", "phady/core/kernel.zep", 435);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phady_exception_ce, "No found root directory.", "phady/core/kernel.zep", 445);
 			return;
 		}
 	}
@@ -772,20 +862,20 @@ PHP_METHOD(Phady_Core_Kernel, setEnvironment) {
 	if (ZEPHIR_IS_STRING(environment, "dev")) {
 		ZEPHIR_SINIT_VAR(_0);
 		ZVAL_LONG(&_0, 32767);
-		ZEPHIR_CALL_FUNCTION(NULL, "error_reporting", NULL, 15, &_0);
+		ZEPHIR_CALL_FUNCTION(NULL, "error_reporting", NULL, 16, &_0);
 		zephir_check_call_status();
 		ZEPHIR_SINIT_NVAR(_0);
 		ZVAL_STRING(&_0, "display_errors", 0);
 		ZEPHIR_SINIT_VAR(_1);
 		ZVAL_LONG(&_1, 1);
-		ZEPHIR_CALL_FUNCTION(NULL, "ini_set", NULL, 16, &_0, &_1);
+		ZEPHIR_CALL_FUNCTION(NULL, "ini_set", NULL, 17, &_0, &_1);
 		zephir_check_call_status();
 	} else if (ZEPHIR_IS_STRING(environment, "prod")) {
 		ZEPHIR_SINIT_NVAR(_0);
 		ZVAL_STRING(&_0, "display_errors", 0);
 		ZEPHIR_SINIT_NVAR(_1);
 		ZVAL_LONG(&_1, 0);
-		ZEPHIR_CALL_FUNCTION(NULL, "ini_set", NULL, 16, &_0, &_1);
+		ZEPHIR_CALL_FUNCTION(NULL, "ini_set", NULL, 17, &_0, &_1);
 		zephir_check_call_status();
 	}
 	zephir_update_property_this(this_ptr, SL("environment"), environment TSRMLS_CC);
@@ -954,7 +1044,7 @@ PHP_METHOD(Phady_Core_Kernel, serialize) {
 	ZEPHIR_OBS_NVAR(_1);
 	zephir_read_property_this(&_1, this_ptr, SL("debug"), PH_NOISY_CC);
 	zephir_array_fast_append(_0, _1);
-	ZEPHIR_RETURN_CALL_FUNCTION("serialize", NULL, 5, _0);
+	ZEPHIR_RETURN_CALL_FUNCTION("serialize", NULL, 1, _0);
 	zephir_check_call_status();
 	RETURN_MM();
 

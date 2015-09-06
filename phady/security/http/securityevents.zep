@@ -11,27 +11,41 @@
 +------------------------------------------------------------------------+
 */
 
-namespace Phady\Security\Core\Exception;
-
-use Phady\Security\Core\Exception\AuthenticationException;
+namespace Phady\Security\Http;
 
 /**
-  * @class Phady\Security\Core\Exception\ProviderNotFoundException
+  * @class Phady\Security\Http\SecurityEvents
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class ProviderNotFoundException extends AuthenticationException
+final class SecurityEvents
 {
+    /**
+     * The INTERACTIVE_LOGIN event occurs after a user is logged in
+     * interactively for authentication based on http, cookies or X509.
+     *
+     * The event listener method receives a
+     * Symfony\Component\Security\Http\Event\InteractiveLoginEvent instance.
+     *
+     * @Event
+     *
+     * @var string
+     */
+    const INTERACTIVE_LOGIN = "security.interactive_login";
 
     /**
-     * {@inheritdoc}
+     * The SWITCH_USER event occurs before switch to another user and
+     * before exit from an already switched user.
+     *
+     * The event listener method receives a
+     * Symfony\Component\Security\Http\Event\SwitchUserEvent instance.
+     *
+     * @Event
+     *
+     * @var string
      */
-    public function getMessageKey()
-    {
-        return "No authentication provider found to support the authentication token.";
-    }
-
+    const SWITCH_USER = "security.switch_user";
 }

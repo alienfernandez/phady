@@ -55,17 +55,20 @@ class PlaintextPasswordEncoder extends BasePasswordEncoder
      */
     public function isPasswordValid(encoded, raw, salt)
     {
+        //print_r("encoded: " . encoded . " | raw: " . raw . " | salt: " . salt );
+        //die("  .........passs......");
         var pass2;
         if (this->isPasswordTooLong(raw)) {
             return false;
         }
-
+        return this->comparePasswords(encoded, raw);
+        /*
         let pass2 = this->mergePasswordAndSalt(raw, salt);
 
         if (!this->ignorePasswordCase) {
             return this->comparePasswords(encoded, pass2);
-        }
+        }*/
 
-        return this->comparePasswords(strtolower(encoded), strtolower(pass2));
+        //return this->comparePasswords(strtolower(encoded), strtolower(pass2));
     }
 }

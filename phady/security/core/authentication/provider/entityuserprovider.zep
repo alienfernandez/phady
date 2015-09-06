@@ -36,8 +36,11 @@ class EntityUserProvider implements UserProviderInterface
 
     public function __construct(classUser, property = null, managerName = null)
     {
+        //print_r(classUser);
+        //die("eup");
         var entity;
-        let entity = new classUser;
+        //let entity = new {classUser}();
+        let entity = new {classUser}();
         let this->classUser = entity;
         let this->property = property;
     }

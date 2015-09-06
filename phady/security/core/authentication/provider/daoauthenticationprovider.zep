@@ -69,7 +69,6 @@ class DaoAuthenticationProvider extends UserAuthenticationProvider
             if ("" === presentedPassword) {
                 throw new BadCredentialsException("The presented password cannot be empty.");
             }
-
             if (!this->encoderFactory->getEncoder(user)->isPasswordValid(user->getPassword(), presentedPassword, user->getSalt())) {
                 throw new BadCredentialsException("The presented password is invalid.");
             }
@@ -90,11 +89,9 @@ class DaoAuthenticationProvider extends UserAuthenticationProvider
 
         try {
             let user = this->userProvider->loadUserByUsername(username);
-
-
             if (user instanceof UserInterface) {
                 return user;
-            }else {
+            } else {
                 throw new AuthenticationServiceException("The user provider must return a UserInterface object.");
             }
 

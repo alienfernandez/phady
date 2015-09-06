@@ -17,6 +17,7 @@ namespace Phady\Security\Core\Authentication;
 use Phady\Security\Core\Authentication\Token\TokenInterface;
 use Phady\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Phady\Security\Core\Exception\AuthenticationException;
+use Phady\Security\Core\Exception\ProviderNotFoundException;
 
 /**
   * @class Phady\Security\Core\Authentication\AuthenticationProviderManager
@@ -90,12 +91,12 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
             return result;
         }
         if (null === lastException) {
-            let lastException = new \Phady\Security\Exception(sprintf("No Authentication Provider found for token of class %s.", get_class(token)));
+            let lastException = new ProviderNotFoundException(sprintf("No Authentication Provider found for token of class %s.", get_class(token)));
         }
         if (null !== this->eventDispatcher) {
             //this->eventDispatcher->dispatch(AuthenticationEvents::AUTHENTICATION_FAILURE, new AuthenticationFailureEvent(token, lastException));
         }
-        //lastException->setToken(token);
+        lastException->setToken(token);
         throw lastException;
     }
 }

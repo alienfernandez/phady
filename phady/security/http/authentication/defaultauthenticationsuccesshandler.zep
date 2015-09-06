@@ -25,7 +25,7 @@ use Phalcon\Http\Request;
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class DefaultAuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterface {
+class DefaultAuthenticationSuccessHandler extends \Phalcon\Di\Injectable implements AuthenticationSuccessHandlerInterface {
     
     protected httpUtils;
     protected options;
@@ -54,8 +54,7 @@ class DefaultAuthenticationSuccessHandler implements AuthenticationSuccessHandle
      */
     public function onAuthenticationSuccess(<Request> request, <TokenInterface> token)
     {
-        return true;
-        //return this->httpUtils->createRedirectResponse(request, this->determineTargetUrl(request));
+        return this->getDI()->get("response")->redirect(this->determineTargetUrl(request));
     }
 
     /**
@@ -112,23 +111,11 @@ class DefaultAuthenticationSuccessHandler implements AuthenticationSuccessHandle
             return this->options["default_target_path"];
         }
 
+        /*
         let targetUrl = request->get(this->options["target_path_parameter"], null, true);
         if (targetUrl) {
             return targetUrl;
-        }
-
-        /*
-        if (null !== this->providerKey && targetUrl = request->getSession()->get("_security.".this->providerKey.".target_path")) {
-            request->getSession()->remove("_security.".this->providerKey.".target_path");
-
-            return targetUrl;
         }*/
-
-        /*
-        if (this->options["use_referer"] && (targetUrl = request->headers->get("Referer")) && targetUrl !== this->httpUtils->generateUri(request, this->options["login_path"])) {
-            return targetUrl;
-        }*/
-
         return this->options["default_target_path"];
     }
 }

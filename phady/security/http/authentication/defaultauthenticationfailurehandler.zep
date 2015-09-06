@@ -16,6 +16,7 @@ namespace Phady\Security\Http\Authentication;
 use Phady\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Phady\Security\Core\Exception\AuthenticationException;
 use Phalcon\Http\Request;
+use Phady\Security\Core\Security;
 
 /**
   * @class Phady\Security\Http\Authentication\DefaultAuthenticationFailureHandler
@@ -25,7 +26,7 @@ use Phalcon\Http\Request;
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class DefaultAuthenticationFailureHandler implements AuthenticationFailureHandlerInterface {
+class DefaultAuthenticationFailureHandler extends \Phalcon\Di\Injectable implements AuthenticationFailureHandlerInterface {
     
    protected httpKernel;
    protected httpUtils;
@@ -101,9 +102,8 @@ class DefaultAuthenticationFailureHandler implements AuthenticationFailureHandle
            //this->logger->debug("Authentication failure, redirect triggered.", ["failure_path" : this->options["failure_path"]]);
        }
 
-       //request->getSession()->set(Security::AUTHENTICATION_ERROR, exception);
+       this->getDI()->get("session")->set(Security::AUTHENTICATION_ERROR, exception);
 
-       return false;
-       //this->httpUtils->createRedirectResponse(request, this->options["failure_path"]);
+        return this->getDI()->get("response")->redirect(this->options["failure_path"]);
    }
 }

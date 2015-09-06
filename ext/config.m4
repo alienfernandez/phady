@@ -9,10 +9,11 @@ if test "$PHP_PHADY" = "yes"; then
 	fi
 
 	AC_DEFINE(HAVE_PHADY, 1, [Whether you have Phady])
-	phady_sources="phady.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c phady/common/entities/modelbase.zep.c
+	phady_sources="phady.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c phady/security/core/exception/authenticationexception.zep.c
+	phady/common/entities/modelbase.zep.c
 	phady/security/core/authentication/authenticationmanagerinterface.zep.c
-	phady/security/core/exception/authenticationexception.zep.c
 	phady/security/core/user/userinterface.zep.c
+	phady/security/core/exception/accountstatusexception.zep.c
 	phady/security/core/user/userproviderinterface.zep.c
 	phady/security/core/authentication/provider/authenticationproviderinterface.zep.c
 	phady/security/core/encoder/passwordencoderinterface.zep.c
@@ -65,14 +66,19 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/authentication/simpleauthenticatorinterface.zep.c
 	phady/security/core/authentication/token/storage/tokenstorage.zep.c
 	phady/security/core/authentication/token/usernamepasswordtoken.zep.c
+	phady/security/core/authenticationevents.zep.c
 	phady/security/core/authorization/acl.zep.c
 	phady/security/core/encoder/bcryptpasswordencoder.zep.c
 	phady/security/core/encoder/encoderawareinterface.zep.c
 	phady/security/core/encoder/encoderfactory.zep.c
 	phady/security/core/encoder/plaintextpasswordencoder.zep.c
 	phady/security/core/exception/accessdeniedexception.zep.c
+	phady/security/core/exception/accountexpiredexception.zep.c
 	phady/security/core/exception/badcredentialsexception.zep.c
+	phady/security/core/exception/credentialsexpiredexception.zep.c
+	phady/security/core/exception/disabledexception.zep.c
 	phady/security/core/exception/invalidcsrftokenexception.zep.c
+	phady/security/core/exception/lockedexception.zep.c
 	phady/security/core/exception/providernotfoundexception.zep.c
 	phady/security/core/exception/unsupporteduserexception.zep.c
 	phady/security/core/exception/usernamenotfoundexception.zep.c
@@ -82,6 +88,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/models/entities/permissions.zep.c
 	phady/security/core/models/entities/resources.zep.c
 	phady/security/core/models/entities/roles.zep.c
+	phady/security/core/models/entities/user.zep.c
 	phady/security/core/models/entities/userrole.zep.c
 	phady/security/core/models/entities/users.zep.c
 	phady/security/core/models/exception.zep.c
@@ -104,7 +111,10 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/groups/groupinterface.zep.c
 	phady/security/http/authentication/defaultauthenticationfailurehandler.zep.c
 	phady/security/http/authentication/defaultauthenticationsuccesshandler.zep.c
+	phady/security/http/event/interactiveloginevent.zep.c
 	phady/security/http/firewall/usernamepasswordformauthenticationlistener.zep.c
+	phady/security/http/securityevents.zep.c
+	phady/security/phadyuserextension.zep.c
 	phady/security/securityextension.zep.c
 	phady/util/datetime.zep.c
 	phady/util/file.zep.c
@@ -135,7 +145,9 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/18__closure.zep.c
 	phady/19__closure.zep.c
 	phady/20__closure.zep.c
-	phady/21__closure.zep.c "
+	phady/21__closure.zep.c
+	phady/22__closure.zep.c
+	phady/23__closure.zep.c "
 	PHP_NEW_EXTENSION(phady, $phady_sources, $ext_shared,, )
 	PHP_SUBST(PHADY_SHARED_LIBADD)
 
