@@ -106,7 +106,6 @@ class DefaultAuthenticationSuccessHandler extends \Phalcon\Di\Injectable impleme
      */
     protected function determineTargetUrl(<Request> request)
     {
-        var targetUrl;
         if (this->options["always_use_default_target_path"]) {
             return this->options["default_target_path"];
         }

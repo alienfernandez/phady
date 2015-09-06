@@ -11,46 +11,25 @@
 +------------------------------------------------------------------------+
 */
 
-namespace Phady\Security\Core\Role;
+namespace Phady\Security\Core\Exception;
 
-use Phady\Security\Core\Role\RoleInterface;
+use Phady\Security\Core\Exception\AuthenticationException;
 
 /**
-  * @class Phady\Security\Core\Role\Role
+  * @class Phady\Security\Core\Exception\AuthenticationCredentialsNotFoundException
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class Role implements RoleInterface
+class AuthenticationCredentialsNotFoundException extends AuthenticationException
 {
-
-    private role;
-
-    /**
-     * Constructor.
-     *
-     * @param string role The role name
-     */
-    public function __construct(role)
-    {
-        let this->role = (string) role;
-    }
-
     /**
      * {@inheritdoc}
      */
-    public function getRole() -> string
+    public function getMessageKey()
     {
-        return this->role;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString() -> string
-    {
-        return (string) this->role;
+        return "Authentication credentials could not be found.";
     }
 }

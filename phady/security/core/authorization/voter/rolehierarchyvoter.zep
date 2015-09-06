@@ -11,46 +11,36 @@
 +------------------------------------------------------------------------+
 */
 
-namespace Phady\Security\Core\Role;
+namespace Phady\Security\Core\Authorization\Voter;
 
-use Phady\Security\Core\Role\RoleInterface;
+use Phady\Security\Core\Authorization\Voter\VoterInterface;
+use Phady\Security\Core\Authorization\Voter\RoleVoter;
+use Phady\Security\Core\Authentication\Token\TokenInterface;
+use Phady\Security\Core\Role\RoleHierarchyInterface;
 
 /**
-  * @class Phady\Security\Core\Role\Role
+  * @class Phady\Security\Core\Authorization\Voter\AbstractVoter
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class Role implements RoleInterface
+class RoleHierarchyVoter extends RoleVoter
 {
+    private roleHierarchy;
 
-    private role;
-
-    /**
-     * Constructor.
-     *
-     * @param string role The role name
-     */
-    public function __construct(role)
+    public function __construct(<RoleHierarchyInterface> roleHierarchy, prefix = "ROLE_")
     {
-        let this->role = (string) role;
+        let this->roleHierarchy = roleHierarchy;
+        parent::__construct(prefix);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRole() -> string
+    protected function extractRoles(<TokenInterface> token)
     {
-        return this->role;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString() -> string
-    {
-        return (string) this->role;
+        return this->roleHierarchy->getReachableRoles(token->getRoles());
     }
 }

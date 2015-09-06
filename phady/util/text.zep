@@ -318,6 +318,41 @@ class Text
     }
 
     /**
+     * Timing attack safe string comparison
+     *
+     * @param string knownString The string of known length to compare against
+     * @param string userString   The string that the user can control
+     *
+     * @return bool true if the two strings are the same, false otherwise
+     */
+    public static function hash_equals(knownString, userString)
+    {
+        if(function_exists("hash_equals")){
+            return hash_equals(knownString, userString);
+        } else {
+            var knownLength, userLength, i, compare;
+            if(strlen(knownString) != strlen(userString)) {
+                return false;
+            } else {
+                let knownLength = self::safeStrlen(knownString);
+                let userLength = self::safeStrlen(userString);
+                if (userLength !== knownLength) {
+                    return false;
+                }
+                let compare = 0;
+                for i in reverse range(0, knownLength) {
+                    if (compare === 0){
+                        let compare = (ord(knownString[i]) ^ ord(userString[i]));
+                    }
+                }
+                return 0 === compare;
+            }
+        }
+
+    }
+
+
+    /**
      * Compares two strings.
      *
      * This method implements a constant-time algorithm to compare strings.
@@ -330,7 +365,6 @@ class Text
      */
     public static function equals(knownString, userInput)
     {
-        var knownLen, userLen, result;
         // Avoid making unnecessary duplications of secret data
         if (!is_string(knownString)) {
             let knownString = (string) knownString;
@@ -339,28 +373,7 @@ class Text
         if (!is_string(userInput)) {
             let userInput = (string) userInput;
         }
-
-        if (function_exists("hash_equals")) {
-            return hash_equals(knownString, userInput);
-        }
-
-        let knownLen = self::safeStrlen(knownString);
-        let userLen = self::safeStrlen(userInput);
-
-        if (userLen !== knownLen) {
-            return false;
-        }
-
-        let result = 0;
-        /*for i in range(0, knownLen) {
-            if (result === 0){
-                let result = (ord(knownString[i]) ^ ord(userInput[i]));
-            }
-        }*/
-
-        // They are only identical strings if result is exactly 0...
-        //return 0 === result;
-        return knownString === userInput;
+        return self::hash_equals(knownString, userInput);
     }
     
 

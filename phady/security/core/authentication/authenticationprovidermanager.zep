@@ -80,7 +80,6 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
                 let lastException = e;
             }
         }
-
         if (null !== result) {
             if (true === this->eraseCredentials) {
                 result->eraseCredentials();

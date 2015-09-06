@@ -11,46 +11,28 @@
 +------------------------------------------------------------------------+
 */
 
-namespace Phady\Security\Core\Role;
+namespace Phady\Http;
 
-use Phady\Security\Core\Role\RoleInterface;
+use Phalcon\Http\Request;
 
 /**
-  * @class Phady\Security\Core\Role\Role
+  * @class Phady\Http\RequestMatcherInterface
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class Role implements RoleInterface
+interface RequestMatcherInterface
 {
-
-    private role;
-
     /**
-     * Constructor.
+     * Decides whether the rule(s) implemented by the strategy matches the supplied request.
      *
-     * @param string role The role name
+     * @param Request $request The request to check for a match
+     *
+     * @return bool true if the request matches, false otherwise
+     *
+     * @api
      */
-    public function __construct(role)
-    {
-        let this->role = (string) role;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRole() -> string
-    {
-        return this->role;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString() -> string
-    {
-        return (string) this->role;
-    }
+    public function matches(<Request> request);
 }

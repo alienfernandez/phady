@@ -125,14 +125,14 @@ PHP_METHOD(Phady_Report_Excel_Template_ExcelMultiTable, getColumnLetter) {
 	ZVAL_STRING(&_0, "A", 0);
 	ZEPHIR_SINIT_VAR(_1);
 	ZVAL_STRING(&_1, "Z", 0);
-	ZEPHIR_CALL_FUNCTION(&_2, "range", &_3, 51, &_0, &_1);
+	ZEPHIR_CALL_FUNCTION(&_2, "range", &_3, 57, &_0, &_1);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("letters"), _2 TSRMLS_CC);
 	ZEPHIR_SINIT_NVAR(_0);
 	ZVAL_STRING(&_0, "A", 0);
 	ZEPHIR_SINIT_NVAR(_1);
 	ZVAL_STRING(&_1, "D", 0);
-	ZEPHIR_CALL_FUNCTION(&_4, "range", &_3, 51, &_0, &_1);
+	ZEPHIR_CALL_FUNCTION(&_4, "range", &_3, 57, &_0, &_1);
 	zephir_check_call_status();
 	zephir_is_iterable(_4, &_6, &_5, 0, 0, "phady/report/excel/template/excelmultitable.zep", 80);
 	for (
@@ -144,7 +144,7 @@ PHP_METHOD(Phady_Report_Excel_Template_ExcelMultiTable, getColumnLetter) {
 		ZVAL_STRING(&_0, "A", 0);
 		ZEPHIR_SINIT_NVAR(_1);
 		ZVAL_STRING(&_1, "Z", 0);
-		ZEPHIR_CALL_FUNCTION(&_8, "range", &_3, 51, &_0, &_1);
+		ZEPHIR_CALL_FUNCTION(&_8, "range", &_3, 57, &_0, &_1);
 		zephir_check_call_status();
 		zephir_is_iterable(_8, &_10, &_9, 0, 0, "phady/report/excel/template/excelmultitable.zep", 79);
 		for (

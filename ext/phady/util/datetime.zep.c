@@ -103,7 +103,7 @@ PHP_METHOD(Phady_Util_DateTime, getDateByLanguage) {
 
 	ZEPHIR_SINIT_VAR(_0);
 	ZVAL_LONG(&_0, 6);
-	ZEPHIR_CALL_FUNCTION(NULL, "setlocale", NULL, 98, &_0, language);
+	ZEPHIR_CALL_FUNCTION(NULL, "setlocale", NULL, 110, &_0, language);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(date);
 	object_init_ex(date, php_date_get_date_ce());
@@ -112,10 +112,10 @@ PHP_METHOD(Phady_Util_DateTime, getDateByLanguage) {
 	ZEPHIR_INIT_VAR(_1);
 	ZEPHIR_CALL_METHOD(&_2, date, "gettimestamp", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_3, "strftime", NULL, 99, format, _2);
+	ZEPHIR_CALL_FUNCTION(&_3, "strftime", NULL, 111, format, _2);
 	zephir_check_call_status();
 	zephir_ucfirst(_1, _3);
-	ZEPHIR_RETURN_CALL_FUNCTION("utf8_encode", NULL, 100, _1);
+	ZEPHIR_RETURN_CALL_FUNCTION("utf8_encode", NULL, 112, _1);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -200,7 +200,7 @@ PHP_METHOD(Phady_Util_DateTime, getDateMoment) {
 			ZEPHIR_CPY_WRT(dayStr, _6);
 		}
 	}
-	ZEPHIR_RETURN_CALL_FUNCTION("utf8_decode", NULL, 101, dayStr);
+	ZEPHIR_RETURN_CALL_FUNCTION("utf8_decode", NULL, 113, dayStr);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -347,9 +347,9 @@ PHP_METHOD(Phady_Util_DateTime, getWeekdaysInMonth) {
 			ZVAL_LONG(&_8, month);
 			ZEPHIR_SINIT_NVAR(_9);
 			ZVAL_LONG(&_9, year);
-			ZEPHIR_CALL_FUNCTION(&time, "mktime", &_10, 102, &_5, &_6, &_7, &_8, i, &_9);
+			ZEPHIR_CALL_FUNCTION(&time, "mktime", &_10, 114, &_5, &_6, &_7, &_8, i, &_9);
 			zephir_check_call_status();
-			ZEPHIR_CALL_FUNCTION(&tDate, "getdate", &_11, 103, time);
+			ZEPHIR_CALL_FUNCTION(&tDate, "getdate", &_11, 115, time);
 			zephir_check_call_status();
 			zephir_array_fetch_string(&_12, tDate, SL("wday"), PH_NOISY | PH_READONLY, "phady/util/datetime.zep", 132 TSRMLS_CC);
 			zephir_array_update_zval(&weekdays, i, &_12, PH_COPY | PH_SEPARATE);

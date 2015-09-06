@@ -11,46 +11,46 @@
 +------------------------------------------------------------------------+
 */
 
-namespace Phady\Security\Core\Role;
+namespace Phady\Security\Http;
 
-use Phady\Security\Core\Role\RoleInterface;
+use Phady\Http\RequestMatcherInterface;
+use Phalcon\Http\Request;
+use Phady\Security\Http\Firewall\ExceptionListener;
 
 /**
-  * @class Phady\Security\Core\Role\Role
+  * @class Phady\Security\Http\AccessMap
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class Role implements RoleInterface
+class FirewallMap implements FirewallMapInterface
 {
-
-    private role;
+    private map = [];
 
     /**
-     * Constructor.
-     *
-     * @param string role The role name
+     * @param RequestMatcherInterface requestMatcher
+     * @param array                   listeners
+     * @param ExceptionListener       exceptionListener
      */
-    public function __construct(role)
+    public function add(<RequestMatcherInterface> requestMatcher = null, array listeners = [], <ExceptionListener> exceptionListener = null)
     {
-        let this->role = (string) role;
+        let this->map[] = [requestMatcher, listeners, exceptionListener];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRole() -> string
+    public function getListeners(<Request> request)
     {
-        return this->role;
-    }
+        var elements;
+        for elements in this->map {
+            if (null === elements[0] || elements[0]->matches(request)) {
+                return [elements[1], elements[2]];
+            }
+        }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString() -> string
-    {
-        return (string) this->role;
+        return [[], null];
     }
 }

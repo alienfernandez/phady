@@ -11,46 +11,28 @@
 +------------------------------------------------------------------------+
 */
 
-namespace Phady\Security\Core\Role;
+namespace Phady\Security\Http\EntryPoint;
 
-use Phady\Security\Core\Role\RoleInterface;
+use Phalcon\Http\Request;
+use Phady\Security\Core\Exception\AuthenticationException;
 
 /**
-  * @class Phady\Security\Core\Role\Role
+  * @class Phady\Security\Http\EntryPoint\AuthenticationEntryPointInterface
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class Role implements RoleInterface
+interface AuthenticationEntryPointInterface
 {
-
-    private role;
-
     /**
-     * Constructor.
+     * Starts the authentication scheme.
      *
-     * @param string role The role name
+     * @param Request                 request       The request that resulted in an AuthenticationException
+     * @param AuthenticationException authException The exception that started the authentication process
+     *
+     * @return Response
      */
-    public function __construct(role)
-    {
-        let this->role = (string) role;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRole() -> string
-    {
-        return this->role;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString() -> string
-    {
-        return (string) this->role;
-    }
+    public function start(<Request> request, <AuthenticationException> authException = null);
 }

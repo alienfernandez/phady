@@ -11,46 +11,25 @@
 +------------------------------------------------------------------------+
 */
 
-namespace Phady\Security\Core\Role;
+namespace Phady\Security\Http;
 
-use Phady\Security\Core\Role\RoleInterface;
-
+use Phalcon\Http\Request;
 /**
-  * @class Phady\Security\Core\Role\Role
+  * @class Phady\Security\Http\AccessMapInterface
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class Role implements RoleInterface
+interface AccessMapInterface
 {
-
-    private role;
-
     /**
-     * Constructor.
+     * Returns security attributes and required channel for the supplied request.
      *
-     * @param string role The role name
+     * @param Request $request The current request
+     *
+     * @return array A tuple of security attributes and the required channel
      */
-    public function __construct(role)
-    {
-        let this->role = (string) role;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRole() -> string
-    {
-        return this->role;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString() -> string
-    {
-        return (string) this->role;
-    }
+    public function getPatterns(<Request> request);
 }

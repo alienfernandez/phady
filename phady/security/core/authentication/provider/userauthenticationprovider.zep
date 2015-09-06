@@ -91,6 +91,7 @@ abstract class UserAuthenticationProvider implements AuthenticationProviderInter
             this->userChecker->checkPreAuth(user);
             this->checkAuthentication(user, token);
             this->userChecker->checkPostAuth(user);
+
         } catch BadCredentialsException, e {
             if (this->hideUserNotFoundExceptions) {
                 throw new BadCredentialsException("Bad credentials.", 0, e);

@@ -17,6 +17,7 @@ PHP_METHOD(Phady_Util_Text, tokenize);
 PHP_METHOD(Phady_Util_Text, stripos);
 PHP_METHOD(Phady_Util_Text, left);
 PHP_METHOD(Phady_Util_Text, right);
+PHP_METHOD(Phady_Util_Text, hash_equals);
 PHP_METHOD(Phady_Util_Text, equals);
 PHP_METHOD(Phady_Util_Text, safeStrlen);
 
@@ -94,6 +95,11 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_phady_util_text_right, 0, 0, 1)
 	ZEND_ARG_INFO(0, right)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phady_util_text_hash_equals, 0, 0, 2)
+	ZEND_ARG_INFO(0, knownString)
+	ZEND_ARG_INFO(0, userString)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phady_util_text_equals, 0, 0, 2)
 	ZEND_ARG_INFO(0, knownString)
 	ZEND_ARG_INFO(0, userInput)
@@ -118,6 +124,7 @@ ZEPHIR_INIT_FUNCS(phady_util_text_method_entry) {
 	PHP_ME(Phady_Util_Text, stripos, arginfo_phady_util_text_stripos, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phady_Util_Text, left, arginfo_phady_util_text_left, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phady_Util_Text, right, arginfo_phady_util_text_right, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	PHP_ME(Phady_Util_Text, hash_equals, arginfo_phady_util_text_hash_equals, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phady_Util_Text, equals, arginfo_phady_util_text_equals, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phady_Util_Text, safeStrlen, arginfo_phady_util_text_safestrlen, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_FE_END

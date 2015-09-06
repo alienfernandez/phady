@@ -53,9 +53,10 @@ class EntityUserProvider implements UserProviderInterface
         var user;
         if (null !== this->property) {
             let user = this->classUser->findFirst([this->property : username]);
+
         } else {
             if (!(this->classUser instanceof UserProviderInterface)) {
-                throw new \InvalidArgumentException(sprintf("The Doctrine repository %s must implement UserProviderInterface.", get_class(this->classUser)));
+                throw new \InvalidArgumentException(sprintf("The User Class %s must implement UserProviderInterface.", get_class(this->classUser)));
             }
 
             //user = this->repository->loadUserByUsername(username);
@@ -73,13 +74,17 @@ class EntityUserProvider implements UserProviderInterface
      */
     public function refreshUser(<UserInterface> user)
     {
-        if (!(user instanceof this->classUser)) {
+        var refreshedUser;
+        if (user instanceof this->classUser) {
+
+        }else {
             throw new UnsupportedUserException(sprintf("Instances of %s are not supported.", get_class(user)));
         }
 
         /*if (this->classUser instanceof UserProviderInterface) {
-            refreshedUser = this->repository->refreshUser(user);
-        } else {
+            let refreshedUser = this->repository->refreshUser(user);
+        }
+         else {
             // The user must be reloaded via the primary key as all other data
             // might have changed without proper persistence in the database.
             // That"s the case when the user has been changed by a form with

@@ -14,7 +14,7 @@
 namespace Phady\Security\Http\Authentication;
 
 use Phady\Security\Core\Exception\AuthenticationException;
-use \Phalcon\Http\Request;
+use Phalcon\Http\Request;
 
 /**
  * Phady\Security\Http\Authentication\AuthenticationFailureHandlerInterface

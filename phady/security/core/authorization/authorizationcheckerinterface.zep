@@ -11,46 +11,26 @@
 +------------------------------------------------------------------------+
 */
 
-namespace Phady\Security\Core\Role;
-
-use Phady\Security\Core\Role\RoleInterface;
+namespace Phady\Security\Core\Authorization;
 
 /**
-  * @class Phady\Security\Core\Role\Role
+  * @class Phady\Security\Core\Authorization\AuthorizationCheckerInterface
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class Role implements RoleInterface
+interface AuthorizationCheckerInterface
 {
-
-    private role;
-
     /**
-     * Constructor.
+     * Checks if the attributes are granted against the current authentication token and optionally supplied object.
      *
-     * @param string role The role name
+     * @param mixed $attributes
+     * @param mixed $object
+     *
+     * @return bool
      */
-    public function __construct(role)
-    {
-        let this->role = (string) role;
-    }
+    public function isGranted(attributes, objectSecure = null);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getRole() -> string
-    {
-        return this->role;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString() -> string
-    {
-        return (string) this->role;
-    }
 }
