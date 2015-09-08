@@ -11,7 +11,7 @@
 +------------------------------------------------------------------------+
 */
 
-namespace Phady\Security\Http;
+namespace Phady\Security;
 
 use Phalcon\Http\Request;
 use Phady\Security\Http\Firewall\ExceptionListener;
@@ -20,7 +20,7 @@ use Phalcon\Events\Event;
 use Phalcon\Mvc\Dispatcher;
 
 /**
-  * @class Phady\Security\Http\Firewall
+  * @class Phady\Security\Firewall
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core
@@ -58,7 +58,7 @@ class Firewall extends \Phalcon\Di\Injectable
         if (!event->isMasterRequest()) {
             return;
         }*/
-        var request, listeners, exceptionListener, listenersMap;
+        var request, listeners, exceptionListener, listenersMap, listener;
         let request = this->getDI()->get("request");
         // register listeners for this firewall
         //list(listeners, exceptionListener) = this->map->getListeners(request);
@@ -69,7 +69,7 @@ class Firewall extends \Phalcon\Di\Injectable
         }*/
 
         // initiate the listener chain
-        foreach (listenersMap[0] as listener) {
+        for listener in listenersMap[0] {
             listener->handle();
             /*
             if (event->hasResponse()) {

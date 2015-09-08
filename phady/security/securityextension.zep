@@ -216,11 +216,11 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
     private function createFirewall(id, firewall, authenticationProviders, providerIds)
     {
-        var matcher, pattern, host, methods, listeners, defaultProvider, contextKey, configuredEntryPoint;
+        var matcher, pattern, host, methods, listeners, defaultProvider, contextKey, configuredEntryPoint, createAuthListeners;
         // Matcher
         let matcher = null;
         if (isset(firewall["request_matcher"])) {
-            let matcher = new firewall["request_matcher"];
+            let matcher = firewall["request_matcher"];
         } elseif (isset(firewall["pattern"]) || isset(firewall["host"])) {
             let pattern = isset(firewall["pattern"]) ? firewall["pattern"] : null;
             let host = isset(firewall["host"]) ? firewall["host"] : null;
@@ -244,10 +244,13 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         let listeners = [];
 
         // Channel listener
-        //this->container->set("security.channel_listener", function () {
-        //    return new \Phady\Security\Http\Firewall\ChannelListener();
-        // });
-         let listeners[] = "security.channel_listener";
+        this->container->set("security.channel_listener", function () {
+            return new \Phady\Security\Http\Firewall\ChannelListener();
+        });
+        if (this->container->has("security.channel_listener")){
+            //this->container->get("security.channel_listener")->setMap()
+        }
+        let listeners[] = "security.channel_listener";
 
 
         // Determine default entry point
@@ -255,13 +258,14 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
         // Authentication listeners
         //list(authListeners, defaultEntryPoint) = this->createAuthenticationListeners(id, firewall, authenticationProviders, defaultProvider, configuredEntryPoint);
+        let createAuthListeners = this->createAuthenticationListeners(id, firewall, authenticationProviders, defaultProvider, configuredEntryPoint);
 
-        //listeners = array_merge(listeners, authListeners);
+        let listeners = array_merge(listeners, createAuthListeners[0]);;
 
         // Access listener
-        //this->container->set("security.access_listener", function () {
-        //    return new \Phady\Security\Http\Firewall\AccessListener();
-        //});
+        this->container->set("security.access_listener", function () {
+            return new \Phady\Security\Http\Firewall\AccessListener();
+        });
         let listeners[] = "security.access_listener";
 
         // Exception listener
@@ -319,10 +323,10 @@ class SecurityExtension extends \Phalcon\Di\Injectable
                     //list(provider, listenerId, defaultEntryPoint) = factory->create(id, firewall[key], userProvider, defaultEntryPoint);
                     let createFactory = factory->create(id, firewall[key], userProvider, defaultEntryPoint);
 
-                    let listeners[] = id;
-                    //let authenticationProviders[] = provider;
-                    let authenticationProviders[] = createFactory;
+                    let listeners[] = createFactory[1];
+                    let authenticationProviders[] = createFactory[0];
                     let hasListeners = true;
+                    let defaultEntryPoint = createFactory[2];
                 }
             }
         }

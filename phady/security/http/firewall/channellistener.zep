@@ -32,12 +32,12 @@ class ChannelListener extends \Phalcon\Di\Injectable implements ListenerInterfac
     private authenticationEntryPoint;
     private logger;
 
-    public function __construct(<AccessMapInterface> map, <AuthenticationEntryPointInterface> authenticationEntryPoint)
+    /*public function __construct(<AccessMapInterface> map, <AuthenticationEntryPointInterface> authenticationEntryPoint)
     {
         let this->map = map;
         let this->authenticationEntryPoint = authenticationEntryPoint;
         //let this->logger = logger;
-    }
+    }*/
 
 
     /**
