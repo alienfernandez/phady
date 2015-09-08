@@ -39,6 +39,25 @@ class ChannelListener extends \Phalcon\Di\Injectable implements ListenerInterfac
         //let this->logger = logger;
     }
 
+
+    /**
+     * Set map
+     *
+     */
+    public function setMap(<AccessMapInterface> map)
+    {
+        let this->map = map;
+    }
+
+    /**
+     * Set authenticationEntryPoint
+     *
+     */
+    public function setAuthenticationEntryPoint( <AuthenticationEntryPointInterface> authenticationEntryPoint)
+    {
+        let this->authenticationEntryPoint = authenticationEntryPoint;
+    }
+
     /**
      * Handles channel management.
      *

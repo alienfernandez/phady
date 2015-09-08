@@ -54,6 +54,7 @@ class EntityFactory extends \Phalcon\Di\Injectable implements UserProviderFactor
                         new \Phady\Security\Core\User\UserChecker(), "key",
                         _SERVER["security.encoder_factory.generic"]);
         });
+        return this->getDI()->get(id, [config]);
     }
 
     public function getKey()

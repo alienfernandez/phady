@@ -177,51 +177,40 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         let firewalls = config["firewalls"];
         let providerIds = this->createUserProviders(config);
         
-        /*let userProviders = [];
+        let userProviders = [];
         for userProviderId in providerIds {
             let userProviders[] = userProviderId;
         }
-        
 
         // load firewall map
-        mapDef = container->getDefinition("security.firewall.map");
         let map = [];
         let authenticationProviders = [];
+        var contextId, name, firewall, newFirewall, listeners, exceptionListener;
         for name, firewall in firewalls {
-            list(matcher, listeners, exceptionListener) = this->createFirewall(container, name, firewall, authenticationProviders, providerIds);
-
-            contextId = "security.firewall.map.context.".name;
-            context = container->setDefinition(contextId, new DefinitionDecorator("security.firewall.context"));
-            context
-                ->replaceArgument(0, listeners)
-                ->replaceArgument(1, exceptionListener)
-            ;
-            map[contextId] = matcher;
+            //list(matcher, listeners, exceptionListener) = this->createFirewall(container, name, firewall, authenticationProviders, providerIds);
+            let newFirewall = this->createFirewall(name, firewall, authenticationProviders, providerIds);
+            let contextId = "security.firewall.map.context.".name;
+            let listeners = newFirewall[1];
+            let exceptionListener = newFirewall[2];
+            this->container->set(contextId, function (listeners, exceptionListener) {
+                return new \Phady\Security\FirewallContext(listeners, exceptionListener);
+             });
+            //let map[contextId] = matcher;
+            let map[contextId] = newFirewall[0];
         }
-        mapDef->replaceArgument(1, map);
-        */
-        
-        //return firewalls;
-        /*
-        // make the ContextListener aware of the configured user providers
-        definition = container->getDefinition("security.context_listener");
-        arguments = definition->getArguments();
-        userProviders = [];
-        foreach (providerIds as userProviderId) {
-            userProviders[] = new Reference(userProviderId);
-        }
-        arguments[1] = userProviders;
-        definition->setArguments(arguments);
 
+        this->container->set("security.firewall.map", function (map) {
+            return new \Phady\Security\FirewallMap(map);
+         });
 
-        // add authentication providers to authentication manager
-        authenticationProviders = array_map(function (id) {
-            return new Reference(id);
-        }, array_values(array_unique(authenticationProviders)));
-        container
-            ->getDefinition("security.authentication.manager")
-            ->replaceArgument(0, authenticationProviders)
-        ;*/
+         // add authentication providers to authentication manager
+         /*authenticationProviders = array_map(function (id) {
+             return new Reference(id);
+         }, array_values(array_unique(authenticationProviders)));
+         container
+             ->getDefinition("security.authentication.manager")
+             ->replaceArgument(0, authenticationProviders)
+         ;*/
     }
 
 
@@ -255,24 +244,32 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         let listeners = [];
 
         // Channel listener
-        //let listeners[] = new Reference("security.channel_listener");
+        //this->container->set("security.channel_listener", function () {
+        //    return new \Phady\Security\Http\Firewall\ChannelListener();
+        // });
+         let listeners[] = "security.channel_listener";
+
 
         // Determine default entry point
         let configuredEntryPoint = isset(firewall["entry_point"]) ? firewall["entry_point"] : null;
 
         // Authentication listeners
-        //list(authListeners, defaultEntryPoint) = this->createAuthenticationListeners(container, id, firewall, authenticationProviders, defaultProvider, configuredEntryPoint);
+        //list(authListeners, defaultEntryPoint) = this->createAuthenticationListeners(id, firewall, authenticationProviders, defaultProvider, configuredEntryPoint);
 
         //listeners = array_merge(listeners, authListeners);
 
         // Access listener
-        //listeners[] = new Reference("security.access_listener");
+        //this->container->set("security.access_listener", function () {
+        //    return new \Phady\Security\Http\Firewall\AccessListener();
+        //});
+        let listeners[] = "security.access_listener";
 
         // Exception listener
         //exceptionListener = new Reference(this->createExceptionListener(container, firewall, id, configuredEntryPoint ?: defaultEntryPoint, firewall["stateless"]));
 
         return [matcher, listeners, null];//exceptionListener
     }
+
 
     // Parses user providers and returns an array of their ids
     private function createUserProviders(array config)
@@ -305,6 +302,58 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
         return providerIds;
     }
+
+    private function createAuthenticationListeners(id, firewall, authenticationProviders, defaultProvider, defaultEntryPoint)
+    {
+        var listeners, hasListeners, position, factory, key, userProvider, provider, listenerId, createFactory;
+        let listeners = [];
+        let hasListeners = false;
+
+        for position in this->listenerPositions {
+            for factory in this->factories[position] {
+                let key = str_replace("-", "_", factory->getKey());
+
+                if (isset(firewall[key])) {
+                    let userProvider = isset(firewall[key]["provider"]) ? this->getUserProviderId(firewall[key]["provider"]) : defaultProvider;
+
+                    //list(provider, listenerId, defaultEntryPoint) = factory->create(id, firewall[key], userProvider, defaultEntryPoint);
+                    let createFactory = factory->create(id, firewall[key], userProvider, defaultEntryPoint);
+
+                    let listeners[] = id;
+                    //let authenticationProviders[] = provider;
+                    let authenticationProviders[] = createFactory;
+                    let hasListeners = true;
+                }
+            }
+        }
+
+        // Anonymous
+        /*if (isset(firewall["anonymous"])) {
+            listenerId = "security.authentication.listener.anonymous.".id;
+            container
+                ->setDefinition(listenerId, new DefinitionDecorator("security.authentication.listener.anonymous"))
+                ->replaceArgument(1, firewall["anonymous"]["key"])
+            ;
+
+            listeners[] = new Reference(listenerId);
+
+            providerId = "security.authentication.provider.anonymous.".id;
+            container
+                ->setDefinition(providerId, new DefinitionDecorator("security.authentication.provider.anonymous"))
+                ->replaceArgument(0, firewall["anonymous"]["key"])
+            ;
+
+            authenticationProviders[] = providerId;
+            hasListeners = true;
+        }*/
+
+        if (!hasListeners) {
+            throw new InvalidConfigurationException(sprintf("No authentication listener registered for firewall %s.", id));
+        }
+
+        return [listeners, defaultEntryPoint];
+    }
+
     
     // Parses a <provider> tag and returns the id for the related user provider service
     private function createUserDaoProvider(name, provider)

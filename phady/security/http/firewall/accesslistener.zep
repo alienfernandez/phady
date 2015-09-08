@@ -38,6 +38,11 @@ class AccessListener extends \Phalcon\Di\Injectable implements ListenerInterface
     private map;
     private authManager;
 
+    public function AccessListener()
+    {
+
+    }
+
     public function __construct(<TokenStorageInterface> tokenStorage, <AccessDecisionManagerInterface> accessDecisionManager,
                                 <AccessMapInterface> map, <AuthenticationManagerInterface> authManager)
     {

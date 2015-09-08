@@ -25,6 +25,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/encoder/basepasswordencoder.zep.c
 	phady/security/core/role/roleinterface.zep.c
 	phady/security/core/user/factory/userproviderfactoryinterface.zep.c
+	phady/security/http/firewallmapinterface.zep.c
 	phady/cache/cacheinterface.zep.c
 	phady/http/requestmatcherinterface.zep.c
 	phady/messaging/adapter/messaginginterface.zep.c
@@ -40,12 +41,12 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/exception/authenticationserviceexception.zep.c
 	phady/security/core/role/role.zep.c
 	phady/security/core/user/usercheckerinterface.zep.c
+	phady/security/factory/securityfactoryinterface.zep.c
 	phady/security/http/accessmapinterface.zep.c
 	phady/security/http/authentication/authenticationfailurehandlerinterface.zep.c
 	phady/security/http/authentication/authenticationsuccesshandlerinterface.zep.c
 	phady/security/http/entrypoint/authenticationentrypointinterface.zep.c
 	phady/security/http/firewall/abstractauthenticationlistener.zep.c
-	phady/security/http/firewallmapinterface.zep.c
 	phady/cache/cachehandler.zep.c
 	phady/common/controllers/controllerbase.zep.c
 	phady/config/yaml.zep.c
@@ -124,6 +125,9 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/user/users.zep.c
 	phady/security/eventlistener/securitylistener.zep.c
 	phady/security/exception.zep.c
+	phady/security/factory/abstractfactory.zep.c
+	phady/security/firewallcontext.zep.c
+	phady/security/firewallmap.zep.c
 	phady/security/http/accessmap.zep.c
 	phady/security/http/authentication/defaultauthenticationfailurehandler.zep.c
 	phady/security/http/authentication/defaultauthenticationsuccesshandler.zep.c
@@ -171,7 +175,9 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/22__closure.zep.c
 	phady/23__closure.zep.c
 	phady/24__closure.zep.c
-	phady/25__closure.zep.c "
+	phady/25__closure.zep.c
+	phady/26__closure.zep.c
+	phady/27__closure.zep.c "
 	PHP_NEW_EXTENSION(phady, $phady_sources, $ext_shared,, )
 	PHP_SUBST(PHADY_SHARED_LIBADD)
 
