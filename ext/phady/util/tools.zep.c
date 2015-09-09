@@ -298,9 +298,9 @@ PHP_METHOD(Phady_Util_Tools, getMemoryLimit) {
 
 	ZEPHIR_SINIT_VAR(_0);
 	ZVAL_STRING(&_0, "memory_limit", 0);
-	ZEPHIR_CALL_FUNCTION(&memory_limit, "ini_get", NULL, 133, &_0);
+	ZEPHIR_CALL_FUNCTION(&memory_limit, "ini_get", NULL, 132, &_0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(NULL, "print_r", NULL, 87, memory_limit);
+	ZEPHIR_CALL_FUNCTION(NULL, "print_r", NULL, 133, memory_limit);
 	zephir_check_call_status();
 	ZEPHIR_CALL_SELF(&getOctect, "getoctets", NULL, 0, memory_limit);
 	zephir_check_call_status();
@@ -343,7 +343,7 @@ PHP_METHOD(Phady_Util_Tools, getOctets) {
 		ZVAL_STRING(_9, "/m/i", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_VAR(_10);
 		ZVAL_STRING(_10, "", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&_11, "preg_replace", NULL, 120, _9, _10, option);
+		ZEPHIR_CALL_FUNCTION(&_11, "preg_replace", NULL, 119, _9, _10, option);
 		zephir_check_temp_parameter(_9);
 		zephir_check_temp_parameter(_10);
 		zephir_check_call_status();
@@ -353,7 +353,7 @@ PHP_METHOD(Phady_Util_Tools, getOctets) {
 		ZVAL_STRING(_9, "/m/i", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_NVAR(_10);
 		ZVAL_STRING(_10, "", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&_11, "preg_replace", NULL, 120, _9, _10, option);
+		ZEPHIR_CALL_FUNCTION(&_11, "preg_replace", NULL, 119, _9, _10, option);
 		zephir_check_temp_parameter(_9);
 		zephir_check_temp_parameter(_10);
 		zephir_check_call_status();
@@ -363,7 +363,7 @@ PHP_METHOD(Phady_Util_Tools, getOctets) {
 		ZVAL_STRING(_9, "/g/i", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_NVAR(_10);
 		ZVAL_STRING(_10, "", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&_11, "preg_replace", NULL, 120, _9, _10, option);
+		ZEPHIR_CALL_FUNCTION(&_11, "preg_replace", NULL, 119, _9, _10, option);
 		zephir_check_temp_parameter(_9);
 		zephir_check_temp_parameter(_10);
 		zephir_check_call_status();

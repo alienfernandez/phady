@@ -18,7 +18,7 @@ use Phalcon\Http\Request;
 use Phady\Security\Http\Firewall\ExceptionListener;
 
 /**
-  * @class Phady\Security\Http\AccessMap
+  * @class Phady\Security\Http\FirewallMap
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core

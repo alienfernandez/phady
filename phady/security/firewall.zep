@@ -74,7 +74,7 @@ class Firewall extends \Phalcon\Di\Injectable
         // register listeners for this firewall
         //list(listeners, exceptionListener) = this->map->getListeners(request);
         let listenersMap = this->map->getListeners(request);
-        echo "<pre>"; print_r(listenersMap); die();
+        //echo "<pre>"; print_r(listenersMap); die();
 
         /*if (null !== exceptionListener) {
             this->exceptionListeners[event->getRequest()] = listenersMap[1];
@@ -83,7 +83,7 @@ class Firewall extends \Phalcon\Di\Injectable
 
         // initiate the listener chain
         for listener in listenersMap[0] {
-            listener->handle();
+            this->getDI()->get(listener)->handle();
             /*
             if (event->hasResponse()) {
                 break;

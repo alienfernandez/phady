@@ -31,9 +31,9 @@ class FirewallMap extends Injectable implements FirewallMapInterface
     protected map;
     protected container;
     
-    public function __construct(array map)
+    public function __construct(container, array map)
     {
-        let this->container = this->getDI();
+        let this->container = container;
         let this->map = map;
     }
 
@@ -42,7 +42,7 @@ class FirewallMap extends Injectable implements FirewallMapInterface
         var contextId, requestMatcher;
         for contextId, requestMatcher in this->map {
             if (null === requestMatcher || requestMatcher->matches(request)) {
-                return this->container->get(contextId);
+                return this->container->get(contextId)->getContext();
             }
         }
 

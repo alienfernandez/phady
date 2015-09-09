@@ -220,11 +220,12 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         }
 
         var firewallMapFunc, argsFM;
-        let argsFM = ["map" : map];
-        let firewallMapFunc = call_user_func_array(function(map) {
-             return new \Phady\Security\FirewallMap(map);
+        let argsFM = ["container" : this->container, "map" : map];
+        let firewallMapFunc = call_user_func_array(function(container, map) {
+             return new \Phady\Security\FirewallMap(container, map);
         }, argsFM);
         this->container->set("security.firewall.map", firewallMapFunc);
+
         if (this->container->has("security.firewall")){
             this->container->get("security.firewall")->setMap(this->container->get("security.firewall.map"));
         }
