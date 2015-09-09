@@ -474,7 +474,7 @@ PHP_METHOD(Phady_Mail_MailReader, readMessageByFilter) {
 					_8 = zephir_fetch_nproperty_this(this_ptr, SL("headers"), PH_NOISY_CC);
 					ZEPHIR_OBS_NVAR(_9);
 					zephir_read_property(&_9, _8, SL("date"), PH_NOISY_CC);
-					ZEPHIR_CALL_METHOD(&_12, this_ptr, "getrecdate", &_13, 42, _9);
+					ZEPHIR_CALL_METHOD(&_12, this_ptr, "getrecdate", &_13, 43, _9);
 					zephir_check_call_status();
 					ZEPHIR_INIT_NVAR(_10);
 					ZEPHIR_SINIT_NVAR(_11);
@@ -510,7 +510,7 @@ PHP_METHOD(Phady_Mail_MailReader, readMessageByFilter) {
 					ZEPHIR_SINIT_NVAR(_11);
 					ZVAL_LONG(&_11, userInput);
 					zephir_fast_trim(_10, &_11, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
-					ZEPHIR_CALL_METHOD(&_12, this_ptr, "containsfromaddress", &_14, 43, _9, _10);
+					ZEPHIR_CALL_METHOD(&_12, this_ptr, "containsfromaddress", &_14, 44, _9, _10);
 					zephir_check_call_status();
 					_7 = zephir_is_true(_12);
 				}
@@ -572,7 +572,7 @@ PHP_METHOD(Phady_Mail_MailReader, getRecDate) {
 	ZEPHIR_INIT_VAR(_2);
 	zephir_substr(_2, date, 5 , 20 , 0);
 	zephir_get_strval(date, _2);
-	ZEPHIR_CALL_FUNCTION(&timestamp, "strtotime", NULL, 44, date);
+	ZEPHIR_CALL_FUNCTION(&timestamp, "strtotime", NULL, 45, date);
 	zephir_check_call_status();
 	ZEPHIR_SINIT_VAR(_3);
 	ZVAL_STRING(&_3, "m-d-Y", 0);
@@ -745,11 +745,11 @@ PHP_METHOD(Phady_Mail_MailReader, getMessagePart) {
 		_10 = ZEPHIR_IS_LONG(_11, 3);
 	}
 	if (_7) {
-		ZEPHIR_CALL_FUNCTION(&_12, "quoted_printable_decode", NULL, 45, data);
+		ZEPHIR_CALL_FUNCTION(&_12, "quoted_printable_decode", NULL, 46, data);
 		zephir_check_call_status();
 		ZEPHIR_CPY_WRT(data, _12);
 	} else if (_10) {
-		ZEPHIR_CALL_FUNCTION(&_12, "base64_decode", NULL, 46, data);
+		ZEPHIR_CALL_FUNCTION(&_12, "base64_decode", NULL, 47, data);
 		zephir_check_call_status();
 		ZEPHIR_CPY_WRT(data, _12);
 	}
@@ -906,7 +906,7 @@ PHP_METHOD(Phady_Mail_MailReader, getMessagePart) {
 			ZVAL_LONG(partNoAll, ((partno * zephir_get_numberval(part2Length)) + ((zephir_get_numberval(partno2) + 1))));
 			ZEPHIR_SINIT_NVAR(_42);
 			ZVAL_LONG(&_42, messageId);
-			ZEPHIR_CALL_METHOD(NULL, this_ptr, "getmessagepart", &_43, 47, &_42, part2, partNoAll);
+			ZEPHIR_CALL_METHOD(NULL, this_ptr, "getmessagepart", &_43, 48, &_42, part2, partNoAll);
 			zephir_check_call_status();
 		}
 	}
@@ -934,7 +934,7 @@ PHP_METHOD(Phady_Mail_MailReader, parseMessage) {
 	ZVAL_LONG(_0, messageId);
 	ZEPHIR_CALL_METHOD(NULL, this_ptr, "getmessage", NULL, 0, _0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "makeresult", NULL, 48);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "makeresult", NULL, 49);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 

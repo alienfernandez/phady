@@ -172,8 +172,7 @@ class RequestMatcher implements RequestMatcherInterface
                 return false;
             }
         }
-
-        if (null !== this->path && !preg_match("{".this->path."}", rawurldecode(request->getRawBody()))) {
+        if (null !== this->path && !preg_match("{".this->path."}", rawurldecode(request->getURI()))) {
             return false;
         }
 
