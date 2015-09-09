@@ -241,10 +241,9 @@ abstract class Kernel
      *
      */
     protected function initializeDefaultService() {
-        var di, config, securityConfig;
+        var di, config;
         let di = this->container;
         let config = this->config;
-        let securityConfig = this->security;
         if (is_array(config)){
 
         }
@@ -252,14 +251,18 @@ abstract class Kernel
         //Si el ambito es de aplicacion web
         let _SERVER["rootDirOk"] = this->rootDir;
         let _SERVER["environment"] = this->environment;
-        let _SERVER["configApp"] = this->config;
-        let _SERVER["securityConfigApp"] = this->security;
-        let _SERVER["containerApp"] = this->container;
 
         //Register the security firewall
         this->container->setShared("security.firewall", function () {
             return new \Phady\Security\Firewall();
         });
+
+        //Init parameters data service
+        var parametersFunc;
+        let parametersFunc = call_user_func_array(function(parameters) {
+             return parameters;
+        }, ["parameters" : this->getCoreParameters()]);
+        this->container->set("parameters", parametersFunc);
 
         var securityListener;
         let securityListener = new \Phady\Security\EventListener\SecurityListener();
@@ -300,18 +303,20 @@ abstract class Kernel
 
 
         //Register component database service
-        this->container->set("db", function () {
-            var dbCore, exception;
-            try {
-                let dbCore = new \Phady\Db\DatabaseHandler(_SERVER["configApp"]);
-                //Get Adapter DB
-                return dbCore->getAdapter();
-            } catch Exception, exception {
-                 // handle exception
-                 echo exception->getMessage();
-                 exit();
-             }
-        });
+        var dbFunc;
+        let dbFunc = call_user_func_array(function(config) {
+             var dbCore, exception;
+             try {
+                 let dbCore = new \Phady\Db\DatabaseHandler(config);
+                 //Get Adapter DB
+                 return dbCore->getAdapter();
+             } catch Exception, exception {
+                  // handle exception
+                  echo exception->getMessage();
+                  exit();
+              }
+        }, ["config" : this->config]);
+        this->container->set("db", dbFunc);
 
         //Register component view service
         this->container->set("view", function () {
@@ -349,18 +354,14 @@ abstract class Kernel
             return flash;
         });
 
-        //Init parameters data service
-        this->container->set("parameters", function () {
-            //return this->getCoreParameters();
-            return true;
-        });
-        
-        //Init parameters data service
-        this->container->set("cache", function () {
-            var cache;
-            let cache = new \Phady\Cache\CacheHandler(_SERVER["configApp"]);
-            return cache->getAdapter();
-        });
+        //Init cache service
+        var cacheFunc;
+        let cacheFunc = call_user_func_array(function(config) {
+             var cache;
+             let cache = new \Phady\Cache\CacheHandler(config);
+             return cache->getAdapter();
+        }, ["config" : this->config]);
+        this->container->set("cache", cacheFunc);
 
         //Init cookies service
         this->container->set("cookies", function () {
@@ -425,10 +426,10 @@ abstract class Kernel
         parameters->setParameter("charset", this->getCharset());
         parameters->setParameter("catalog", this->config["framework"]["catalog"]);
         parameters->setParameter("datetime", this->config["framework"]["datetime"]);
-        parameters->setParameter("mail", this->config["mail"]);
-        parameters->setParameter("pdf", this->config["pdf"]);
-        parameters->setParameter("files", this->config["files"]);
-        //parameters->setParameter("security", this->security["security"]);
+        //parameters->setParameter("mail", this->config["mail"]);
+        //parameters->setParameter("pdf", this->config["pdf"]);
+        //parameters->setParameter("files", this->config["files"]);
+        parameters->setParameter("security", this->security["security"]);
         parameters->setParameter("container", this->container);
         return parameters;
     }

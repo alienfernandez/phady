@@ -141,10 +141,10 @@ abstract class AbstractFactory extends Injectable implements SecurityFactoryInte
         var args, listenerId, listenerFunc;
         let listenerId = this->getListenerId();
         let listenerId = listenerId . "." . id;
-        let args = ["id" : id, "config" : config, "userProvider" : userProvider, "options" : this->options];
-        let listenerFunc = call_user_func_array(function(id, config, userProviderId, options) {
-             var container, listenForm;
-             let container = _SERVER["containerApp"];
+        let args = ["id" : id, "config" : config, "userProvider" : userProvider, "options" : this->options,
+                    "container" : this->getDI()];
+        let listenerFunc = call_user_func_array(function(id, config, userProviderId, options, container) {
+             var listenForm;
 
              let listenForm = new \Phady\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener(
                      container->get("security.token_storage"), container->get("security.authentication.manager"),

@@ -61,13 +61,14 @@ class SecurityListener extends \Phalcon\Di\Injectable
         });
 
         //Register component login manager service
+        /*
         this->container->set("security.login_manager", function () {
             var loginManager, userChecker, container;
             let container = _SERVER["containerApp"];
             let userChecker = new \Phady\Security\Core\User\UserChecker();
             let loginManager = new \Phady\Security\Core\Authentication\LoginManager(container->get("security.token_storage"), userChecker, _SERVER["containerApp"]);
             return loginManager;
-        });
+        });*/
 
         let this->securityExtension = new SecurityExtension();
 

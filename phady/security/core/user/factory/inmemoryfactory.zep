@@ -16,8 +16,6 @@ namespace Phady\Security\Core\User\Factory;
 use Phady\Security\Core\User\UserProviderInterface;
 use Phady\Security\Core\User\UserInterface;
 use Phady\Security\Core\User\User as UserCore;
-use Phady\Security\Core\Exception\UsernameNotFoundException;
-use Phady\Security\Core\Exception\UnsupportedUserException;
 
 /**
   * @class Phady\Security\Core\User\Factory\InMemoryFactory
@@ -38,23 +36,26 @@ class InMemoryFactory extends \Phalcon\Di\Injectable implements UserProviderFact
     }
 
     public function create(id, config) {
-        var username, user, userId, inMemoryProvider;
-        //definition = container->setDefinition(id, new DefinitionDecorator("security.user.provider.in_memory"));
+        var memoryProviderFunc, argsProvider, argsFactory, memoryFactoryFunc;
         //"security.user.provider.in_memory.class"
+        //Register component security.user.provider.in_memory
+        let argsProvider = ["config" : config];
+        let memoryProviderFunc = call_user_func_array(function(config) {
+             return new \Phady\Security\Core\User\InMemoryUserProvider(config["users"]);
+        }, argsProvider);
+        this->getDI()->set("security.user.provider.in_memory", memoryProviderFunc);
 
-        //let this->container["security.user.provider.in_memory"] = new \Phady\Security\Core\User\InMemoryUserProvider(config["users"]);
-        this->container->set("security.user.provider.in_memory", function (config) {
-            return new \Phady\Security\Core\User\InMemoryUserProvider(config["users"]);
-        });
+        //Register component security.user.provider.in_memory
+        let argsFactory = ["config" : config, "id": id, "container" : this->getDI()];
+        let memoryFactoryFunc = call_user_func_array(function(config, id, container) {
+             return new \Phady\Security\Core\Authentication\Provider\DaoAuthenticationProvider(
+                         container->get("security.user.provider.in_memory"),
+                         new \Phady\Security\Core\User\UserChecker(), id,
+                         container->get("security.encoder_factory.generic"));
+        }, argsFactory);
+        this->getDI()->set(id, memoryFactoryFunc);
 
-        this->container->set(id, function (config) {
-            var userProvider, container;
-            let container = _SERVER["containerApp"];
-            let userProvider = new \Phady\Security\Core\User\InMemoryUserProvider(config["users"]);
-            return new \Phady\Security\Core\Authentication\Provider\DaoAuthenticationProvider(userProvider,
-                        new \Phady\Security\Core\User\UserChecker(), "key",
-                        _SERVER["security.encoder_factory.generic"]);
-        });
+        return this->getDI()->get(id);
     }
 
     public function getKey()

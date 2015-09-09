@@ -106,8 +106,8 @@ PHP_METHOD(Phady_Util_Tools, getHttpHost) {
  */
 PHP_METHOD(Phady_Util_Tools, getRequestProtocol) {
 
-	zval *_SERVER, *_1, *_2, *_4, *_6, *_8, *_9;
-	zend_bool isSecure = 0, _0, _3, _5, _7;
+	zval *_SERVER, *_1, _2, *_4, _6, *_8, _10, *_12, *_14, *_15;
+	zend_bool isSecure = 0, _0, _3, _5, _7, _9, _11, _13;
 
 	ZEPHIR_MM_GROW();
 	zephir_get_global(&_SERVER, SS("_SERVER") TSRMLS_CC);
@@ -117,36 +117,54 @@ PHP_METHOD(Phady_Util_Tools, getRequestProtocol) {
 		zephir_array_fetch_string(&_1, _SERVER, SL("HTTPS"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 66 TSRMLS_CC);
 		_0 = ZEPHIR_IS_STRING(_1, "on");
 	}
-	ZEPHIR_OBS_VAR(_2);
-	zephir_array_fetch_string(&_2, _SERVER, SL("HTTP_X_FORWARDED_PROTO"), PH_NOISY, "phady/util/tools.zep", 68 TSRMLS_CC);
-	_3 = !(ZEPHIR_IS_EMPTY(_2));
+	ZEPHIR_SINIT_VAR(_2);
+	ZVAL_STRING(&_2, "HTTP_X_FORWARDED_PROTO", 0);
+	_3 = zephir_array_key_exists(_SERVER, &_2 TSRMLS_CC);
 	if (_3) {
-		zephir_array_fetch_string(&_4, _SERVER, SL("HTTP_X_FORWARDED_PROTO"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 68 TSRMLS_CC);
-		_3 = ZEPHIR_IS_STRING(_4, "https");
+		ZEPHIR_OBS_VAR(_4);
+		zephir_array_fetch_string(&_4, _SERVER, SL("HTTP_X_FORWARDED_PROTO"), PH_NOISY, "phady/util/tools.zep", 68 TSRMLS_CC);
+		_3 = !(ZEPHIR_IS_EMPTY(_4));
 	}
 	_5 = _3;
-	if (!(_5)) {
-		ZEPHIR_OBS_VAR(_6);
-		zephir_array_fetch_string(&_6, _SERVER, SL("HTTP_X_FORWARDED_SSL"), PH_NOISY, "phady/util/tools.zep", 68 TSRMLS_CC);
-		_7 = !(ZEPHIR_IS_EMPTY(_6));
+	if (_5) {
+		ZEPHIR_SINIT_VAR(_6);
+		ZVAL_STRING(&_6, "HTTP_X_FORWARDED_PROTO", 0);
+		_7 = zephir_array_key_exists(_SERVER, &_6 TSRMLS_CC);
 		if (_7) {
-			zephir_array_fetch_string(&_8, _SERVER, SL("HTTP_X_FORWARDED_SSL"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 68 TSRMLS_CC);
-			_7 = ZEPHIR_IS_STRING(_8, "on");
+			zephir_array_fetch_string(&_8, _SERVER, SL("HTTP_X_FORWARDED_PROTO"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 69 TSRMLS_CC);
+			_7 = ZEPHIR_IS_STRING(_8, "https");
 		}
 		_5 = _7;
 	}
+	_9 = _5;
+	if (!(_9)) {
+		ZEPHIR_SINIT_VAR(_10);
+		ZVAL_STRING(&_10, "HTTP_X_FORWARDED_SSL", 0);
+		_11 = zephir_array_key_exists(_SERVER, &_10 TSRMLS_CC);
+		if (_11) {
+			ZEPHIR_OBS_VAR(_12);
+			zephir_array_fetch_string(&_12, _SERVER, SL("HTTP_X_FORWARDED_SSL"), PH_NOISY, "phady/util/tools.zep", 70 TSRMLS_CC);
+			_11 = !(ZEPHIR_IS_EMPTY(_12));
+		}
+		_13 = _11;
+		if (_13) {
+			zephir_array_fetch_string(&_14, _SERVER, SL("HTTP_X_FORWARDED_SSL"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 71 TSRMLS_CC);
+			_13 = ZEPHIR_IS_STRING(_14, "on");
+		}
+		_9 = _13;
+	}
 	if (_0) {
 		isSecure = 1;
-	} else if (_5) {
+	} else if (_9) {
 		isSecure = 1;
 	}
-	ZEPHIR_INIT_VAR(_9);
+	ZEPHIR_INIT_VAR(_15);
 	if (isSecure) {
-		ZVAL_STRING(_9, "http", 1);
+		ZVAL_STRING(_15, "http", 1);
 	} else {
-		ZVAL_STRING(_9, "https", 1);
+		ZVAL_STRING(_15, "https", 1);
 	}
-	RETURN_CCTOR(_9);
+	RETURN_CCTOR(_15);
 
 }
 
@@ -165,7 +183,7 @@ PHP_METHOD(Phady_Util_Tools, getRemoteAddr) {
 
 	_0 = zephir_array_isset_string(_SERVER, SS("HTTP_X_FORWARDED_FOR"));
 	if (_0) {
-		zephir_array_fetch_string(&_1, _SERVER, SL("HTTP_X_FORWARDED_FOR"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 83 TSRMLS_CC);
+		zephir_array_fetch_string(&_1, _SERVER, SL("HTTP_X_FORWARDED_FOR"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 86 TSRMLS_CC);
 		_0 = zephir_is_true(_1);
 	}
 	_2 = _0;
@@ -175,7 +193,7 @@ PHP_METHOD(Phady_Util_Tools, getRemoteAddr) {
 			ZEPHIR_INIT_VAR(_4);
 			ZEPHIR_INIT_VAR(_5);
 			ZEPHIR_INIT_VAR(_6);
-			zephir_array_fetch_string(&_7, _SERVER, SL("REMOTE_ADDR"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 84 TSRMLS_CC);
+			zephir_array_fetch_string(&_7, _SERVER, SL("REMOTE_ADDR"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 87 TSRMLS_CC);
 			zephir_fast_trim(_6, _7, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
 			ZEPHIR_SINIT_VAR(_8);
 			ZVAL_STRING(&_8, "/^127\\..*/i", 0);
@@ -187,7 +205,7 @@ PHP_METHOD(Phady_Util_Tools, getRemoteAddr) {
 			ZEPHIR_INIT_VAR(_10);
 			ZEPHIR_INIT_VAR(_11);
 			ZEPHIR_INIT_VAR(_12);
-			zephir_array_fetch_string(&_13, _SERVER, SL("REMOTE_ADDR"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 84 TSRMLS_CC);
+			zephir_array_fetch_string(&_13, _SERVER, SL("REMOTE_ADDR"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 87 TSRMLS_CC);
 			zephir_fast_trim(_12, _13, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
 			ZEPHIR_SINIT_VAR(_14);
 			ZVAL_STRING(&_14, "/^172\\.16.*/i", 0);
@@ -199,7 +217,7 @@ PHP_METHOD(Phady_Util_Tools, getRemoteAddr) {
 			ZEPHIR_INIT_VAR(_16);
 			ZEPHIR_INIT_VAR(_17);
 			ZEPHIR_INIT_VAR(_18);
-			zephir_array_fetch_string(&_19, _SERVER, SL("REMOTE_ADDR"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 85 TSRMLS_CC);
+			zephir_array_fetch_string(&_19, _SERVER, SL("REMOTE_ADDR"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 88 TSRMLS_CC);
 			zephir_fast_trim(_18, _19, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
 			ZEPHIR_SINIT_VAR(_20);
 			ZVAL_STRING(&_20, "/^192\\.168\\.*/i", 0);
@@ -211,7 +229,7 @@ PHP_METHOD(Phady_Util_Tools, getRemoteAddr) {
 			ZEPHIR_INIT_VAR(_22);
 			ZEPHIR_INIT_VAR(_23);
 			ZEPHIR_INIT_VAR(_24);
-			zephir_array_fetch_string(&_25, _SERVER, SL("REMOTE_ADDR"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 85 TSRMLS_CC);
+			zephir_array_fetch_string(&_25, _SERVER, SL("REMOTE_ADDR"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 88 TSRMLS_CC);
 			zephir_fast_trim(_24, _25, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
 			ZEPHIR_SINIT_VAR(_26);
 			ZVAL_STRING(&_26, "/^10\\..*/i", 0);
@@ -221,24 +239,24 @@ PHP_METHOD(Phady_Util_Tools, getRemoteAddr) {
 		_2 = _21;
 	}
 	if (_2) {
-		zephir_array_fetch_string(&_27, _SERVER, SL("HTTP_X_FORWARDED_FOR"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 87 TSRMLS_CC);
+		zephir_array_fetch_string(&_27, _SERVER, SL("HTTP_X_FORWARDED_FOR"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 90 TSRMLS_CC);
 		ZEPHIR_SINIT_VAR(_28);
 		ZVAL_STRING(&_28, ",", 0);
 		ZEPHIR_INIT_VAR(_29);
 		zephir_fast_strpos(_29, _27, &_28, 0 );
 		if (zephir_is_true(_29)) {
-			zephir_array_fetch_string(&_30, _SERVER, SL("HTTP_X_FORWARDED_FOR"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 89 TSRMLS_CC);
+			zephir_array_fetch_string(&_30, _SERVER, SL("HTTP_X_FORWARDED_FOR"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 92 TSRMLS_CC);
 			ZEPHIR_INIT_VAR(ips);
 			zephir_fast_explode_str(ips, SL(","), _30, LONG_MAX TSRMLS_CC);
 			ZEPHIR_OBS_VAR(remoteAddr);
-			zephir_array_fetch_long(&remoteAddr, ips, 0, PH_NOISY, "phady/util/tools.zep", 90 TSRMLS_CC);
+			zephir_array_fetch_long(&remoteAddr, ips, 0, PH_NOISY, "phady/util/tools.zep", 93 TSRMLS_CC);
 		} else {
 			ZEPHIR_OBS_NVAR(remoteAddr);
-			zephir_array_fetch_string(&remoteAddr, _SERVER, SL("HTTP_X_FORWARDED_FOR"), PH_NOISY, "phady/util/tools.zep", 93 TSRMLS_CC);
+			zephir_array_fetch_string(&remoteAddr, _SERVER, SL("HTTP_X_FORWARDED_FOR"), PH_NOISY, "phady/util/tools.zep", 96 TSRMLS_CC);
 		}
 	} else {
 		ZEPHIR_OBS_NVAR(remoteAddr);
-		zephir_array_fetch_string(&remoteAddr, _SERVER, SL("REMOTE_ADDR"), PH_NOISY, "phady/util/tools.zep", 96 TSRMLS_CC);
+		zephir_array_fetch_string(&remoteAddr, _SERVER, SL("REMOTE_ADDR"), PH_NOISY, "phady/util/tools.zep", 99 TSRMLS_CC);
 	}
 	RETURN_CCTOR(remoteAddr);
 
@@ -258,21 +276,21 @@ PHP_METHOD(Phady_Util_Tools, usingSecureMode) {
 	zephir_get_global(&_SERVER, SS("_SERVER") TSRMLS_CC);
 
 	if (zephir_array_isset_string(_SERVER, SS("HTTPS"))) {
-		zephir_array_fetch_string(&_0, _SERVER, SL("HTTPS"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 110 TSRMLS_CC);
+		zephir_array_fetch_string(&_0, _SERVER, SL("HTTPS"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 113 TSRMLS_CC);
 		_1 = ZEPHIR_IS_LONG(_0, 1);
 		if (!(_1)) {
 			ZEPHIR_INIT_VAR(_2);
-			zephir_array_fetch_string(&_3, _SERVER, SL("HTTPS"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 110 TSRMLS_CC);
+			zephir_array_fetch_string(&_3, _SERVER, SL("HTTPS"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 113 TSRMLS_CC);
 			zephir_fast_strtolower(_2, _3);
 			_1 = ZEPHIR_IS_STRING(_2, "on");
 		}
 		secureMode = _1;
 	} else if (zephir_array_isset_string(_SERVER, SS("SSL"))) {
-		zephir_array_fetch_string(&_0, _SERVER, SL("SSL"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 114 TSRMLS_CC);
+		zephir_array_fetch_string(&_0, _SERVER, SL("SSL"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 117 TSRMLS_CC);
 		_1 = ZEPHIR_IS_LONG(_0, 1);
 		if (!(_1)) {
 			ZEPHIR_INIT_NVAR(_2);
-			zephir_array_fetch_string(&_3, _SERVER, SL("SSL"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 114 TSRMLS_CC);
+			zephir_array_fetch_string(&_3, _SERVER, SL("SSL"), PH_NOISY | PH_READONLY, "phady/util/tools.zep", 117 TSRMLS_CC);
 			zephir_fast_strtolower(_2, _3);
 			_1 = ZEPHIR_IS_STRING(_2, "on");
 		}
@@ -419,7 +437,7 @@ PHP_METHOD(Phady_Util_Tools, getUserAgent) {
 
 	ZEPHIR_INIT_VAR(_0);
 	if (zephir_array_isset_string(_SERVER, SS("HTTP_USER_AGENT"))) {
-		zephir_array_fetch_string(&_0, _SERVER, SL("HTTP_USER_AGENT"), PH_NOISY, "phady/util/tools.zep", 178 TSRMLS_CC);
+		zephir_array_fetch_string(&_0, _SERVER, SL("HTTP_USER_AGENT"), PH_NOISY, "phady/util/tools.zep", 181 TSRMLS_CC);
 	} else {
 		ZVAL_STRING(_0, "Desconocido", 1);
 	}

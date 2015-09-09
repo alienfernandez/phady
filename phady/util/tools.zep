@@ -65,7 +65,10 @@ class Tools
         var isSecure = false;
         if (isset(_SERVER["HTTPS"]) && _SERVER["HTTPS"] == "on") {
             let isSecure = true;
-        } elseif (!empty(_SERVER["HTTP_X_FORWARDED_PROTO"]) && _SERVER["HTTP_X_FORWARDED_PROTO"] == "https" || !empty(_SERVER["HTTP_X_FORWARDED_SSL"]) && _SERVER["HTTP_X_FORWARDED_SSL"] == "on") {
+        } elseif ((array_key_exists("HTTP_X_FORWARDED_PROTO", _SERVER) && !empty(_SERVER["HTTP_X_FORWARDED_PROTO"])) &&
+                   (array_key_exists("HTTP_X_FORWARDED_PROTO", _SERVER) && _SERVER["HTTP_X_FORWARDED_PROTO"] == "https") ||
+                    (array_key_exists("HTTP_X_FORWARDED_SSL", _SERVER) && !empty(_SERVER["HTTP_X_FORWARDED_SSL"]) &&
+                    _SERVER["HTTP_X_FORWARDED_SSL"] == "on")) {
             let isSecure = true;
         }
         return isSecure ? self::REQUEST_PROTOCOL_HTTP : self::REQUEST_PROTOCOL_HTTPS;

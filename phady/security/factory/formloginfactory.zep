@@ -56,11 +56,9 @@ class FormLoginFactory extends AbstractFactory
     {
         var provider, providerFunc, args;
         let provider = "security.authentication.provider.dao.".id;
-        let args = ["id" : id, "config" : config, "userProviderId" : userProviderId];
-        let providerFunc = call_user_func_array(function(id, config, userProviderId) {
-             var authProvider, container;
-
-             let container = _SERVER["containerApp"];
+        let args = ["id" : id, "config" : config, "userProviderId" : userProviderId, "container" : this->getDI()];
+        let providerFunc = call_user_func_array(function(id, config, userProviderId, container) {
+             var authProvider;
              let authProvider = new \Phady\Security\Core\Authentication\Provider\DaoAuthenticationProvider(
                     container->get(userProviderId), new \Phady\Security\Core\User\UserChecker(), id,
                     container->get("security.encoder_factory.generic")

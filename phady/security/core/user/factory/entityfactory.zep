@@ -48,16 +48,15 @@ class EntityFactory extends \Phalcon\Di\Injectable implements UserProviderFactor
         }, args);
         this->getDI()->set("phalcon.orm.security.user.provider", ormProviderFunc);
 
-        let args = ["config" : config, "id": id];
-        let entityFactoryFunc = call_user_func_array(function(config, id) {
-             var container;
-             let container = _SERVER["containerApp"];
+        let args = ["config" : config, "id": id, "container" : this->getDI()];
+        let entityFactoryFunc = call_user_func_array(function(config, id, container) {
              return new \Phady\Security\Core\Authentication\Provider\DaoAuthenticationProvider(
                          container->get("phalcon.orm.security.user.provider"),
                          new \Phady\Security\Core\User\UserChecker(), id,
                          container->get("security.encoder_factory.generic"));
         }, args);
         this->getDI()->set(id, entityFactoryFunc);
+
         return this->getDI()->get(id);
     }
 

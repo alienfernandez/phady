@@ -34,8 +34,7 @@ class PhadyUserExtension extends \Phalcon\Di\Injectable
     public function __construct()
     {
         let this->container = this->getDI();
-        //TODO change _SERVER["securityConfigApp"]
-        this->loadPhadyUserConfig(_SERVER["securityConfigApp"]["security"]);
+        //this->loadPhadyUserConfig(["security"]);
     }
 
     public function loadPhadyUserConfig(array config)

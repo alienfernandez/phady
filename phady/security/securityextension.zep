@@ -40,6 +40,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
     public function __construct()
     {
+        var securityConfig;
         let this->container = this->getDI();
         let this->authenticationProviders = [];
         var position;
@@ -47,8 +48,8 @@ class SecurityExtension extends \Phalcon\Di\Injectable
             let this->factories[position] = [];
         }
 
-        //TODO change _SERVER["securityConfigApp"]
-        this->loadSecurityConfig(_SERVER["securityConfigApp"]["security"]);
+        let securityConfig = this->getDI()->get("parameters")->security;
+        this->loadSecurityConfig(securityConfig);
     }
 
     public function loadSecurityConfig(array config)
@@ -202,7 +203,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         let this->authenticationProviders = [];
         var contextId, name, firewall, newFirewall, listeners, exceptionListener;
         for name, firewall in firewalls {
-            //list(matcher, listeners, exceptionListener) = this->createFirewall(container, name, firewall, providerIds);
+            //list(matcher, listeners, exceptionListener) = this->createFirewall(name, firewall, providerIds);
             let newFirewall = this->createFirewall(name, firewall, providerIds);
 
             let contextId = "security.firewall.map.context.".name;
@@ -327,18 +328,15 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         }, args);
         this->container->set("security.authentication.manager", authManagerFunc);
 
-        //Register component login manager service
-        this->container->set("security.authentication.listener.form", function () {
-            var container, listenForm;
-            let container = _SERVER["containerApp"];
-
-            let listenForm = new \Phady\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener(
-                    container->get("security.token_storage"), container->get("security.authentication.manager"),
-                    "key", container->get("security.authentication.success_handler"), container->get("security.authentication.failure_handler"),
-                    [], null);
-            return listenForm;
-        });
-
+        /*var argsAuthListenForm;
+        let argsAuthListenForm = ["container" : this->container];
+        let authManagerFunc = call_user_func_array(function(container) {
+             return new \Phady\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener(
+                     container->get("security.token_storage"), container->get("security.authentication.manager"),
+                     "key", container->get("security.authentication.success_handler"), container->get("security.authentication.failure_handler"),
+                     [], null);
+        }, argsAuthListenForm);
+        this->container->set("security.authentication.listener.form", argsAuthListenForm);*/
         return providerIds;
     }
 
