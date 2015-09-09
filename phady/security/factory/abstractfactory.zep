@@ -52,9 +52,9 @@ abstract class AbstractFactory extends Injectable implements SecurityFactoryInte
     public function create(id, config, userProviderId, defaultEntryPointId)
     {
         var authProviderId, listenerId, entryPointId;
+
         // authentication provider
         let authProviderId = this->createAuthProvider(id, config, userProviderId);
-
         // authentication listener
         let listenerId = this->createListener(id, config, userProviderId);
 
@@ -138,17 +138,28 @@ abstract class AbstractFactory extends Injectable implements SecurityFactoryInte
 
     protected function createListener(id, config, userProvider)
     {
-        /*
+        var args, listenerId, listenerFunc;
         let listenerId = this->getListenerId();
-        listener = new DefinitionDecorator(listenerId);
-        listener->replaceArgument(4, id);
+        let listenerId = listenerId . "." . id;
+        let args = ["id" : id, "config" : config, "userProvider" : userProvider, "options" : this->options];
+        let listenerFunc = call_user_func_array(function(id, config, userProviderId, options) {
+             var container, listenForm;
+             let container = _SERVER["containerApp"];
+
+             let listenForm = new \Phady\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener(
+                     container->get("security.token_storage"), container->get("security.authentication.manager"),
+                     id, container->get("security.authentication.success_handler"),
+                     container->get("security.authentication.failure_handler"),
+                     array_intersect_key(config, options), null);
+             return listenForm;
+        }, args);
+        this->getDI()->set(listenerId, listenerFunc);
+        return listenerId;
+        /*
         listener->replaceArgument(5, new Reference(this->createAuthenticationSuccessHandler(container, id, config)));
         listener->replaceArgument(6, new Reference(this->createAuthenticationFailureHandler(container, id, config)));
-        listener->replaceArgument(7, array_intersect_key(config, this->options));
-
         listenerId .= ".".id;
         container->setDefinition(listenerId, listener);
-
         return listenerId;*/
     }
 

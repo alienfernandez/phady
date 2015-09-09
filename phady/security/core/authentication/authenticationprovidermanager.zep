@@ -43,6 +43,15 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
      */
     public function __construct(providers, eraseCredentials = true)
     {
+        this->setProviders(providers);
+        let this->eraseCredentials = (bool) eraseCredentials;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setProviders(providers)
+    {
         var provider;
         if (!providers) {
             throw new \InvalidArgumentException("You must at least add one authentication provider.");
@@ -53,7 +62,6 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
             }
         }
         let this->providers = providers;
-        let this->eraseCredentials = (bool) eraseCredentials;
     }
 
     /**

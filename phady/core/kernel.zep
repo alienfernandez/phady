@@ -256,6 +256,15 @@ abstract class Kernel
         let _SERVER["securityConfigApp"] = this->security;
         let _SERVER["containerApp"] = this->container;
 
+        //Register the security firewall
+        this->container->setShared("security.firewall", function () {
+            return new \Phady\Security\Firewall();
+        });
+
+        var securityListener;
+        let securityListener = new \Phady\Security\EventListener\SecurityListener();
+        securityListener->addSecurityListeners();
+
         if (this->scope == self::SCOPE_MVC) {
             this->container->set("router", function () {
                 var routeCore;
@@ -282,7 +291,7 @@ abstract class Kernel
                     /**
                      * Check if the user is allowed to access certain action using the AuthenticationListener
                      */
-                    eventsManager->attach("dispatch:beforeDispatch", new \Phady\Security\Core\Authentication\EventListener\AuthenticationListener());
+                    eventsManager->attach("dispatch:beforeDispatch", this->container->get("security.firewall"));
                     this->container->get("dispatcher")->setEventsManager(eventsManager);
                     eventsManager->fire("dispatch:beforeDispatch", this->container->get("dispatcher"));
                 }
@@ -383,10 +392,6 @@ abstract class Kernel
             }
         }
 
-
-        var securityListener;
-        let securityListener = new \Phady\Security\EventListener\SecurityListener();
-        securityListener->addSecurityListeners();
     }
 
     /**

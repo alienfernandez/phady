@@ -18,6 +18,7 @@ use Phalcon\Di\Injectable;
 use Phady\Security\Core\User\Factory\UserProviderFactoryInterface;
 use Phady\Security\Core\User\Factory\InMemoryFactory;
 use Phady\Security\Core\User\Factory\EntityFactory;
+use Phady\Security\Factory\FormLoginFactory;
 
 /**
   * @class Phady\Security\SecurityExtension
@@ -35,10 +36,12 @@ class SecurityExtension extends \Phalcon\Di\Injectable
     private factories = [];
     private userProviderFactories = [];
     private container;
+    private authenticationProviders;
 
     public function __construct()
     {
         let this->container = this->getDI();
+        let this->authenticationProviders = [];
         var position;
         for position in this->listenerPositions {
             let this->factories[position] = [];
@@ -57,6 +60,9 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         //Add factories user providers "InMemoryFactory" y ""
         this->addUserProviderFactory(new InMemoryFactory());
         this->addUserProviderFactory(new EntityFactory("entity", "phalcon.orm.security.user.provider"));
+
+        this->addSecurityListenerFactory(new FormLoginFactory());
+
         this->createFirewalls(config);
         this->createAuthorization(config);
         //this->createRoleHierarchy(config, container);
@@ -65,20 +71,22 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
     private function createEncoders(encoders)
     {
-        var encoderMap, classEncoder, encoder;
+        var encoderMap, classEncoder, encoder, args, encFactoryFunc;
         let encoderMap = [];
         for classEncoder, encoder in encoders {
             let encoderMap[classEncoder] = this->createEncoder(encoder);
         }
 
-        let _SERVER["security.encoder_factory.generic"] = new \Phady\Security\Core\Encoder\EncoderFactory(encoderMap);
-        this->container->set("security.encoder_factory.generic", function (encoderMap) {
-            return new \Phady\Security\Core\Encoder\EncoderFactory(encoderMap);
-         });
+        let args = ["encoderMap" : encoderMap];
+        let encFactoryFunc = call_user_func_array(function(encoderMap) {
+             return new \Phady\Security\Core\Encoder\EncoderFactory(encoderMap);
+        }, args);
+        this->container->set("security.encoder_factory.generic", encFactoryFunc);
     }
 
     private function createEncoder(array config)
     {
+        var args, userFunc;
         // a custom encoder service
         /*
         if (isset(config["id"])) {
@@ -87,9 +95,11 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
         // bcrypt encoder
         if (array_key_exists("algorithm", config) && "bcrypt" === config["algorithm"]) {
-            this->container->set("security.encoder.bcrypt.class", function (config) {
-                return new \Phady\Security\Core\Encoder\BCryptPasswordEncoder(config["cost"]);
-             });
+            let args = ["config" : config];
+            let userFunc = call_user_func_array(function(config) {
+                 return new \Phady\Security\Core\Encoder\BCryptPasswordEncoder(config["cost"]);
+            }, args);
+            this->container->set("security.encoder.bcrypt.class", userFunc);
             return this->container->get("security.encoder.bcrypt.class");
         }
 
@@ -106,7 +116,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
     private function createAuthorization(config)
     {
-        var access, matcher, attributes, accessParams, requires_channel;
+        var access, matcher, attributes, accessParams, requires_channel, args, userFunc;
         if (!config["access_control"]) {
             return;
         }
@@ -126,12 +136,15 @@ class SecurityExtension extends \Phalcon\Di\Injectable
             }*/
             let requires_channel = (array_key_exists("requires_channel", access)) ? access["requires_channel"] : null;
             let accessParams = [matcher, attributes, requires_channel];
-            this->container->set("security.access_map", function (accessParams) {
-                var accessMap;
-                let accessMap = new \Phady\Security\Http\AccessMap();
-                accessMap->add(accessParams[0], accessParams[1], accessParams[2]);
-                return accessMap;
-             });
+
+            let args = ["matcher" : attributes, "attributes" : attributes, "requires_channel" : requires_channel];
+            let userFunc = call_user_func_array(function(matcher, attributes, requires_channel) {
+                 var access_Map;
+                 let access_Map = new \Phady\Security\Http\AccessMap();
+                 access_Map->add(matcher, attributes, requires_channel);
+                 return access_Map;
+            }, args);
+            this->container->set("security.access_map", userFunc);
              //print_r(this->container->get("security.access_map", [accessParams]));
              //die();
         }
@@ -152,69 +165,87 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         }
 
         // only add arguments that are necessary
-        let arguments = [path, host, methods, ip, attributes, null];
         /*while (count(arguments) > 0 && !end(arguments)) {
             array_pop(arguments);
         }*/
 
-        this->container->set(id, function (arguments) {
-            return new \Phady\Http\RequestMatcher(arguments[0],arguments[1],arguments[2],arguments[3],arguments[4],arguments[5]);
-         });
+        var args, userFunc;
+        let args = ["path" : path, "host" : host, "methods" : methods, "ip" : ip,
+                    "attributes" : attributes, "schemes" : null];
+        let userFunc = call_user_func_array(function(path, host, methods, ip, attributes, schemes) {
+             return new \Phady\Http\RequestMatcher(path, host, methods, ip, attributes, schemes);
+        }, args);
+        this->container->set(id, userFunc);
 
         //"security.matcher.class"
-        let this->requestMatchers[id] = this->container->get(id, [arguments]);
+        let this->requestMatchers[id] = this->container->get(id);
         return this->requestMatchers[id];
     }
 
     
     private function createFirewalls(config)
     {
-        var providerIds, userProviderId, map, authenticationProviders, firewalls, userProviders;
+        var providerIds, userProviderId, map, firewalls, userProviders;
         if (!isset(config["firewalls"])) {
             return;
         }
 
         let firewalls = config["firewalls"];
         let providerIds = this->createUserProviders(config);
-        
         let userProviders = [];
         for userProviderId in providerIds {
-            let userProviders[] = userProviderId;
+            let userProviders[] = this->container->get(userProviderId);
         }
 
         // load firewall map
         let map = [];
-        let authenticationProviders = [];
+        let this->authenticationProviders = [];
         var contextId, name, firewall, newFirewall, listeners, exceptionListener;
         for name, firewall in firewalls {
-            //list(matcher, listeners, exceptionListener) = this->createFirewall(container, name, firewall, authenticationProviders, providerIds);
-            let newFirewall = this->createFirewall(name, firewall, authenticationProviders, providerIds);
+            //list(matcher, listeners, exceptionListener) = this->createFirewall(container, name, firewall, providerIds);
+            let newFirewall = this->createFirewall(name, firewall, providerIds);
+
             let contextId = "security.firewall.map.context.".name;
             let listeners = newFirewall[1];
             let exceptionListener = newFirewall[2];
-            this->container->set(contextId, function (listeners, exceptionListener) {
-                return new \Phady\Security\FirewallContext(listeners, exceptionListener);
-             });
+
+            var args, userFunc;
+            let args = ["listeners" : listeners, "exceptionListener" : exceptionListener];
+            let userFunc = call_user_func_array(function(listeners, exceptionListener) {
+                 return new \Phady\Security\FirewallContext(listeners, exceptionListener);
+            }, args);
+            this->container->set(contextId, userFunc);
             //let map[contextId] = matcher;
             let map[contextId] = newFirewall[0];
         }
 
-        this->container->set("security.firewall.map", function (map) {
-            return new \Phady\Security\FirewallMap(map);
-         });
+        var firewallMapFunc, argsFM;
+        let argsFM = ["map" : map];
+        let firewallMapFunc = call_user_func_array(function(map) {
+             return new \Phady\Security\FirewallMap(map);
+        }, argsFM);
+        this->container->set("security.firewall.map", firewallMapFunc);
+        if (this->container->has("security.firewall")){
+            this->container->get("security.firewall")->setMap(this->container->get("security.firewall.map"));
+        }
+        //echo "<pre>"; print_r(this->container->get("security.firewall"));die();
+        //map:Phady\Security\Firewall:private
 
-         // add authentication providers to authentication manager
-         /*authenticationProviders = array_map(function (id) {
-             return new Reference(id);
-         }, array_values(array_unique(authenticationProviders)));
-         container
-             ->getDefinition("security.authentication.manager")
-             ->replaceArgument(0, authenticationProviders)
-         ;*/
+        // add authentication providers to authentication manager
+        var key, authProvider;
+        array authenticationProvidersRef = [];
+        for key, authProvider in this->authenticationProviders {
+            let authenticationProvidersRef[key] = this->container->get(authProvider);
+        }
+        if (this->container->has("security.authentication.manager")){
+            this->container->get("security.authentication.manager")->setProviders(authenticationProvidersRef);
+        }
+        //echo "<pre>"; print_r(this->container->get("security.authentication.manager"));die();
+
     }
 
 
-    private function createFirewall(id, firewall, authenticationProviders, providerIds)
+    private function createFirewall(id, firewall, providerIds)
     {
         var matcher, pattern, host, methods, listeners, defaultProvider, contextKey, configuredEntryPoint, createAuthListeners;
         // Matcher
@@ -229,7 +260,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         }
 
         // Security disabled?
-        if (false === firewall["security"]) {
+        if (array_key_exists("security", firewall) && false === firewall["security"]) {
             return [matcher, [], null];
         }
 
@@ -250,7 +281,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         if (this->container->has("security.channel_listener")){
             //this->container->get("security.channel_listener")->setMap()
         }
-        let listeners[] = "security.channel_listener";
+        //let listeners[] = "security.channel_listener";
 
 
         // Determine default entry point
@@ -258,15 +289,15 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
         // Authentication listeners
         //list(authListeners, defaultEntryPoint) = this->createAuthenticationListeners(id, firewall, authenticationProviders, defaultProvider, configuredEntryPoint);
-        let createAuthListeners = this->createAuthenticationListeners(id, firewall, authenticationProviders, defaultProvider, configuredEntryPoint);
+        let createAuthListeners = this->createAuthenticationListeners(id, firewall, defaultProvider, configuredEntryPoint);
 
-        let listeners = array_merge(listeners, createAuthListeners[0]);;
+        let listeners = array_merge(listeners, createAuthListeners[0]);
 
         // Access listener
         this->container->set("security.access_listener", function () {
             return new \Phady\Security\Http\Firewall\AccessListener();
         });
-        let listeners[] = "security.access_listener";
+        //let listeners[] = "security.access_listener";
 
         // Exception listener
         //exceptionListener = new Reference(this->createExceptionListener(container, firewall, id, configuredEntryPoint ?: defaultEntryPoint, firewall["stateless"]));
@@ -278,7 +309,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
     // Parses user providers and returns an array of their ids
     private function createUserProviders(array config)
     {
-        var providerIds, providersList, name, provider, arrReturn;
+        var providerIds, providersList, name, provider, arrReturn, authManagerFunc, args;
         let providerIds = [];
         let providersList = [];
         for name, provider in config["providers"] {
@@ -289,16 +320,19 @@ class SecurityExtension extends \Phalcon\Di\Injectable
             }
         }
         //Register component security.authentication.manager
-        //let this->container["security.authentication.manager"] = new \Phady\Security\Core\Authentication\AuthenticationProviderManager(providersList);
-        //TODO delete _SERVER
-        let _SERVER["security.authentication.manager"] = new \Phady\Security\Core\Authentication\AuthenticationProviderManager(providersList);
+        let args = ["providersList" : providersList];
+        let authManagerFunc = call_user_func_array(function(providersList) {
+             return new \Phady\Security\Core\Authentication\AuthenticationProviderManager(providersList);
+        }, args);
+        this->container->set("security.authentication.manager", authManagerFunc);
+
         //Register component login manager service
         this->container->set("security.authentication.listener.form", function () {
             var container, listenForm;
             let container = _SERVER["containerApp"];
 
             let listenForm = new \Phady\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener(
-                    container->get("security.token_storage"), _SERVER["security.authentication.manager"],
+                    container->get("security.token_storage"), container->get("security.authentication.manager"),
                     "key", container->get("security.authentication.success_handler"), container->get("security.authentication.failure_handler"),
                     [], null);
             return listenForm;
@@ -307,7 +341,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         return providerIds;
     }
 
-    private function createAuthenticationListeners(id, firewall, authenticationProviders, defaultProvider, defaultEntryPoint)
+    private function createAuthenticationListeners(id, firewall, defaultProvider, defaultEntryPoint)
     {
         var listeners, hasListeners, position, factory, key, userProvider, provider, listenerId, createFactory;
         let listeners = [];
@@ -316,20 +350,21 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         for position in this->listenerPositions {
             for factory in this->factories[position] {
                 let key = str_replace("-", "_", factory->getKey());
-
-                if (isset(firewall[key])) {
-                    let userProvider = isset(firewall[key]["provider"]) ? this->getUserProviderId(firewall[key]["provider"]) : defaultProvider;
+                if (array_key_exists(key, firewall) && isset(firewall[key])) {
+                    let userProvider = (array_key_exists("provider", firewall[key]) && isset(firewall[key]["provider"])) ? this->getUserProviderId(firewall[key]["provider"]) : defaultProvider;
 
                     //list(provider, listenerId, defaultEntryPoint) = factory->create(id, firewall[key], userProvider, defaultEntryPoint);
                     let createFactory = factory->create(id, firewall[key], userProvider, defaultEntryPoint);
 
                     let listeners[] = createFactory[1];
-                    let authenticationProviders[] = createFactory[0];
+                    let this->authenticationProviders[] = createFactory[0];
                     let hasListeners = true;
                     let defaultEntryPoint = createFactory[2];
                 }
             }
         }
+
+
 
         // Anonymous
         /*if (isset(firewall["anonymous"])) {
@@ -415,5 +450,10 @@ class SecurityExtension extends \Phalcon\Di\Injectable
     public function addUserProviderFactory(<UserProviderFactoryInterface> factory)
     {
         let this->userProviderFactories[] = factory;
+    }
+
+    public function addSecurityListenerFactory(factory)//SecurityFactoryInterface
+    {
+        let this->factories[factory->getPosition()][] = factory;
     }
 }

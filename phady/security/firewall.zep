@@ -40,11 +40,22 @@ class Firewall extends \Phalcon\Di\Injectable
      * @param FirewallMapInterface     map        A FirewallMapInterface instance
      * @param EventDispatcherInterface dispatcher An EventDispatcherInterface instance
      */
-    public function __construct(<FirewallMapInterface> map)
+     //<FirewallMapInterface> map
+    public function __construct()
     {
-        let this->map = map;
+        //let this->map = map;
+        //let this->map = this->getDI()->get("security.firewall.map");
         let this->dispatcher = this->getDI()->get("dispatcher");
         let this->exceptionListeners = new \SplObjectStorage();
+    }
+
+    /**
+     * Set map
+     *
+     */
+    public function setMap(<FirewallMapInterface> map)
+    {
+        let this->map = map;
     }
 
     /**
@@ -52,7 +63,7 @@ class Firewall extends \Phalcon\Di\Injectable
      *
      * @param GetResponseEvent event An GetResponseEvent instance
      */
-    public function beforeDispatch(<Event> event, <Dispatcher> dispatcher)
+    public function beforeDispatch(<Event> event, <Dispatcher> dispatcher, exception)//<Event> event,
     {
         /*
         if (!event->isMasterRequest()) {
@@ -63,6 +74,8 @@ class Firewall extends \Phalcon\Di\Injectable
         // register listeners for this firewall
         //list(listeners, exceptionListener) = this->map->getListeners(request);
         let listenersMap = this->map->getListeners(request);
+        echo "<pre>"; print_r(listenersMap); die();
+
         /*if (null !== exceptionListener) {
             this->exceptionListeners[event->getRequest()] = listenersMap[1];
             exceptionListener->register(this->dispatcher);

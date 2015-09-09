@@ -300,7 +300,7 @@ PHP_METHOD(Phady_Util_Tools, getMemoryLimit) {
 	ZVAL_STRING(&_0, "memory_limit", 0);
 	ZEPHIR_CALL_FUNCTION(&memory_limit, "ini_get", NULL, 133, &_0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(NULL, "print_r", NULL, 134, memory_limit);
+	ZEPHIR_CALL_FUNCTION(NULL, "print_r", NULL, 87, memory_limit);
 	zephir_check_call_status();
 	ZEPHIR_CALL_SELF(&getOctect, "getoctets", NULL, 0, memory_limit);
 	zephir_check_call_status();
@@ -389,9 +389,9 @@ PHP_METHOD(Phady_Util_Tools, getHostName) {
 
 	ZEPHIR_SINIT_VAR(_0);
 	ZVAL_STRING(&_0, "COMPUTERNAME", 0);
-	ZEPHIR_CALL_FUNCTION(&computerName, "getenv", NULL, 135, &_0);
+	ZEPHIR_CALL_FUNCTION(&computerName, "getenv", NULL, 134, &_0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_1, "gethostname", NULL, 136);
+	ZEPHIR_CALL_FUNCTION(&_1, "gethostname", NULL, 135);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(hostname);
 	ZEPHIR_CONCAT_VSV(hostname, _1, "|", computerName);

@@ -12,9 +12,8 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/memory.h"
 #include "kernel/fcall.h"
-#include "kernel/array.h"
+#include "kernel/memory.h"
 
 
 ZEPHIR_INIT_CLASS(phady_0__closure) {
@@ -28,19 +27,11 @@ ZEPHIR_INIT_CLASS(phady_0__closure) {
 PHP_METHOD(phady_0__closure, __invoke) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *routeCore, *_SERVER, *_0;
 
 	ZEPHIR_MM_GROW();
-	zephir_get_global(&_SERVER, SS("_SERVER") TSRMLS_CC);
 
-	ZEPHIR_INIT_VAR(routeCore);
-	object_init_ex(routeCore, phady_route_router_ce);
-	ZEPHIR_CALL_METHOD(NULL, routeCore, "__construct", NULL, 138);
-	zephir_check_call_status();
-	zephir_array_fetch_string(&_0, _SERVER, SL("rootDirOk"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 264 TSRMLS_CC);
-	ZEPHIR_CALL_METHOD(NULL, routeCore, "setsystemroutes", NULL, 139, _0);
-	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_METHOD(routeCore, "getrouter", NULL, 140);
+	object_init_ex(return_value, phady_security_firewall_ce);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 137);
 	zephir_check_call_status();
 	RETURN_MM();
 

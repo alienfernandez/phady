@@ -17,7 +17,7 @@ use Phalcon\Di\Injectable;
 use Phady\Security\Factory\SecurityFactoryInterface;
 
 /**
-  * @class Phady\Security\Factory\AbstractFactory
+  * @class Phady\Security\Factory\FormLoginFactory
   *
   * AbstractFactory is the base class for all classes inheriting from
   * AbstractAuthenticationListener.
@@ -54,24 +54,20 @@ class FormLoginFactory extends AbstractFactory
 
     protected function createAuthProvider(id, config, userProviderId)
     {
-        var provider;
+        var provider, providerFunc, args;
         let provider = "security.authentication.provider.dao.".id;
-        /*this->container->set(provider, function (config) {
-            var userProvider, container;
-            let container = _SERVER["containerApp"];
-            let userProvider = new \Phady\Security\Core\User\InMemoryUserProvider(config["users"]);
-            return new \Phady\Security\Core\Authentication\Provider\DaoAuthenticationProvider(userProvider,
-                        new \Phady\Security\Core\User\UserChecker(), "key",
-                        _SERVER["security.encoder_factory.generic"]);
-        });*/
+        let args = ["id" : id, "config" : config, "userProviderId" : userProviderId];
+        let providerFunc = call_user_func_array(function(id, config, userProviderId) {
+             var authProvider, container;
 
-        /*
-        container
-            ->setDefinition(provider, new DefinitionDecorator("security.authentication.provider.dao"))
-            ->replaceArgument(0, new Reference(userProviderId))
-            ->replaceArgument(2, id)
-        ;*/
-
+             let container = _SERVER["containerApp"];
+             let authProvider = new \Phady\Security\Core\Authentication\Provider\DaoAuthenticationProvider(
+                    container->get(userProviderId), new \Phady\Security\Core\User\UserChecker(), id,
+                    container->get("security.encoder_factory.generic")
+              );
+             return authProvider;
+        }, args);
+        this->getDI()->set(provider, providerFunc);
         return provider;
     }
 
@@ -88,7 +84,7 @@ class FormLoginFactory extends AbstractFactory
         return listenerId;
     }
 
-    protected function createEntryPoint(container, id, config, defaultEntryPoint)
+    protected function createEntryPoint(id, config, defaultEntryPoint)
     {
         /*
         entryPointId = "security.authentication.form_entry_point.".id;

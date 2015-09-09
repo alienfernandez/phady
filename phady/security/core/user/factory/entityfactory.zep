@@ -38,23 +38,27 @@ class EntityFactory extends \Phalcon\Di\Injectable implements UserProviderFactor
 
     public function create(id, config)
     {
+        var args, ormProviderFunc, entityFactoryFunc;
         //Register component phalcon.orm.security.user.provider
-        this->getDI()->set("phalcon.orm.security.user.provider", function (config) {
-            string configName;
-            let configName = (array_key_exists("manager_name", config)) ? config["manager_name"] : "";
-            return new \Phady\Security\Core\Authentication\Provider\EntityUserProvider(config["class"], config["property"], configName);
-        });
+        let args = ["config" : config];
+        let ormProviderFunc = call_user_func_array(function(config) {
+             string configName;
+             let configName = (array_key_exists("manager_name", config)) ? config["manager_name"] : "";
+             return new \Phady\Security\Core\Authentication\Provider\EntityUserProvider(config["class"], config["property"], configName);
+        }, args);
+        this->getDI()->set("phalcon.orm.security.user.provider", ormProviderFunc);
 
-        this->getDI()->set(id, function (config) {
-            var userProvider, container, configName;
-            let container = _SERVER["containerApp"];
-            let configName = (array_key_exists("manager_name", config)) ? config["manager_name"] : "";
-            let userProvider = new \Phady\Security\Core\Authentication\Provider\EntityUserProvider(config["class"], config["property"], configName);
-            return new \Phady\Security\Core\Authentication\Provider\DaoAuthenticationProvider(userProvider,
-                        new \Phady\Security\Core\User\UserChecker(), "key",
-                        _SERVER["security.encoder_factory.generic"]);
-        });
-        return this->getDI()->get(id, [config]);
+        let args = ["config" : config, "id": id];
+        let entityFactoryFunc = call_user_func_array(function(config, id) {
+             var container;
+             let container = _SERVER["containerApp"];
+             return new \Phady\Security\Core\Authentication\Provider\DaoAuthenticationProvider(
+                         container->get("phalcon.orm.security.user.provider"),
+                         new \Phady\Security\Core\User\UserChecker(), id,
+                         container->get("security.encoder_factory.generic"));
+        }, args);
+        this->getDI()->set(id, entityFactoryFunc);
+        return this->getDI()->get(id);
     }
 
     public function getKey()
