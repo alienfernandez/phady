@@ -69,4 +69,82 @@ class ExceptionListener extends \Phalcon\Di\Injectable
         let this->stateless = stateless;
     }
 
+
+    /**
+     * Handles exceptions security.
+     *
+     */
+    public function beforeException(<Event> event, <Dispatcher> dispatcher, exception) {
+        print_r(exception);
+        die();
+        if (exception instanceof AuthenticationException) {
+            return this->handleAuthenticationException(exception);
+        }
+        /*elseif (exception instanceof AccessDeniedException) {
+            return this->handleAccessDeniedException(event, exception);
+        } elseif (exception instanceof LogoutException) {
+            return this->handleLogoutException(exception);
+        }*/
+    }
+
+    private function handleAuthenticationException(<AuthenticationException> exception)
+    {
+        var e;
+        /*if (null !== this->logger) {
+            this->logger->info("An AuthenticationException was thrown; redirecting to authentication entry point.", array("exception" => exception));
+        }*/
+
+        try {
+            this->startAuthentication(exception);
+        } catch \Exception, e {
+            echo e;
+        }
+    }
+
+
+    /**
+     * @param Request                 request
+     * @param AuthenticationException authException
+     *
+     * @return Response
+     *
+     * @throws AuthenticationException
+     */
+    private function startAuthentication(<AuthenticationException> authException)
+    {
+        if (null === this->authenticationEntryPoint) {
+            throw authException;
+        }
+
+        /*if (null !== this->logger) {
+            this->logger->debug("Calling Authentication entry point.");
+        }
+
+        if (!this->stateless) {
+            this->setTargetPath(request);
+        }*/
+
+        if (authException instanceof AccountStatusException) {
+            // remove the security token to prevent infinite redirect loops
+            this->tokenStorage->setToken(null);
+
+            /*if (null !== this->logger) {
+                this->logger->info("The security token was removed due to an AccountStatusException.", array("exception" => authException));
+            }*/
+        }
+
+        return this->authenticationEntryPoint->start(this->getDI()->get("request"), authException);
+    }
+
+    /**
+     * @param Request request
+     */
+    protected function setTargetPath(<Request> request)
+    {
+        // session isn"t required when using HTTP basic authentication mechanism for example
+        /*if (request->hasSession() && request->isMethodSafe() && !request->isXmlHttpRequest()) {
+            request->getSession()->set("_security.".this->providerKey.".target_path", request->getURI());
+        }*/
+    }
+
 }

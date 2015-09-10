@@ -84,15 +84,14 @@ class FormLoginFactory extends AbstractFactory
 
     protected function createEntryPoint(id, config, defaultEntryPoint)
     {
-        /*
-        entryPointId = "security.authentication.form_entry_point.".id;
-        container
-            ->setDefinition(entryPointId, new DefinitionDecorator("security.authentication.form_entry_point"))
-            ->addArgument(new Reference("security.http_utils"))
-            ->addArgument(config["login_path"])
-            ->addArgument(config["use_forward"])
-        ;
+        var entryPointId, entryPointFunc, args;
+        let entryPointId = "security.authentication.form_entry_point.".id;
+        let args = ["config" : config];
+        let entryPointFunc = call_user_func_array(function(config) {
+             return new \Phady\Security\Http\EntryPoint\FormAuthenticationEntryPoint(config["login_path"], config["use_forward"]);
+        }, args);
+        this->getDI()->set(entryPointId, entryPointFunc);
 
-        return entryPointId;*/
+        return entryPointId;
     }
 }

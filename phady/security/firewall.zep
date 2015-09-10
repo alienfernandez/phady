@@ -18,6 +18,8 @@ use Phady\Security\Http\Firewall\ExceptionListener;
 use Phady\Security\Http\FirewallMapInterface;
 use Phalcon\Events\Event;
 use Phalcon\Mvc\Dispatcher;
+use Phady\Security\Core\Exception\AuthenticationException;
+use Phady\Security\Core\Exception\AccountStatusException;
 
 /**
   * @class Phady\Security\Firewall
@@ -58,13 +60,17 @@ class Firewall extends \Phalcon\Di\Injectable
         let this->map = map;
     }
 
+
     /**
      * Handles security.
      *
      * @param GetResponseEvent event An GetResponseEvent instance
      */
-    public function beforeDispatch(<Event> event, <Dispatcher> dispatcher, exception)//<Event> event,
+    public function beforeDispatch(<Event> event, <Dispatcher> dispatcher, exception)
+    //public function beforeExecuteRoute(<Event> event, <Dispatcher> dispatcher, exception)
     {
+
+        echo "<pre>"; print_r("beforeDispatch!!!");
         /*
         if (!event->isMasterRequest()) {
             return;
@@ -74,7 +80,7 @@ class Firewall extends \Phalcon\Di\Injectable
         // register listeners for this firewall
         //list(listeners, exceptionListener) = this->map->getListeners(request);
         let listenersMap = this->map->getListeners(request);
-        //echo "<pre>"; print_r(listenersMap); die();
+        //echo "<pre>"; print_r(listenersMap);
 
         /*if (null !== exceptionListener) {
             this->exceptionListeners[event->getRequest()] = listenersMap[1];
@@ -83,11 +89,13 @@ class Firewall extends \Phalcon\Di\Injectable
 
         // initiate the listener chain
         for listener in listenersMap[0] {
+
+            //echo "<pre>"; print_r(this->getDI()->get(listener)); die();
             this->getDI()->get(listener)->handle();
-            /*
-            if (event->hasResponse()) {
-                break;
-            }*/
+
+            //if (null !== this->getDI()->get("response")) {
+            //    break;
+           // }
         }
     }        
 }

@@ -296,13 +296,28 @@ abstract class Kernel
                      */
                     eventsManager->attach("dispatch:beforeDispatch", this->container->get("security.firewall"));
                     this->container->get("dispatcher")->setEventsManager(eventsManager);
-                    eventsManager->fire("dispatch:beforeDispatch", this->container->get("dispatcher"));
+                    //eventsManager->fire("dispatch:beforeDispatch", this->container->get("dispatcher"));
                 }
             }
         }
 
 
         //Register component database service
+
+        let _SERVER["configApp"] = this->config;
+        this->container->set("db", function () {
+            var dbCore, exception;
+            try {
+                let dbCore = new \Phady\Db\DatabaseHandler(_SERVER["configApp"]);
+                //Get Adapter DB
+                return dbCore->getAdapter();
+            } catch Exception, exception {
+                 // handle exception
+                 echo exception->getMessage();
+                 exit();
+             }
+        });
+/*
         var dbFunc;
         let dbFunc = call_user_func_array(function(config) {
              var dbCore, exception;
@@ -316,7 +331,7 @@ abstract class Kernel
                   exit();
               }
         }, ["config" : this->config]);
-        this->container->set("db", dbFunc);
+        this->container->set("db", dbFunc);*/
 
         //Register component view service
         this->container->set("view", function () {

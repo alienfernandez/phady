@@ -179,5 +179,7 @@
 #include "phady/29__closure.zep.h"
 #include "phady/30__closure.zep.h"
 #include "phady/31__closure.zep.h"
+#include "phady/32__closure.zep.h"
+#include "phady/33__closure.zep.h"
 
 #endif

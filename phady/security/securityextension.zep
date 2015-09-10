@@ -249,7 +249,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
     private function createFirewall(id, firewall, providerIds)
     {
-        var matcher, pattern, host, methods, listeners, defaultProvider, contextKey, configuredEntryPoint, createAuthListeners;
+        var matcher, pattern, host, methods, listeners, defaultProvider, contextKey, configuredEntryPoint, createAuthListeners, exceptionListener;
         // Matcher
         let matcher = null;
         if (isset(firewall["request_matcher"])) {
@@ -302,11 +302,39 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         //let listeners[] = "security.access_listener";
 
         // Exception listener
-        //exceptionListener = new Reference(this->createExceptionListener(container, firewall, id, configuredEntryPoint ?: defaultEntryPoint, firewall["stateless"]));
+        let exceptionListener = this->createExceptionListener(firewall, id, (configuredEntryPoint) ? configuredEntryPoint : createAuthListeners[1], firewall["stateless"]);
 
-        return [matcher, listeners, null];//exceptionListener
+        return [matcher, listeners, exceptionListener];
     }
 
+    private function createExceptionListener(config, id, defaultEntryPoint, stateless)
+    {
+        var exceptionListenerId;
+        let exceptionListenerId = "security.exception_listener.".id;
+        var args, userFunc;
+        let args = ["config" : config, "id" : id, "defaultEntryPoint" : defaultEntryPoint, "stateless" : stateless,
+                    "container" : this->container];
+        let userFunc = call_user_func_array(function(config, id, defaultEntryPoint, stateless, container) {
+             return new \Phady\Security\Http\Firewall\ExceptionListener(
+                container->get("security.token_storage"), null, id,
+                null === defaultEntryPoint ? null : container->get(defaultEntryPoint),
+                null,
+                (array_key_exists("access_denied_handler", config) && isset(config["access_denied_handler"])) ? config["access_denied_url"] : null,
+                stateless
+             );
+        }, args);
+        this->container->set(exceptionListenerId, userFunc);
+
+
+        if (this->container->has("dispatcher")) {
+            if (this->container->get("dispatcher")->getEventsManager()) {
+                 this->container->get("dispatcher")->getEventsManager()->attach("dispatch:beforeException", this->container->get(exceptionListenerId));
+            }
+        }
+
+
+        return exceptionListenerId;
+    }
 
     // Parses user providers and returns an array of their ids
     private function createUserProviders(array config)

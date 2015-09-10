@@ -133,6 +133,7 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
             }*/
 
             let returnValue = this->attemptAuthentication(request);
+
             if (null === returnValue) {
                 return;
             }
@@ -163,8 +164,27 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
      */
     protected function requiresAuthentication(<Request> request)
     {
-        //return this->httpUtils->checkRequestPath(request, this->options["check_path"]);
-        return true;
+        /*if ('/' !== substr(this->options["check_path"], 0, 1)) {
+            try {
+                // matching a request is more powerful than matching a URL path + context, so try that first
+                if ($this->urlMatcher instanceof RequestMatcherInterface) {
+                    $parameters = $this->urlMatcher->matchRequest($request);
+                } else {
+                    $parameters = $this->urlMatcher->match($request->getPathInfo());
+                }
+
+                return $path === $parameters['_route'];
+            } catch (MethodNotAllowedException $e) {
+                return false;
+            } catch (ResourceNotFoundException $e) {
+                return false;
+            }
+        }*/
+        echo "<pre>"; print_r(rawurldecode(request->getURI()));
+        echo "<pre>"; print_r("--------------");
+        echo "<pre>"; print_r(this->options["check_path"]);
+
+        return this->options["check_path"] === rawurldecode(request->getURI());
     }
 
     /**

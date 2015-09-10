@@ -105,11 +105,11 @@ PHP_METHOD(Phady_Config_Yaml, parse) {
 		ZEPHIR_INIT_VAR(_3);
 		ZVAL_LONG(_3, ndocs);
 		Z_SET_ISREF_P(_3);
-		ZEPHIR_CALL_FUNCTION(&yamlConfig, "yaml_parse_file", &_4, 27, filePath, _2, _3, callbacks);
+		ZEPHIR_CALL_FUNCTION(&yamlConfig, "yaml_parse_file", &_4, 29, filePath, _2, _3, callbacks);
 		Z_UNSET_ISREF_P(_3);
 		zephir_check_call_status();
 	} else {
-		ZEPHIR_CALL_FUNCTION(&yamlConfig, "yaml_parse_file", &_4, 27, filePath);
+		ZEPHIR_CALL_FUNCTION(&yamlConfig, "yaml_parse_file", &_4, 29, filePath);
 		zephir_check_call_status();
 	}
 	if (ZEPHIR_IS_FALSE_IDENTICAL(yamlConfig)) {
@@ -119,7 +119,7 @@ PHP_METHOD(Phady_Config_Yaml, parse) {
 		zephir_basename(_3, filePath TSRMLS_CC);
 		ZEPHIR_INIT_VAR(_5);
 		ZEPHIR_CONCAT_SVS(_5, "Configuration file ", _3, " can't be loaded");
-		ZEPHIR_CALL_METHOD(NULL, _2, "__construct", NULL, 28, _5);
+		ZEPHIR_CALL_METHOD(NULL, _2, "__construct", NULL, 30, _5);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(_2, "phady/config/yaml.zep", 53 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();

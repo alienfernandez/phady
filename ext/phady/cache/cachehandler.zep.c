@@ -18,10 +18,7 @@
 #include "kernel/memory.h"
 #include "kernel/array.h"
 #include "kernel/fcall.h"
-#include "kernel/operators.h"
 #include "ext/phalcon/phalcon/cache/frontend/data.zep.h"
-#include "ext/phalcon/phalcon/cache/backend/redis.zep.h"
-#include "ext/phalcon/phalcon/cache/backend/memcache.zep.h"
 
 
 /**
@@ -76,7 +73,7 @@ PHP_METHOD(Phady_Cache_CacheHandler, getAdapter) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *_1;
-	zval *arrCacheConfig = NULL, *cacheConfig, *adapter = NULL, *frontCache, *_0, *_2, *_3, *_4, *_5 = NULL, *_6, *_7, *_8, *_9, *_10, *_11;
+	zval *cacheConfig, *frontCache, *_0;
 
 	ZEPHIR_MM_GROW();
 
@@ -89,91 +86,7 @@ PHP_METHOD(Phady_Cache_CacheHandler, getAdapter) {
 	add_assoc_long_ex(_1, SS("lifetime"), 172800);
 	ZEPHIR_CALL_METHOD(NULL, frontCache, "__construct", NULL, 0, _1);
 	zephir_check_call_status();
-	zephir_array_fetch_string(&_2, cacheConfig, SL("driver"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 57 TSRMLS_CC);
-	do {
-		if (ZEPHIR_IS_STRING(_2, "redis")) {
-			ZEPHIR_INIT_VAR(arrCacheConfig);
-			zephir_create_array(arrCacheConfig, 4, 0 TSRMLS_CC);
-			zephir_array_fetch_string(&_3, cacheConfig, SL("redis"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 60 TSRMLS_CC);
-			zephir_array_fetch_string(&_4, _3, SL("default"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 60 TSRMLS_CC);
-			ZEPHIR_OBS_VAR(_5);
-			zephir_array_fetch_string(&_5, _4, SL("host"), PH_NOISY, "phady/cache/cachehandler.zep", 60 TSRMLS_CC);
-			zephir_array_update_string(&arrCacheConfig, SL("host"), &_5, PH_COPY | PH_SEPARATE);
-			zephir_array_fetch_string(&_6, cacheConfig, SL("redis"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 61 TSRMLS_CC);
-			zephir_array_fetch_string(&_7, _6, SL("default"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 61 TSRMLS_CC);
-			ZEPHIR_OBS_NVAR(_5);
-			zephir_array_fetch_string(&_5, _7, SL("port"), PH_NOISY, "phady/cache/cachehandler.zep", 61 TSRMLS_CC);
-			zephir_array_update_string(&arrCacheConfig, SL("port"), &_5, PH_COPY | PH_SEPARATE);
-			zephir_array_fetch_string(&_8, cacheConfig, SL("redis"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 62 TSRMLS_CC);
-			zephir_array_fetch_string(&_9, _8, SL("default"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 62 TSRMLS_CC);
-			ZEPHIR_OBS_NVAR(_5);
-			zephir_array_fetch_string(&_5, _9, SL("persistent"), PH_NOISY, "phady/cache/cachehandler.zep", 62 TSRMLS_CC);
-			zephir_array_update_string(&arrCacheConfig, SL("persistent"), &_5, PH_COPY | PH_SEPARATE);
-			zephir_array_fetch_string(&_10, cacheConfig, SL("redis"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 63 TSRMLS_CC);
-			zephir_array_fetch_string(&_11, _10, SL("default"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 63 TSRMLS_CC);
-			ZEPHIR_OBS_NVAR(_5);
-			zephir_array_fetch_string(&_5, _11, SL("auth"), PH_NOISY, "phady/cache/cachehandler.zep", 64 TSRMLS_CC);
-			zephir_array_update_string(&arrCacheConfig, SL("auth"), &_5, PH_COPY | PH_SEPARATE);
-			ZEPHIR_INIT_VAR(adapter);
-			object_init_ex(adapter, phalcon_cache_backend_redis_ce);
-			ZEPHIR_CALL_METHOD(NULL, adapter, "__construct", NULL, 0, arrCacheConfig);
-			zephir_check_call_status();
-			break;
-		}
-		if (ZEPHIR_IS_STRING(_2, "memcache")) {
-			ZEPHIR_INIT_NVAR(arrCacheConfig);
-			zephir_create_array(arrCacheConfig, 3, 0 TSRMLS_CC);
-			zephir_array_fetch_string(&_3, cacheConfig, SL("memcache"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 69 TSRMLS_CC);
-			zephir_array_fetch_string(&_4, _3, SL("default"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 69 TSRMLS_CC);
-			ZEPHIR_OBS_NVAR(_5);
-			zephir_array_fetch_string(&_5, _4, SL("host"), PH_NOISY, "phady/cache/cachehandler.zep", 69 TSRMLS_CC);
-			zephir_array_update_string(&arrCacheConfig, SL("host"), &_5, PH_COPY | PH_SEPARATE);
-			zephir_array_fetch_string(&_6, cacheConfig, SL("memcache"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 70 TSRMLS_CC);
-			zephir_array_fetch_string(&_7, _6, SL("default"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 70 TSRMLS_CC);
-			ZEPHIR_OBS_NVAR(_5);
-			zephir_array_fetch_string(&_5, _7, SL("port"), PH_NOISY, "phady/cache/cachehandler.zep", 70 TSRMLS_CC);
-			zephir_array_update_string(&arrCacheConfig, SL("port"), &_5, PH_COPY | PH_SEPARATE);
-			zephir_array_fetch_string(&_8, cacheConfig, SL("memcache"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 71 TSRMLS_CC);
-			zephir_array_fetch_string(&_9, _8, SL("default"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 71 TSRMLS_CC);
-			ZEPHIR_OBS_NVAR(_5);
-			zephir_array_fetch_string(&_5, _9, SL("persistent"), PH_NOISY, "phady/cache/cachehandler.zep", 72 TSRMLS_CC);
-			zephir_array_update_string(&arrCacheConfig, SL("persistent"), &_5, PH_COPY | PH_SEPARATE);
-			ZEPHIR_INIT_NVAR(adapter);
-			object_init_ex(adapter, phalcon_cache_backend_memcache_ce);
-			ZEPHIR_CALL_METHOD(NULL, adapter, "__construct", NULL, 0, arrCacheConfig);
-			zephir_check_call_status();
-			break;
-		}
-		ZEPHIR_INIT_NVAR(arrCacheConfig);
-		zephir_create_array(arrCacheConfig, 4, 0 TSRMLS_CC);
-		zephir_array_fetch_string(&_3, cacheConfig, SL("redis"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 77 TSRMLS_CC);
-		zephir_array_fetch_string(&_4, _3, SL("default"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 77 TSRMLS_CC);
-		ZEPHIR_OBS_NVAR(_5);
-		zephir_array_fetch_string(&_5, _4, SL("host"), PH_NOISY, "phady/cache/cachehandler.zep", 77 TSRMLS_CC);
-		zephir_array_update_string(&arrCacheConfig, SL("host"), &_5, PH_COPY | PH_SEPARATE);
-		zephir_array_fetch_string(&_6, cacheConfig, SL("redis"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 78 TSRMLS_CC);
-		zephir_array_fetch_string(&_7, _6, SL("default"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 78 TSRMLS_CC);
-		ZEPHIR_OBS_NVAR(_5);
-		zephir_array_fetch_string(&_5, _7, SL("port"), PH_NOISY, "phady/cache/cachehandler.zep", 78 TSRMLS_CC);
-		zephir_array_update_string(&arrCacheConfig, SL("port"), &_5, PH_COPY | PH_SEPARATE);
-		zephir_array_fetch_string(&_8, cacheConfig, SL("redis"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 79 TSRMLS_CC);
-		zephir_array_fetch_string(&_9, _8, SL("default"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 79 TSRMLS_CC);
-		ZEPHIR_OBS_NVAR(_5);
-		zephir_array_fetch_string(&_5, _9, SL("persistent"), PH_NOISY, "phady/cache/cachehandler.zep", 79 TSRMLS_CC);
-		zephir_array_update_string(&arrCacheConfig, SL("persistent"), &_5, PH_COPY | PH_SEPARATE);
-		zephir_array_fetch_string(&_10, cacheConfig, SL("redis"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 80 TSRMLS_CC);
-		zephir_array_fetch_string(&_11, _10, SL("default"), PH_NOISY | PH_READONLY, "phady/cache/cachehandler.zep", 80 TSRMLS_CC);
-		ZEPHIR_OBS_NVAR(_5);
-		zephir_array_fetch_string(&_5, _11, SL("auth"), PH_NOISY, "phady/cache/cachehandler.zep", 81 TSRMLS_CC);
-		zephir_array_update_string(&arrCacheConfig, SL("auth"), &_5, PH_COPY | PH_SEPARATE);
-		ZEPHIR_INIT_NVAR(adapter);
-		object_init_ex(adapter, phalcon_cache_backend_redis_ce);
-		ZEPHIR_CALL_METHOD(NULL, adapter, "__construct", NULL, 0, arrCacheConfig);
-		zephir_check_call_status();
-		break;
-	} while(0);
-
-	RETURN_CCTOR(adapter);
+	ZEPHIR_MM_RESTORE();
 
 }
 

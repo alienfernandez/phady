@@ -187,7 +187,7 @@ PHP_METHOD(Phady_Route_Router, setSystemRoutes) {
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_3);
 	ZEPHIR_CONCAT_VS(_3, rootDir, "/config/routing.yml");
-	ZEPHIR_CALL_FUNCTION(&_4, "yaml_parse_file", NULL, 27, _3);
+	ZEPHIR_CALL_FUNCTION(&_4, "yaml_parse_file", NULL, 29, _3);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("configRoutes"), _4 TSRMLS_CC);
 	_5 = zephir_fetch_nproperty_this(this_ptr, SL("configRoutes"), PH_NOISY_CC);

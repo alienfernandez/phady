@@ -19,10 +19,7 @@
 #include "kernel/array.h"
 #include "kernel/operators.h"
 #include "kernel/fcall.h"
-#include "ext/phalcon/phalcon/db/adapter/pdo/postgresql.zep.h"
 #include "ext/phalcon/phalcon/db/adapter/pdo/mysql.zep.h"
-#include "ext/phalcon/phalcon/db/adapter/pdo/sqlite.zep.h"
-#include "ext/phalcon/phalcon/db/adapter/pdo/oracle.zep.h"
 
 
 /**
@@ -70,6 +67,7 @@ PHP_METHOD(Phady_Db_DatabaseHandler, __construct) {
  */
 PHP_METHOD(Phady_Db_DatabaseHandler, getAdapter) {
 
+	zephir_nts_static zend_class_entry *_4 = NULL, *_5 = NULL, *_6 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *arrdbConfig, *dbConfig, *adapter = NULL, *_0, *_1, *_2 = NULL, *_3;
 
@@ -94,18 +92,21 @@ PHP_METHOD(Phady_Db_DatabaseHandler, getAdapter) {
 	zephir_array_update_string(&arrdbConfig, SL("dbname"), &_2, PH_COPY | PH_SEPARATE);
 	zephir_array_fetch_string(&_3, dbConfig, SL("driver"), PH_NOISY | PH_READONLY, "phady/db/databasehandler.zep", 61 TSRMLS_CC);
 	do {
-		if (ZEPHIR_IS_STRING(_3, "pgsql")) {
+		if (ZEPHIR_IS_STRING(_3, "mysql")) {
 			ZEPHIR_INIT_VAR(adapter);
-			object_init_ex(adapter, phalcon_db_adapter_pdo_postgresql_ce);
+			object_init_ex(adapter, phalcon_db_adapter_pdo_mysql_ce);
 			if (zephir_has_constructor(adapter TSRMLS_CC)) {
 				ZEPHIR_CALL_METHOD(NULL, adapter, "__construct", NULL, 0, arrdbConfig);
 				zephir_check_call_status();
 			}
 			break;
 		}
-		if (ZEPHIR_IS_STRING(_3, "mysql")) {
+		if (ZEPHIR_IS_STRING(_3, "pgsql")) {
 			ZEPHIR_INIT_NVAR(adapter);
-			object_init_ex(adapter, phalcon_db_adapter_pdo_mysql_ce);
+			if (!_4) {
+				_4 = zend_fetch_class(SL("Phady\\Db\\PostgresqlAdapter"), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
+			}
+			object_init_ex(adapter, _4);
 			if (zephir_has_constructor(adapter TSRMLS_CC)) {
 				ZEPHIR_CALL_METHOD(NULL, adapter, "__construct", NULL, 0, arrdbConfig);
 				zephir_check_call_status();
@@ -114,7 +115,10 @@ PHP_METHOD(Phady_Db_DatabaseHandler, getAdapter) {
 		}
 		if (ZEPHIR_IS_STRING(_3, "sqlite")) {
 			ZEPHIR_INIT_NVAR(adapter);
-			object_init_ex(adapter, phalcon_db_adapter_pdo_sqlite_ce);
+			if (!_5) {
+				_5 = zend_fetch_class(SL("Phady\\Db\\SqliteAdapter"), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
+			}
+			object_init_ex(adapter, _5);
 			if (zephir_has_constructor(adapter TSRMLS_CC)) {
 				ZEPHIR_CALL_METHOD(NULL, adapter, "__construct", NULL, 0, arrdbConfig);
 				zephir_check_call_status();
@@ -123,7 +127,10 @@ PHP_METHOD(Phady_Db_DatabaseHandler, getAdapter) {
 		}
 		if (ZEPHIR_IS_STRING(_3, "oracle")) {
 			ZEPHIR_INIT_NVAR(adapter);
-			object_init_ex(adapter, phalcon_db_adapter_pdo_oracle_ce);
+			if (!_6) {
+				_6 = zend_fetch_class(SL("Phady\\Db\\OracleAdapter"), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
+			}
+			object_init_ex(adapter, _6);
 			if (zephir_has_constructor(adapter TSRMLS_CC)) {
 				ZEPHIR_CALL_METHOD(NULL, adapter, "__construct", NULL, 0, arrdbConfig);
 				zephir_check_call_status();
@@ -131,7 +138,7 @@ PHP_METHOD(Phady_Db_DatabaseHandler, getAdapter) {
 			break;
 		}
 		ZEPHIR_INIT_NVAR(adapter);
-		object_init_ex(adapter, phalcon_db_adapter_pdo_postgresql_ce);
+		object_init_ex(adapter, phalcon_db_adapter_pdo_mysql_ce);
 		if (zephir_has_constructor(adapter TSRMLS_CC)) {
 			ZEPHIR_CALL_METHOD(NULL, adapter, "__construct", NULL, 0, arrdbConfig);
 			zephir_check_call_status();
