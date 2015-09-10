@@ -54,6 +54,8 @@ class DefaultAuthenticationSuccessHandler extends \Phalcon\Di\Injectable impleme
      */
     public function onAuthenticationSuccess(<Request> request, <TokenInterface> token)
     {
+        print_r(" Auth ok");
+        die();
         return this->getDI()->get("response")->redirect(this->determineTargetUrl(request));
     }
 

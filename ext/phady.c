@@ -99,7 +99,6 @@ zend_class_entry *phady_2__closure_ce;
 zend_class_entry *phady_30__closure_ce;
 zend_class_entry *phady_31__closure_ce;
 zend_class_entry *phady_32__closure_ce;
-zend_class_entry *phady_33__closure_ce;
 zend_class_entry *phady_3__closure_ce;
 zend_class_entry *phady_4__closure_ce;
 zend_class_entry *phady_5__closure_ce;
@@ -398,7 +397,6 @@ static PHP_MINIT_FUNCTION(phady)
 	ZEPHIR_INIT(phady_30__closure);
 	ZEPHIR_INIT(phady_31__closure);
 	ZEPHIR_INIT(phady_32__closure);
-	ZEPHIR_INIT(phady_33__closure);
 	ZEPHIR_INIT(phady_3__closure);
 	ZEPHIR_INIT(phady_4__closure);
 	ZEPHIR_INIT(phady_5__closure);

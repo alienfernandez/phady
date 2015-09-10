@@ -20,7 +20,7 @@ use Phalcon\Mvc\Controller as ControllerMVC;
  *
  * Base Controller
  */
-class ControllerBase extends ControllerMVC
+class ControllerBase extends \Phalcon\Di\Injectable
 {
 
     const LOGIN_URI = "login";
@@ -46,5 +46,39 @@ class ControllerBase extends ControllerMVC
             */
         }
     }
+    
+    public function beforeExecuteRoute(dispatcher) {
+        var map;
+        //echo "<pre>"; print_r("beforeExecuteRoute!!!");die();
+        var request, listeners, exceptionListener, listenersMap, listener;
+        let request = this->getDI()->get("request");
+        let map = this->getDI()->get("security.firewall.map");
+        // register listeners for this firewall
+        //list(listeners, exceptionListener) = this->map->getListeners(request);
+        let listenersMap = map->getListeners(request);
+
+        var controllerName, actionName;
+        let controllerName = dispatcher->getControllerName();
+        let actionName = dispatcher->getActionName();
+
+        //echo "<pre>"; print_r(controllerName);
+        //echo "<pre>"; print_r(actionName);
+
+        /*if (null !== exceptionListener) {
+            this->exceptionListeners[event->getRequest()] = listenersMap[1];
+            exceptionListener->register(this->dispatcher);
+        }*/
+        //echo "<pre>"; print_r(this->getDI()->get("session")); die();
+        // initiate the listener chain
+        for listener in listenersMap[0] {
+
+            this->getDI()->get(listener)->handle();
+            //echo "<pre>"; print_r(this->getDI()->get("session")); die();
+            //if (null !== this->getDI()->get("response")) {
+            //    break;
+           // }
+        }
+    }
+
 
 }

@@ -79,7 +79,9 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
                 continue;
             }
             try {
+
                 let result = provider->authenticate(token);
+
                 if (null !== result) {
                     break;
                 }

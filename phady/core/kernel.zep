@@ -294,7 +294,7 @@ abstract class Kernel
                     /**
                      * Check if the user is allowed to access certain action using the AuthenticationListener
                      */
-                    eventsManager->attach("dispatch:beforeDispatch", this->container->get("security.firewall"));
+                    //eventsManager->attach("dispatch:beforeDispatch", this->container->get("security.firewall"));
                     this->container->get("dispatcher")->setEventsManager(eventsManager);
                     //eventsManager->fire("dispatch:beforeDispatch", this->container->get("dispatcher"));
                 }

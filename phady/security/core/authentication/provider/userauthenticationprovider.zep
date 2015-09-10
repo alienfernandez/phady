@@ -68,6 +68,7 @@ abstract class UserAuthenticationProvider implements AuthenticationProviderInter
         }
 
         try {
+
             let user = this->retrieveUser(username, token);
         } catch UsernameNotFoundException, e {
             if (this->hideUserNotFoundExceptions) {

@@ -134,6 +134,7 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
 
             let returnValue = this->attemptAuthentication(request);
 
+            die("OK");
             if (null === returnValue) {
                 return;
             }
@@ -145,6 +146,7 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
             } else {
                 throw new \RuntimeException("attemptAuthentication() must either return a Response, an implementation of TokenInterface, or null.");
             }
+
         } catch AuthenticationException, e {
             let response = this->onFailure(request, e);
         }

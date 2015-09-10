@@ -59,7 +59,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
             this->createEncoders(config["encoders"]);
         }
         //Add factories user providers "InMemoryFactory" y ""
-        this->addUserProviderFactory(new InMemoryFactory());
+        //this->addUserProviderFactory(new InMemoryFactory());
         this->addUserProviderFactory(new EntityFactory("entity", "phalcon.orm.security.user.provider"));
 
         this->addSecurityListenerFactory(new FormLoginFactory());
@@ -228,7 +228,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         this->container->set("security.firewall.map", firewallMapFunc);
 
         if (this->container->has("security.firewall")){
-            this->container->get("security.firewall")->setMap(this->container->get("security.firewall.map"));
+            //this->container->get("security.firewall")->setMap(this->container->get("security.firewall.map"));
         }
         //echo "<pre>"; print_r(this->container->get("security.firewall"));die();
         //map:Phady\Security\Firewall:private
@@ -239,9 +239,18 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         for key, authProvider in this->authenticationProviders {
             let authenticationProvidersRef[key] = this->container->get(authProvider);
         }
-        if (this->container->has("security.authentication.manager")){
+
+        var authManagerFunc, argsManagerFunc;
+        //Register component security.authentication.manager
+        let argsManagerFunc = ["authenticationProvidersRef" : authenticationProvidersRef];
+        let authManagerFunc = call_user_func_array(function(authenticationProvidersRef) {
+             return new \Phady\Security\Core\Authentication\AuthenticationProviderManager(authenticationProvidersRef);
+        }, argsManagerFunc);
+        this->container->set("security.authentication.manager", authManagerFunc);
+
+        /*if (this->container->has("security.authentication.manager")){
             this->container->get("security.authentication.manager")->setProviders(authenticationProvidersRef);
-        }
+        }*/
         //echo "<pre>"; print_r(this->container->get("security.authentication.manager"));die();
 
     }
@@ -328,7 +337,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
         if (this->container->has("dispatcher")) {
             if (this->container->get("dispatcher")->getEventsManager()) {
-                 this->container->get("dispatcher")->getEventsManager()->attach("dispatch:beforeException", this->container->get(exceptionListenerId));
+                 //this->container->get("dispatcher")->getEventsManager()->attach("dispatch:beforeException", this->container->get(exceptionListenerId));
             }
         }
 
@@ -339,32 +348,12 @@ class SecurityExtension extends \Phalcon\Di\Injectable
     // Parses user providers and returns an array of their ids
     private function createUserProviders(array config)
     {
-        var providerIds, providersList, name, provider, arrReturn, authManagerFunc, args;
+        var providerIds, name, provider, id;
         let providerIds = [];
-        let providersList = [];
         for name, provider in config["providers"] {
-            let arrReturn = this->createUserDaoProvider(name, provider);
-            if (arrReturn){
-                let providerIds[] = arrReturn["name"];
-                let providersList[] = this->container->get(arrReturn["name"], [provider[arrReturn["key"]]]);
-            }
+            let id = this->createUserDaoProvider(name, provider);
+            let providerIds[] = id;
         }
-        //Register component security.authentication.manager
-        let args = ["providersList" : providersList];
-        let authManagerFunc = call_user_func_array(function(providersList) {
-             return new \Phady\Security\Core\Authentication\AuthenticationProviderManager(providersList);
-        }, args);
-        this->container->set("security.authentication.manager", authManagerFunc);
-
-        /*var argsAuthListenForm;
-        let argsAuthListenForm = ["container" : this->container];
-        let authManagerFunc = call_user_func_array(function(container) {
-             return new \Phady\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener(
-                     container->get("security.token_storage"), container->get("security.authentication.manager"),
-                     "key", container->get("security.authentication.success_handler"), container->get("security.authentication.failure_handler"),
-                     [], null);
-        }, argsAuthListenForm);
-        this->container->set("security.authentication.listener.form", argsAuthListenForm);*/
         return providerIds;
     }
 
@@ -425,7 +414,6 @@ class SecurityExtension extends \Phalcon\Di\Injectable
     private function createUserDaoProvider(name, provider)
     {
         var factory, key;
-        array arrReturn = [];
         let name = this->getUserProviderId(strtolower(name));
 
         // Doctrine Entity and In-memory DAO provider are managed by factories
@@ -433,9 +421,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
             let key = str_replace("-", "_", factory->getKey());
             if (array_key_exists(key, provider) && !empty(provider[key])) {
                 factory->create(name, provider[key]);
-                let arrReturn["name"] = name;
-                let arrReturn["key"] = key;
-                return arrReturn;
+                return name;
             }
         }
 

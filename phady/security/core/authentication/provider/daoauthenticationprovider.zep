@@ -88,7 +88,9 @@ class DaoAuthenticationProvider extends UserAuthenticationProvider
         }
 
         try {
+            echo "<pre>"; print_r(this->userProvider); die();
             let user = this->userProvider->loadUserByUsername(username);
+
             if (user instanceof UserInterface) {
                 return user;
             } else {

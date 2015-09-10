@@ -184,8 +184,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/29__closure.zep.c
 	phady/30__closure.zep.c
 	phady/31__closure.zep.c
-	phady/32__closure.zep.c
-	phady/33__closure.zep.c "
+	phady/32__closure.zep.c "
 	PHP_NEW_EXTENSION(phady, $phady_sources, $ext_shared,, )
 	PHP_SUBST(PHADY_SHARED_LIBADD)
 

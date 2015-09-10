@@ -76,7 +76,7 @@ PHP_METHOD(Phady_Security_Core_Models_Entities_Resources, init) {
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_CALL_PARENT(NULL, phady_security_core_models_entities_resources_ce, this_ptr, "init", &_0, 84);
+	ZEPHIR_CALL_PARENT(NULL, phady_security_core_models_entities_resources_ce, this_ptr, "init", &_0, 77);
 	zephir_check_call_status();
 	_1 = zephir_fetch_nproperty_this(this_ptr, SL("_set"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_2);
@@ -86,7 +86,7 @@ PHP_METHOD(Phady_Security_Core_Models_Entities_Resources, init) {
 	ZEPHIR_INIT_VAR(_4);
 	ZVAL_STRING(_4, "name", ZEPHIR_TEMP_PARAM_COPY);
 	Z_SET_ISREF_P(_1);
-	ZEPHIR_CALL_FUNCTION(NULL, "array_push", &_5, 85, _1, _2, _3, _4);
+	ZEPHIR_CALL_FUNCTION(NULL, "array_push", &_5, 78, _1, _2, _3, _4);
 	zephir_check_temp_parameter(_2);
 	zephir_check_temp_parameter(_3);
 	zephir_check_temp_parameter(_4);
@@ -100,7 +100,7 @@ PHP_METHOD(Phady_Security_Core_Models_Entities_Resources, init) {
 	ZEPHIR_INIT_NVAR(_4);
 	ZVAL_STRING(_4, "name", ZEPHIR_TEMP_PARAM_COPY);
 	Z_SET_ISREF_P(_6);
-	ZEPHIR_CALL_FUNCTION(NULL, "array_push", &_5, 85, _6, _2, _3, _4);
+	ZEPHIR_CALL_FUNCTION(NULL, "array_push", &_5, 78, _6, _2, _3, _4);
 	zephir_check_temp_parameter(_2);
 	zephir_check_temp_parameter(_3);
 	zephir_check_temp_parameter(_4);
