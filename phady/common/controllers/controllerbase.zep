@@ -72,8 +72,8 @@ class ControllerBase extends \Phalcon\Di\Injectable
         // initiate the listener chain
         for listener in listenersMap[0] {
 
+            //echo "<pre>"; print_r(this->getDI()->get(listener)); die();
             this->getDI()->get(listener)->handle();
-            //echo "<pre>"; print_r(this->getDI()->get("session")); die();
             //if (null !== this->getDI()->get("response")) {
             //    break;
            // }

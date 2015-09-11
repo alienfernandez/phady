@@ -13,15 +13,16 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/common/entities/modelbase.zep.c
 	phady/security/core/authentication/authenticationmanagerinterface.zep.c
 	phady/security/core/user/userinterface.zep.c
+	phady/security/http/firewall/listenerinterface.zep.c
+	phady/security/core/authentication/provider/authenticationproviderinterface.zep.c
 	phady/security/core/authorization/voter/voterinterface.zep.c
 	phady/security/core/exception/accountstatusexception.zep.c
 	phady/security/core/user/userproviderinterface.zep.c
-	phady/security/http/firewall/listenerinterface.zep.c
-	phady/security/core/authentication/provider/authenticationproviderinterface.zep.c
+	phady/security/core/authentication/token/tokeninterface.zep.c
 	phady/security/core/encoder/passwordencoderinterface.zep.c
 	phady/security/core/user/advanceduserinterface.zep.c
 	phady/core/kernel.zep.c
-	phady/security/core/authentication/token/tokeninterface.zep.c
+	phady/security/core/authentication/token/abstracttoken.zep.c
 	phady/security/core/encoder/basepasswordencoder.zep.c
 	phady/security/core/role/roleinterface.zep.c
 	phady/security/core/user/factory/userproviderfactoryinterface.zep.c
@@ -30,10 +31,10 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/cache/cacheinterface.zep.c
 	phady/http/requestmatcherinterface.zep.c
 	phady/messaging/adapter/messaginginterface.zep.c
+	phady/security/core/authentication/authenticationtrustresolverinterface.zep.c
 	phady/security/core/authentication/loginmanagerinterface.zep.c
 	phady/security/core/authentication/model/userinterface.zep.c
 	phady/security/core/authentication/provider/userauthenticationprovider.zep.c
-	phady/security/core/authentication/token/abstracttoken.zep.c
 	phady/security/core/authentication/token/storage/tokenstorageinterface.zep.c
 	phady/security/core/authorization/accessdecisionmanagerinterface.zep.c
 	phady/security/core/authorization/authorizationcheckerinterface.zep.c
@@ -66,17 +67,19 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/report/excel/template/excelmultitable.zep.c
 	phady/route/router.zep.c
 	phady/security/core/authentication/authenticationprovidermanager.zep.c
-	phady/security/core/authentication/authenticationtrustresolverinterface.zep.c
+	phady/security/core/authentication/authenticationtrustresolver.zep.c
 	phady/security/core/authentication/authhandler.zep.c
 	phady/security/core/authentication/eventlistener/authenticationlistener.zep.c
 	phady/security/core/authentication/loginmanager.zep.c
 	phady/security/core/authentication/model/user.zep.c
 	phady/security/core/authentication/model/usermanagerinterface.zep.c
+	phady/security/core/authentication/provider/anonymousauthenticationprovider.zep.c
 	phady/security/core/authentication/provider/daoauthenticationprovider.zep.c
 	phady/security/core/authentication/provider/entityuserprovider.zep.c
 	phady/security/core/authentication/provider/simpleauthenticationprovider.zep.c
 	phady/security/core/authentication/provider/userprovider.zep.c
 	phady/security/core/authentication/simpleauthenticatorinterface.zep.c
+	phady/security/core/authentication/token/anonymoustoken.zep.c
 	phady/security/core/authentication/token/storage/tokenstorage.zep.c
 	phady/security/core/authentication/token/usernamepasswordtoken.zep.c
 	phady/security/core/authenticationevents.zep.c
@@ -137,6 +140,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/http/entrypoint/formauthenticationentrypoint.zep.c
 	phady/security/http/event/interactiveloginevent.zep.c
 	phady/security/http/firewall/accesslistener.zep.c
+	phady/security/http/firewall/anonymousauthenticationlistener.zep.c
 	phady/security/http/firewall/channellistener.zep.c
 	phady/security/http/firewall/exceptionlistener.zep.c
 	phady/security/http/firewall/usernamepasswordformauthenticationlistener.zep.c
@@ -184,7 +188,12 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/29__closure.zep.c
 	phady/30__closure.zep.c
 	phady/31__closure.zep.c
-	phady/32__closure.zep.c "
+	phady/32__closure.zep.c
+	phady/33__closure.zep.c
+	phady/34__closure.zep.c
+	phady/35__closure.zep.c
+	phady/36__closure.zep.c
+	phady/37__closure.zep.c "
 	PHP_NEW_EXTENSION(phady, $phady_sources, $ext_shared,, )
 	PHP_SUBST(PHADY_SHARED_LIBADD)
 

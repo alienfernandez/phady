@@ -82,14 +82,14 @@ PHP_METHOD(Phady_Messaging_Messaging, getMessagingAdapter) {
 			if (ZEPHIR_IS_STRING(key, "rabbitmq")) {
 				ZEPHIR_INIT_NVAR(rabbitmqServer);
 				object_init_ex(rabbitmqServer, phady_messaging_adapter_rabbitmq_ce);
-				ZEPHIR_CALL_METHOD(NULL, rabbitmqServer, "__construct", &_4, 50, messaging);
+				ZEPHIR_CALL_METHOD(NULL, rabbitmqServer, "__construct", &_4, 55, messaging);
 				zephir_check_call_status();
 				zephir_update_property_zval(adapter, SL("rabbitmq"), rabbitmqServer TSRMLS_CC);
 				break;
 			}
 			ZEPHIR_INIT_NVAR(rabbitmqServer);
 			object_init_ex(rabbitmqServer, phady_messaging_adapter_rabbitmq_ce);
-			ZEPHIR_CALL_METHOD(NULL, rabbitmqServer, "__construct", &_4, 50, messaging);
+			ZEPHIR_CALL_METHOD(NULL, rabbitmqServer, "__construct", &_4, 55, messaging);
 			zephir_check_call_status();
 			zephir_update_property_zval(adapter, SL("rabbitmq"), rabbitmqServer TSRMLS_CC);
 			break;

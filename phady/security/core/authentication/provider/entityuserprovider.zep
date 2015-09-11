@@ -53,7 +53,6 @@ class EntityUserProvider implements UserProviderInterface
         var user;
         if (null !== this->property) {
 
-            echo "<pre>"; print_r("OK USER LOAD (*&#$%^&*("); die();
             let user = this->classUser->findFirst([this->property : username]);
 
         } else {

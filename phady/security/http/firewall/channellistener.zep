@@ -64,9 +64,11 @@ class ChannelListener extends \Phalcon\Di\Injectable implements ListenerInterfac
      */
     public function handle()
     {
+        let this->map = this->getDI()->get("security.access_map");
         var request, patterns, channel, response;
         let request = this->getDI()->get("request");
 
+        echo "<pre>";print_r(this->map->getPatterns(request));die();
         //list(, channel) = this->map->getPatterns(request);
         let patterns = this->map->getPatterns(request);
         let channel = patterns[1];
@@ -80,7 +82,7 @@ class ChannelListener extends \Phalcon\Di\Injectable implements ListenerInterfac
             return;
         }
 
-        if ("http" === channel && request->isSecure()) {
+        if ("http" === channel && request->isSecureRequest()) {
             /*
             if (null !== this->logger) {
                 this->logger->info("Redirecting to HTTP.");

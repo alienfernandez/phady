@@ -75,8 +75,6 @@ class ExceptionListener extends \Phalcon\Di\Injectable
      *
      */
     public function beforeException(<Event> event, <Dispatcher> dispatcher, exception) {
-        print_r(exception);
-        die();
         if (exception instanceof AuthenticationException) {
             return this->handleAuthenticationException(exception);
         }

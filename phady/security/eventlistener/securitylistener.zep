@@ -60,14 +60,19 @@ class SecurityListener extends \Phalcon\Di\Injectable
             return new \Phady\Security\Http\Authentication\DefaultAuthenticationFailureHandler();
         });
 
-        //Register component login manager service
+        this->container->set("security.authentication.manager", function() {
+             return new \Phady\Security\Core\Authentication\AuthenticationProviderManager([]);
+        });
+
+        this->container->set("security.access.simple_role_voter", function() {
+             return new \Phady\Security\Core\Authorization\Voter\RoleVoter("ROLE_");
+        });
+
         /*
-        this->container->set("security.login_manager", function () {
-            var loginManager, userChecker, container;
-            let container = _SERVER["containerApp"];
-            let userChecker = new \Phady\Security\Core\User\UserChecker();
-            let loginManager = new \Phady\Security\Core\Authentication\LoginManager(container->get("security.token_storage"), userChecker, _SERVER["containerApp"]);
-            return loginManager;
+        this->container->set("security.authentication.trust_resolver", function() {
+             return new \Phady\Security\Core\Authentication\AuthenticationTrustResolver(
+
+             );
         });*/
 
         let this->securityExtension = new SecurityExtension();

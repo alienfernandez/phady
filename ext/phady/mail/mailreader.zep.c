@@ -313,10 +313,10 @@ PHP_METHOD(Phady_Mail_MailReader, __construct) {
  */
 PHP_METHOD(Phady_Mail_MailReader, setConnection) {
 
-	zephir_fcall_cache_entry *_15 = NULL;
+	zephir_fcall_cache_entry *_13 = NULL, *_16 = NULL;
 	int _8, _9, ZEPHIR_LAST_CALL_STATUS;
 	zend_bool _7;
-	zval *key = NULL, *exception = NULL, *_0, *_1, *_2, _3, *_4, *_5, *_6, *_10, *_11, *_12 = NULL, *_13 = NULL, *_14 = NULL;
+	zval *key = NULL, *exception = NULL, *_0, *_1, *_2, _3, *_4, *_5, *_6, *_10, *_11, *_12 = NULL, *_14 = NULL, *_15 = NULL;
 
 	ZEPHIR_MM_GROW();
 
@@ -357,18 +357,18 @@ PHP_METHOD(Phady_Mail_MailReader, setConnection) {
 						_5 = zephir_fetch_nproperty_this(this_ptr, SL("mailbox"), PH_NOISY_CC);
 						_10 = zephir_fetch_nproperty_this(this_ptr, SL("username"), PH_NOISY_CC);
 						_11 = zephir_fetch_nproperty_this(this_ptr, SL("password"), PH_NOISY_CC);
-						ZEPHIR_CALL_FUNCTION(&_12, "imap_open", NULL, 0, _5, _10, _11);
+						ZEPHIR_CALL_FUNCTION(&_12, "imap_open", &_13, 41, _5, _10, _11);
 						zephir_check_call_status_or_jump(try_end_1);
 						zephir_update_property_this(this_ptr, SL("connection"), _12 TSRMLS_CC);
 					} else {
-						ZEPHIR_INIT_NVAR(_13);
-						object_init_ex(_13, zend_exception_get_default(TSRMLS_C));
 						ZEPHIR_INIT_NVAR(_14);
-						ZVAL_STRING(_14, "imap_open function is not available install the extension php5_imap", ZEPHIR_TEMP_PARAM_COPY);
-						ZEPHIR_CALL_METHOD(NULL, _13, "__construct", &_15, 30, _14);
-						zephir_check_temp_parameter(_14);
+						object_init_ex(_14, zend_exception_get_default(TSRMLS_C));
+						ZEPHIR_INIT_NVAR(_15);
+						ZVAL_STRING(_15, "imap_open function is not available install the extension php5_imap", ZEPHIR_TEMP_PARAM_COPY);
+						ZEPHIR_CALL_METHOD(NULL, _14, "__construct", &_16, 28, _15);
+						zephir_check_temp_parameter(_15);
 						zephir_check_call_status_or_jump(try_end_1);
-						zephir_throw_exception_debug(_13, "phady/mail/mailreader.zep", 213 TSRMLS_CC);
+						zephir_throw_exception_debug(_14, "phady/mail/mailreader.zep", 213 TSRMLS_CC);
 						goto try_end_1;
 
 					}
@@ -378,14 +378,14 @@ PHP_METHOD(Phady_Mail_MailReader, setConnection) {
 					}
 				}
 			}
-			ZEPHIR_INIT_NVAR(_13);
-			object_init_ex(_13, zend_exception_get_default(TSRMLS_C));
 			ZEPHIR_INIT_NVAR(_14);
-			ZVAL_STRING(_14, "You can't connect the mail server", ZEPHIR_TEMP_PARAM_COPY);
-			ZEPHIR_CALL_METHOD(NULL, _13, "__construct", &_15, 30, _14);
-			zephir_check_temp_parameter(_14);
+			object_init_ex(_14, zend_exception_get_default(TSRMLS_C));
+			ZEPHIR_INIT_NVAR(_15);
+			ZVAL_STRING(_15, "You can't connect the mail server", ZEPHIR_TEMP_PARAM_COPY);
+			ZEPHIR_CALL_METHOD(NULL, _14, "__construct", &_16, 28, _15);
+			zephir_check_temp_parameter(_15);
 			zephir_check_call_status_or_jump(try_end_1);
-			zephir_throw_exception_debug(_13, "phady/mail/mailreader.zep", 220 TSRMLS_CC);
+			zephir_throw_exception_debug(_14, "phady/mail/mailreader.zep", 220 TSRMLS_CC);
 			goto try_end_1;
 
 
@@ -416,9 +416,9 @@ PHP_METHOD(Phady_Mail_MailReader, setConnection) {
  */
 PHP_METHOD(Phady_Mail_MailReader, readMessageByFilter) {
 
-	zephir_fcall_cache_entry *_13 = NULL, *_14 = NULL, *_15 = NULL;
-	zend_bool flag, filter, _1, _7;
-	zval *userInput_param = NULL, *filterType_param = NULL, *flag_param = NULL, *i = NULL, *countMsg = NULL, *_0, *_3 = NULL, *_4, *_5 = NULL, *_6 = NULL, *_8, *_9 = NULL, *_10 = NULL, _11 = zval_used_for_init, *_12 = NULL;
+	zephir_fcall_cache_entry *_6 = NULL, *_14 = NULL, *_15 = NULL, *_16 = NULL;
+	zend_bool flag, filter, _1, _8;
+	zval *userInput_param = NULL, *filterType_param = NULL, *flag_param = NULL, *i = NULL, *countMsg = NULL, *_0, *_3 = NULL, *_4, *_5 = NULL, *_7 = NULL, *_9, *_10 = NULL, *_11 = NULL, _12 = zval_used_for_init, *_13 = NULL;
 	int userInput, filterType, ZEPHIR_LAST_CALL_STATUS, _2;
 
 	ZEPHIR_MM_GROW();
@@ -430,7 +430,7 @@ PHP_METHOD(Phady_Mail_MailReader, readMessageByFilter) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("connection"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&countMsg, "imap_num_msg", NULL, 0, _0);
+	ZEPHIR_CALL_FUNCTION(&countMsg, "imap_num_msg", NULL, 42, _0);
 	zephir_check_call_status();
 	ZEPHIR_CPY_WRT(_3, countMsg);
 	_2 = 1;
@@ -448,100 +448,100 @@ PHP_METHOD(Phady_Mail_MailReader, readMessageByFilter) {
 			ZEPHIR_INIT_NVAR(i);
 			ZVAL_LONG(i, _2);
 			_4 = zephir_fetch_nproperty_this(this_ptr, SL("connection"), PH_NOISY_CC);
-			ZEPHIR_CALL_FUNCTION(&_5, "imap_headerinfo", NULL, 0, _4, i);
+			ZEPHIR_CALL_FUNCTION(&_5, "imap_headerinfo", &_6, 43, _4, i);
 			zephir_check_call_status();
 			zephir_update_property_this(this_ptr, SL("headers"), _5 TSRMLS_CC);
 			if (filterType == 0) {
-				ZEPHIR_OBS_NVAR(_6);
-				zephir_read_property_this(&_6, this_ptr, SL("headers"), PH_NOISY_CC);
-				_7 = zephir_is_true(_6);
-				if (_7) {
-					_8 = zephir_fetch_nproperty_this(this_ptr, SL("headers"), PH_NOISY_CC);
-					ZEPHIR_OBS_NVAR(_9);
-					zephir_read_property(&_9, _8, SL("Msgno"), PH_NOISY_CC);
-					ZEPHIR_INIT_NVAR(_10);
-					ZEPHIR_SINIT_NVAR(_11);
-					ZVAL_LONG(&_11, userInput);
-					zephir_fast_trim(_10, &_11, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
-					_7 = ZEPHIR_IS_EQUAL(_9, _10);
+				ZEPHIR_OBS_NVAR(_7);
+				zephir_read_property_this(&_7, this_ptr, SL("headers"), PH_NOISY_CC);
+				_8 = zephir_is_true(_7);
+				if (_8) {
+					_9 = zephir_fetch_nproperty_this(this_ptr, SL("headers"), PH_NOISY_CC);
+					ZEPHIR_OBS_NVAR(_10);
+					zephir_read_property(&_10, _9, SL("Msgno"), PH_NOISY_CC);
+					ZEPHIR_INIT_NVAR(_11);
+					ZEPHIR_SINIT_NVAR(_12);
+					ZVAL_LONG(&_12, userInput);
+					zephir_fast_trim(_11, &_12, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
+					_8 = ZEPHIR_IS_EQUAL(_10, _11);
 				}
-				filter = _7;
+				filter = _8;
 			} else if (filterType == 1) {
-				ZEPHIR_OBS_NVAR(_6);
-				zephir_read_property_this(&_6, this_ptr, SL("headers"), PH_NOISY_CC);
-				_7 = zephir_is_true(_6);
-				if (_7) {
-					_8 = zephir_fetch_nproperty_this(this_ptr, SL("headers"), PH_NOISY_CC);
-					ZEPHIR_OBS_NVAR(_9);
-					zephir_read_property(&_9, _8, SL("date"), PH_NOISY_CC);
-					ZEPHIR_CALL_METHOD(&_12, this_ptr, "getrecdate", &_13, 43, _9);
+				ZEPHIR_OBS_NVAR(_7);
+				zephir_read_property_this(&_7, this_ptr, SL("headers"), PH_NOISY_CC);
+				_8 = zephir_is_true(_7);
+				if (_8) {
+					_9 = zephir_fetch_nproperty_this(this_ptr, SL("headers"), PH_NOISY_CC);
+					ZEPHIR_OBS_NVAR(_10);
+					zephir_read_property(&_10, _9, SL("date"), PH_NOISY_CC);
+					ZEPHIR_CALL_METHOD(&_13, this_ptr, "getrecdate", &_14, 44, _10);
 					zephir_check_call_status();
-					ZEPHIR_INIT_NVAR(_10);
-					ZEPHIR_SINIT_NVAR(_11);
-					ZVAL_LONG(&_11, userInput);
-					zephir_fast_trim(_10, &_11, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
-					_7 = ZEPHIR_IS_EQUAL(_12, _10);
+					ZEPHIR_INIT_NVAR(_11);
+					ZEPHIR_SINIT_NVAR(_12);
+					ZVAL_LONG(&_12, userInput);
+					zephir_fast_trim(_11, &_12, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
+					_8 = ZEPHIR_IS_EQUAL(_13, _11);
 				}
-				filter = _7;
+				filter = _8;
 			} else if (filterType == 2) {
-				ZEPHIR_OBS_NVAR(_6);
-				zephir_read_property_this(&_6, this_ptr, SL("headers"), PH_NOISY_CC);
-				_7 = zephir_is_true(_6);
-				if (_7) {
-					_8 = zephir_fetch_nproperty_this(this_ptr, SL("headers"), PH_NOISY_CC);
-					ZEPHIR_OBS_NVAR(_9);
-					zephir_read_property(&_9, _8, SL("Subject"), PH_NOISY_CC);
-					ZEPHIR_INIT_NVAR(_10);
-					ZEPHIR_SINIT_NVAR(_11);
-					ZVAL_LONG(&_11, userInput);
-					zephir_fast_trim(_10, &_11, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
-					_7 = ZEPHIR_IS_EQUAL(_9, _10);
+				ZEPHIR_OBS_NVAR(_7);
+				zephir_read_property_this(&_7, this_ptr, SL("headers"), PH_NOISY_CC);
+				_8 = zephir_is_true(_7);
+				if (_8) {
+					_9 = zephir_fetch_nproperty_this(this_ptr, SL("headers"), PH_NOISY_CC);
+					ZEPHIR_OBS_NVAR(_10);
+					zephir_read_property(&_10, _9, SL("Subject"), PH_NOISY_CC);
+					ZEPHIR_INIT_NVAR(_11);
+					ZEPHIR_SINIT_NVAR(_12);
+					ZVAL_LONG(&_12, userInput);
+					zephir_fast_trim(_11, &_12, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
+					_8 = ZEPHIR_IS_EQUAL(_10, _11);
 				}
-				filter = _7;
+				filter = _8;
 			} else if (filterType == 3) {
-				ZEPHIR_OBS_NVAR(_6);
-				zephir_read_property_this(&_6, this_ptr, SL("headers"), PH_NOISY_CC);
-				_7 = zephir_is_true(_6);
-				if (_7) {
-					_8 = zephir_fetch_nproperty_this(this_ptr, SL("headers"), PH_NOISY_CC);
-					ZEPHIR_OBS_NVAR(_9);
-					zephir_read_property(&_9, _8, SL("fromaddress"), PH_NOISY_CC);
-					ZEPHIR_INIT_NVAR(_10);
-					ZEPHIR_SINIT_NVAR(_11);
-					ZVAL_LONG(&_11, userInput);
-					zephir_fast_trim(_10, &_11, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
-					ZEPHIR_CALL_METHOD(&_12, this_ptr, "containsfromaddress", &_14, 44, _9, _10);
+				ZEPHIR_OBS_NVAR(_7);
+				zephir_read_property_this(&_7, this_ptr, SL("headers"), PH_NOISY_CC);
+				_8 = zephir_is_true(_7);
+				if (_8) {
+					_9 = zephir_fetch_nproperty_this(this_ptr, SL("headers"), PH_NOISY_CC);
+					ZEPHIR_OBS_NVAR(_10);
+					zephir_read_property(&_10, _9, SL("fromaddress"), PH_NOISY_CC);
+					ZEPHIR_INIT_NVAR(_11);
+					ZEPHIR_SINIT_NVAR(_12);
+					ZVAL_LONG(&_12, userInput);
+					zephir_fast_trim(_11, &_12, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
+					ZEPHIR_CALL_METHOD(&_13, this_ptr, "containsfromaddress", &_15, 45, _10, _11);
 					zephir_check_call_status();
-					_7 = zephir_is_true(_12);
+					_8 = zephir_is_true(_13);
 				}
-				filter = _7;
+				filter = _8;
 			} else if (filterType == 4) {
-				ZEPHIR_OBS_NVAR(_6);
-				zephir_read_property_this(&_6, this_ptr, SL("headers"), PH_NOISY_CC);
-				_7 = zephir_is_true(_6);
-				if (_7) {
-					_7 = 1;
+				ZEPHIR_OBS_NVAR(_7);
+				zephir_read_property_this(&_7, this_ptr, SL("headers"), PH_NOISY_CC);
+				_8 = zephir_is_true(_7);
+				if (_8) {
+					_8 = 1;
 				}
-				filter = _7;
+				filter = _8;
 			}
 			if (filter) {
 				if (flag) {
-					_8 = zephir_fetch_nproperty_this(this_ptr, SL("headers"), PH_NOISY_CC);
-					ZEPHIR_OBS_NVAR(_6);
-					zephir_read_property(&_6, _8, SL("Unseen"), PH_NOISY_CC);
-					if (ZEPHIR_IS_STRING(_6, "U")) {
-						ZEPHIR_CALL_METHOD(NULL, this_ptr, "parsemessage", &_15, 0, i);
+					_9 = zephir_fetch_nproperty_this(this_ptr, SL("headers"), PH_NOISY_CC);
+					ZEPHIR_OBS_NVAR(_7);
+					zephir_read_property(&_7, _9, SL("Unseen"), PH_NOISY_CC);
+					if (ZEPHIR_IS_STRING(_7, "U")) {
+						ZEPHIR_CALL_METHOD(NULL, this_ptr, "parsemessage", &_16, 0, i);
 						zephir_check_call_status();
 					}
 				} else {
-					ZEPHIR_CALL_METHOD(NULL, this_ptr, "parsemessage", &_15, 0, i);
+					ZEPHIR_CALL_METHOD(NULL, this_ptr, "parsemessage", &_16, 0, i);
 					zephir_check_call_status();
 				}
 			}
 		}
 	}
 	_4 = zephir_fetch_nproperty_this(this_ptr, SL("connection"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(NULL, "imap_close", NULL, 0, _4);
+	ZEPHIR_CALL_FUNCTION(NULL, "imap_close", NULL, 46, _4);
 	zephir_check_call_status();
 	RETURN_MM_MEMBER(this_ptr, "result");
 
@@ -572,7 +572,7 @@ PHP_METHOD(Phady_Mail_MailReader, getRecDate) {
 	ZEPHIR_INIT_VAR(_2);
 	zephir_substr(_2, date, 5 , 20 , 0);
 	zephir_get_strval(date, _2);
-	ZEPHIR_CALL_FUNCTION(&timestamp, "strtotime", NULL, 45, date);
+	ZEPHIR_CALL_FUNCTION(&timestamp, "strtotime", NULL, 47, date);
 	zephir_check_call_status();
 	ZEPHIR_SINIT_VAR(_3);
 	ZVAL_STRING(&_3, "m-d-Y", 0);
@@ -638,9 +638,9 @@ PHP_METHOD(Phady_Mail_MailReader, containsFromAddress) {
  */
 PHP_METHOD(Phady_Mail_MailReader, getMessage) {
 
-	HashTable *_4;
-	HashPosition _3;
-	zval *messageId_param = NULL, *structure = NULL, *arrParts = NULL, *_0, *_1 = NULL, *_2 = NULL, *partMsg = NULL, *key = NULL, **_5;
+	HashTable *_5;
+	HashPosition _4;
+	zval *messageId_param = NULL, *structure = NULL, *arrParts = NULL, *_0, _1, *_2 = NULL, *_3 = NULL, *partMsg = NULL, *key = NULL, **_6;
 	int messageId, ZEPHIR_LAST_CALL_STATUS;
 
 	ZEPHIR_MM_GROW();
@@ -650,34 +650,34 @@ PHP_METHOD(Phady_Mail_MailReader, getMessage) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("connection"), PH_NOISY_CC);
-	ZEPHIR_INIT_VAR(_1);
-	ZVAL_LONG(_1, messageId);
-	ZEPHIR_CALL_FUNCTION(&structure, "imap_fetchstructure", NULL, 0, _0, _1);
+	ZEPHIR_SINIT_VAR(_1);
+	ZVAL_LONG(&_1, messageId);
+	ZEPHIR_CALL_FUNCTION(&structure, "imap_fetchstructure", NULL, 48, _0, &_1);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(arrParts);
 	array_init(arrParts);
 	ZEPHIR_OBS_NVAR(arrParts);
 	zephir_read_property(&arrParts, structure, SL("parts"), PH_NOISY_CC);
 	if (ZEPHIR_IS_EMPTY(arrParts)) {
-		ZEPHIR_INIT_NVAR(_1);
-		ZVAL_LONG(_1, messageId);
 		ZEPHIR_INIT_VAR(_2);
-		ZVAL_LONG(_2, 0);
-		ZEPHIR_CALL_METHOD(NULL, this_ptr, "getmessagepart", NULL, 0, _1, structure, _2);
+		ZVAL_LONG(_2, messageId);
+		ZEPHIR_INIT_VAR(_3);
+		ZVAL_LONG(_3, 0);
+		ZEPHIR_CALL_METHOD(NULL, this_ptr, "getmessagepart", NULL, 0, _2, structure, _3);
 		zephir_check_call_status();
 	} else if (Z_TYPE_P(arrParts) == IS_ARRAY) {
-		zephir_is_iterable(arrParts, &_4, &_3, 0, 0, "phady/mail/mailreader.zep", 323);
+		zephir_is_iterable(arrParts, &_5, &_4, 0, 0, "phady/mail/mailreader.zep", 323);
 		for (
-		  ; zephir_hash_get_current_data_ex(_4, (void**) &_5, &_3) == SUCCESS
-		  ; zephir_hash_move_forward_ex(_4, &_3)
+		  ; zephir_hash_get_current_data_ex(_5, (void**) &_6, &_4) == SUCCESS
+		  ; zephir_hash_move_forward_ex(_5, &_4)
 		) {
-			ZEPHIR_GET_HMKEY(key, _4, _3);
-			ZEPHIR_GET_HVALUE(partMsg, _5);
-			ZEPHIR_INIT_NVAR(_1);
-			ZVAL_LONG(_1, messageId);
+			ZEPHIR_GET_HMKEY(key, _5, _4);
+			ZEPHIR_GET_HVALUE(partMsg, _6);
 			ZEPHIR_INIT_NVAR(_2);
-			ZVAL_LONG(_2, (zephir_get_numberval(key) + 1));
-			ZEPHIR_CALL_METHOD(NULL, this_ptr, "getmessagepart", NULL, 0, _1, partMsg, _2);
+			ZVAL_LONG(_2, messageId);
+			ZEPHIR_INIT_NVAR(_3);
+			ZVAL_LONG(_3, (zephir_get_numberval(key) + 1));
+			ZEPHIR_CALL_METHOD(NULL, this_ptr, "getmessagepart", NULL, 0, _2, partMsg, _3);
 			zephir_check_call_status();
 		}
 	}
@@ -694,12 +694,12 @@ PHP_METHOD(Phady_Mail_MailReader, getMessage) {
  */
 PHP_METHOD(Phady_Mail_MailReader, getMessagePart) {
 
-	HashTable *_18, *_25, *_40;
-	HashPosition _17, _24, _39;
-	zval *_16 = NULL, *_23 = NULL, *_38 = NULL;
-	zend_bool _7, _10, _13, _22, _28, _30, _31, _33, _35;
-	zephir_fcall_cache_entry *_6 = NULL, *_43 = NULL;
-	zval *messageId_param = NULL, *partObj, *partno_param = NULL, *data = NULL, *params, *x = NULL, *y = NULL, *filename = NULL, *partno2 = NULL, *part2 = NULL, *partNoAll = NULL, *part2Length = NULL, *_0, *_1 = NULL, *_2 = NULL, *_3, _4 = zval_used_for_init, *_5 = NULL, *_8, *_9 = NULL, *_11, *_12 = NULL, *_14, *_15 = NULL, **_19, *_20 = NULL, *_21 = NULL, **_26, *_27 = NULL, _29, _32 = zval_used_for_init, *_34, *_36 = NULL, *_37, **_41, _42 = zval_used_for_init;
+	HashTable *_17, *_25, *_38;
+	HashPosition _16, _24, _37;
+	zval *_15 = NULL, *_23 = NULL, *_36 = NULL;
+	zend_bool _6, _9, _12, _22, _28, _29, _30, _32, _34;
+	zephir_fcall_cache_entry *_5 = NULL, *_41 = NULL;
+	zval *messageId_param = NULL, *partObj, *partno_param = NULL, *data = NULL, *params, *x = NULL, *y = NULL, *filename = NULL, *partno2 = NULL, *part2 = NULL, *partNoAll = NULL, *part2Length = NULL, *_0, _1 = zval_used_for_init, _2 = zval_used_for_init, *_3, *_4 = NULL, *_7, *_8 = NULL, *_10, *_11 = NULL, *_13, *_14 = NULL, **_18, *_19 = NULL, *_20 = NULL, *_21 = NULL, **_26, *_27 = NULL, _31 = zval_used_for_init, *_33, *_35, **_39, _40 = zval_used_for_init;
 	int messageId, partno, ZEPHIR_LAST_CALL_STATUS;
 
 	ZEPHIR_MM_GROW();
@@ -711,93 +711,93 @@ PHP_METHOD(Phady_Mail_MailReader, getMessagePart) {
 
 	if (partno) {
 		_0 = zephir_fetch_nproperty_this(this_ptr, SL("connection"), PH_NOISY_CC);
-		ZEPHIR_INIT_VAR(_1);
-		ZVAL_LONG(_1, messageId);
-		ZEPHIR_INIT_VAR(_2);
-		ZVAL_LONG(_2, partno);
-		ZEPHIR_CALL_FUNCTION(&data, "imap_fetchbody", NULL, 0, _0, _1, _2);
+		ZEPHIR_SINIT_VAR(_1);
+		ZVAL_LONG(&_1, messageId);
+		ZEPHIR_SINIT_VAR(_2);
+		ZVAL_LONG(&_2, partno);
+		ZEPHIR_CALL_FUNCTION(&data, "imap_fetchbody", NULL, 49, _0, &_1, &_2);
 		zephir_check_call_status();
 	} else {
 		_3 = zephir_fetch_nproperty_this(this_ptr, SL("connection"), PH_NOISY_CC);
-		ZEPHIR_INIT_NVAR(_1);
-		ZVAL_LONG(_1, messageId);
-		ZEPHIR_CALL_FUNCTION(&data, "imap_body", NULL, 0, _3, _1);
+		ZEPHIR_SINIT_NVAR(_1);
+		ZVAL_LONG(&_1, messageId);
+		ZEPHIR_CALL_FUNCTION(&data, "imap_body", NULL, 50, _3, &_1);
 		zephir_check_call_status();
 	}
-	ZEPHIR_SINIT_VAR(_4);
-	ZVAL_STRING(&_4, "encoding", 0);
-	ZEPHIR_CALL_FUNCTION(&_5, "property_exists", &_6, 37, partObj, &_4);
+	ZEPHIR_SINIT_NVAR(_1);
+	ZVAL_STRING(&_1, "encoding", 0);
+	ZEPHIR_CALL_FUNCTION(&_4, "property_exists", &_5, 35, partObj, &_1);
 	zephir_check_call_status();
-	_7 = zephir_is_true(_5);
-	if (_7) {
-		ZEPHIR_OBS_VAR(_8);
-		zephir_read_property(&_8, partObj, SL("encoding"), PH_NOISY_CC);
-		_7 = ZEPHIR_IS_LONG(_8, 4);
+	_6 = zephir_is_true(_4);
+	if (_6) {
+		ZEPHIR_OBS_VAR(_7);
+		zephir_read_property(&_7, partObj, SL("encoding"), PH_NOISY_CC);
+		_6 = ZEPHIR_IS_LONG(_7, 4);
 	}
-	ZEPHIR_SINIT_NVAR(_4);
-	ZVAL_STRING(&_4, "encoding", 0);
-	ZEPHIR_CALL_FUNCTION(&_9, "property_exists", &_6, 37, partObj, &_4);
+	ZEPHIR_SINIT_NVAR(_1);
+	ZVAL_STRING(&_1, "encoding", 0);
+	ZEPHIR_CALL_FUNCTION(&_8, "property_exists", &_5, 35, partObj, &_1);
 	zephir_check_call_status();
-	_10 = zephir_is_true(_9);
-	if (_10) {
-		ZEPHIR_OBS_VAR(_11);
-		zephir_read_property(&_11, partObj, SL("encoding"), PH_NOISY_CC);
-		_10 = ZEPHIR_IS_LONG(_11, 3);
+	_9 = zephir_is_true(_8);
+	if (_9) {
+		ZEPHIR_OBS_VAR(_10);
+		zephir_read_property(&_10, partObj, SL("encoding"), PH_NOISY_CC);
+		_9 = ZEPHIR_IS_LONG(_10, 3);
 	}
-	if (_7) {
-		ZEPHIR_CALL_FUNCTION(&_12, "quoted_printable_decode", NULL, 46, data);
+	if (_6) {
+		ZEPHIR_CALL_FUNCTION(&_11, "quoted_printable_decode", NULL, 51, data);
 		zephir_check_call_status();
-		ZEPHIR_CPY_WRT(data, _12);
-	} else if (_10) {
-		ZEPHIR_CALL_FUNCTION(&_12, "base64_decode", NULL, 47, data);
+		ZEPHIR_CPY_WRT(data, _11);
+	} else if (_9) {
+		ZEPHIR_CALL_FUNCTION(&_11, "base64_decode", NULL, 52, data);
 		zephir_check_call_status();
-		ZEPHIR_CPY_WRT(data, _12);
+		ZEPHIR_CPY_WRT(data, _11);
 	}
 	ZEPHIR_INIT_VAR(params);
 	array_init(params);
-	ZEPHIR_SINIT_NVAR(_4);
-	ZVAL_STRING(&_4, "parameters", 0);
-	ZEPHIR_CALL_FUNCTION(&_12, "property_exists", &_6, 37, partObj, &_4);
+	ZEPHIR_SINIT_NVAR(_1);
+	ZVAL_STRING(&_1, "parameters", 0);
+	ZEPHIR_CALL_FUNCTION(&_11, "property_exists", &_5, 35, partObj, &_1);
 	zephir_check_call_status();
-	_13 = zephir_is_true(_12);
-	if (_13) {
+	_12 = zephir_is_true(_11);
+	if (_12) {
+		ZEPHIR_OBS_VAR(_13);
+		zephir_read_property(&_13, partObj, SL("parameters"), PH_NOISY_CC);
+		_12 = zephir_is_true(_13);
+	}
+	if (_12) {
 		ZEPHIR_OBS_VAR(_14);
 		zephir_read_property(&_14, partObj, SL("parameters"), PH_NOISY_CC);
-		_13 = zephir_is_true(_14);
-	}
-	if (_13) {
-		ZEPHIR_OBS_VAR(_15);
-		zephir_read_property(&_15, partObj, SL("parameters"), PH_NOISY_CC);
-		zephir_get_arrval(_16, _15);
-		zephir_is_iterable(_16, &_18, &_17, 0, 0, "phady/mail/mailreader.zep", 352);
+		zephir_get_arrval(_15, _14);
+		zephir_is_iterable(_15, &_17, &_16, 0, 0, "phady/mail/mailreader.zep", 352);
 		for (
-		  ; zephir_hash_get_current_data_ex(_18, (void**) &_19, &_17) == SUCCESS
-		  ; zephir_hash_move_forward_ex(_18, &_17)
+		  ; zephir_hash_get_current_data_ex(_17, (void**) &_18, &_16) == SUCCESS
+		  ; zephir_hash_move_forward_ex(_17, &_16)
 		) {
-			ZEPHIR_GET_HVALUE(x, _19);
-			ZEPHIR_OBS_NVAR(_20);
-			zephir_read_property(&_20, x, SL("value"), PH_NOISY_CC);
-			ZEPHIR_INIT_NVAR(_1);
+			ZEPHIR_GET_HVALUE(x, _18);
+			ZEPHIR_OBS_NVAR(_19);
+			zephir_read_property(&_19, x, SL("value"), PH_NOISY_CC);
+			ZEPHIR_INIT_NVAR(_20);
 			ZEPHIR_OBS_NVAR(_21);
 			zephir_read_property(&_21, x, SL("attribute"), PH_NOISY_CC);
-			zephir_fast_strtolower(_1, _21);
-			zephir_array_update_zval(&params, _1, &_20, PH_COPY | PH_SEPARATE);
+			zephir_fast_strtolower(_20, _21);
+			zephir_array_update_zval(&params, _20, &_19, PH_COPY | PH_SEPARATE);
 		}
 	}
-	ZEPHIR_SINIT_NVAR(_4);
-	ZVAL_STRING(&_4, "dparameters", 0);
-	ZEPHIR_CALL_FUNCTION(&_12, "property_exists", &_6, 37, partObj, &_4);
+	ZEPHIR_SINIT_NVAR(_1);
+	ZVAL_STRING(&_1, "dparameters", 0);
+	ZEPHIR_CALL_FUNCTION(&_11, "property_exists", &_5, 35, partObj, &_1);
 	zephir_check_call_status();
-	_22 = zephir_is_true(_12);
+	_22 = zephir_is_true(_11);
 	if (_22) {
-		ZEPHIR_OBS_NVAR(_15);
-		zephir_read_property(&_15, partObj, SL("dparameters"), PH_NOISY_CC);
-		_22 = !(ZEPHIR_IS_EMPTY(_15));
+		ZEPHIR_OBS_NVAR(_14);
+		zephir_read_property(&_14, partObj, SL("dparameters"), PH_NOISY_CC);
+		_22 = !(ZEPHIR_IS_EMPTY(_14));
 	}
 	if (_22) {
-		ZEPHIR_OBS_NVAR(_20);
-		zephir_read_property(&_20, partObj, SL("dparameters"), PH_NOISY_CC);
-		zephir_get_arrval(_23, _20);
+		ZEPHIR_OBS_NVAR(_19);
+		zephir_read_property(&_19, partObj, SL("dparameters"), PH_NOISY_CC);
+		zephir_get_arrval(_23, _19);
 		zephir_is_iterable(_23, &_25, &_24, 0, 0, "phady/mail/mailreader.zep", 357);
 		for (
 		  ; zephir_hash_get_current_data_ex(_25, (void**) &_26, &_24) == SUCCESS
@@ -806,42 +806,42 @@ PHP_METHOD(Phady_Mail_MailReader, getMessagePart) {
 			ZEPHIR_GET_HVALUE(y, _26);
 			ZEPHIR_OBS_NVAR(_21);
 			zephir_read_property(&_21, y, SL("value"), PH_NOISY_CC);
-			ZEPHIR_INIT_NVAR(_2);
+			ZEPHIR_INIT_NVAR(_20);
 			ZEPHIR_OBS_NVAR(_27);
 			zephir_read_property(&_27, y, SL("attribute"), PH_NOISY_CC);
-			zephir_fast_strtolower(_2, _27);
-			zephir_array_update_zval(&params, _2, &_21, PH_COPY | PH_SEPARATE);
+			zephir_fast_strtolower(_20, _27);
+			zephir_array_update_zval(&params, _20, &_21, PH_COPY | PH_SEPARATE);
 		}
 	}
-	ZEPHIR_SINIT_NVAR(_4);
-	ZVAL_STRING(&_4, "filename", 0);
-	_28 = zephir_array_key_exists(params, &_4 TSRMLS_CC);
+	ZEPHIR_SINIT_NVAR(_1);
+	ZVAL_STRING(&_1, "filename", 0);
+	_28 = zephir_array_key_exists(params, &_1 TSRMLS_CC);
 	if (!(_28)) {
-		ZEPHIR_SINIT_VAR(_29);
-		ZVAL_STRING(&_29, "name", 0);
-		_28 = zephir_array_key_exists(params, &_29 TSRMLS_CC);
+		ZEPHIR_SINIT_NVAR(_2);
+		ZVAL_STRING(&_2, "name", 0);
+		_28 = zephir_array_key_exists(params, &_2 TSRMLS_CC);
 	}
-	_30 = _28;
-	if (_30) {
-		ZEPHIR_OBS_NVAR(_15);
-		zephir_array_fetch_string(&_15, params, SL("filename"), PH_NOISY, "phady/mail/mailreader.zep", 360 TSRMLS_CC);
-		_31 = zephir_is_true(_15);
-		if (!(_31)) {
-			ZEPHIR_OBS_NVAR(_20);
-			zephir_array_fetch_string(&_20, params, SL("name"), PH_NOISY, "phady/mail/mailreader.zep", 360 TSRMLS_CC);
-			_31 = zephir_is_true(_20);
+	_29 = _28;
+	if (_29) {
+		ZEPHIR_OBS_NVAR(_14);
+		zephir_array_fetch_string(&_14, params, SL("filename"), PH_NOISY, "phady/mail/mailreader.zep", 360 TSRMLS_CC);
+		_30 = zephir_is_true(_14);
+		if (!(_30)) {
+			ZEPHIR_OBS_NVAR(_19);
+			zephir_array_fetch_string(&_19, params, SL("name"), PH_NOISY, "phady/mail/mailreader.zep", 360 TSRMLS_CC);
+			_30 = zephir_is_true(_19);
 		}
-		_30 = _31;
+		_29 = _30;
 	}
-	if (_30) {
-		ZEPHIR_SINIT_VAR(_32);
-		ZVAL_STRING(&_32, "filename", 0);
-		_33 = zephir_array_key_exists(params, &_32 TSRMLS_CC);
-		if (_33) {
-			zephir_array_fetch_string(&_34, params, SL("filename"), PH_NOISY | PH_READONLY, "phady/mail/mailreader.zep", 362 TSRMLS_CC);
-			_33 = zephir_is_true(_34);
+	if (_29) {
+		ZEPHIR_SINIT_VAR(_31);
+		ZVAL_STRING(&_31, "filename", 0);
+		_32 = zephir_array_key_exists(params, &_31 TSRMLS_CC);
+		if (_32) {
+			zephir_array_fetch_string(&_33, params, SL("filename"), PH_NOISY | PH_READONLY, "phady/mail/mailreader.zep", 362 TSRMLS_CC);
+			_32 = zephir_is_true(_33);
 		}
-		if (_33) {
+		if (_32) {
 			ZEPHIR_OBS_VAR(filename);
 			zephir_array_fetch_string(&filename, params, SL("filename"), PH_NOISY, "phady/mail/mailreader.zep", 362 TSRMLS_CC);
 		} else {
@@ -850,63 +850,63 @@ PHP_METHOD(Phady_Mail_MailReader, getMessagePart) {
 		}
 		zephir_update_property_array(this_ptr, SL("attachments"), filename, data TSRMLS_CC);
 	}
-	ZEPHIR_OBS_NVAR(_15);
-	zephir_read_property(&_15, partObj, SL("type"), PH_NOISY_CC);
-	_33 = ZEPHIR_IS_LONG(_15, 0);
-	if (_33) {
-		_33 = zephir_is_true(data);
+	ZEPHIR_OBS_NVAR(_14);
+	zephir_read_property(&_14, partObj, SL("type"), PH_NOISY_CC);
+	_32 = ZEPHIR_IS_LONG(_14, 0);
+	if (_32) {
+		_32 = zephir_is_true(data);
 	}
 	ZEPHIR_OBS_NVAR(_21);
 	zephir_read_property(&_21, partObj, SL("type"), PH_NOISY_CC);
-	_35 = ZEPHIR_IS_LONG(_21, 2);
-	if (_35) {
-		_35 = zephir_is_true(data);
+	_34 = ZEPHIR_IS_LONG(_21, 2);
+	if (_34) {
+		_34 = zephir_is_true(data);
 	}
-	if (_33) {
-		ZEPHIR_INIT_VAR(_36);
+	if (_32) {
+		ZEPHIR_INIT_NVAR(_20);
 		ZEPHIR_OBS_NVAR(_27);
 		zephir_read_property(&_27, partObj, SL("subtype"), PH_NOISY_CC);
-		zephir_fast_strtolower(_36, _27);
-		if (ZEPHIR_IS_STRING(_36, "plain")) {
-			ZEPHIR_INIT_VAR(_37);
-			zephir_fast_trim(_37, data, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
-			zephir_update_property_this(this_ptr, SL("plainBody"), _37 TSRMLS_CC);
+		zephir_fast_strtolower(_20, _27);
+		if (ZEPHIR_IS_STRING(_20, "plain")) {
+			ZEPHIR_INIT_VAR(_35);
+			zephir_fast_trim(_35, data, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
+			zephir_update_property_this(this_ptr, SL("plainBody"), _35 TSRMLS_CC);
 		}
-	} else if (_35) {
-		ZEPHIR_INIT_NVAR(_36);
-		zephir_fast_trim(_36, data, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
-		zephir_update_property_this(this_ptr, SL("plainBody"), _36 TSRMLS_CC);
+	} else if (_34) {
+		ZEPHIR_INIT_NVAR(_20);
+		zephir_fast_trim(_20, data, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
+		zephir_update_property_this(this_ptr, SL("plainBody"), _20 TSRMLS_CC);
 	}
-	ZEPHIR_SINIT_NVAR(_32);
-	ZVAL_STRING(&_32, "parts", 0);
-	ZEPHIR_CALL_FUNCTION(&_12, "property_exists", &_6, 37, partObj, &_32);
+	ZEPHIR_SINIT_NVAR(_31);
+	ZVAL_STRING(&_31, "parts", 0);
+	ZEPHIR_CALL_FUNCTION(&_11, "property_exists", &_5, 35, partObj, &_31);
 	zephir_check_call_status();
-	_33 = zephir_is_true(_12);
-	if (_33) {
-		ZEPHIR_OBS_NVAR(_15);
-		zephir_read_property(&_15, partObj, SL("parts"), PH_NOISY_CC);
-		_33 = !(ZEPHIR_IS_EMPTY(_15));
+	_32 = zephir_is_true(_11);
+	if (_32) {
+		ZEPHIR_OBS_NVAR(_14);
+		zephir_read_property(&_14, partObj, SL("parts"), PH_NOISY_CC);
+		_32 = !(ZEPHIR_IS_EMPTY(_14));
 	}
-	if (_33) {
-		ZEPHIR_OBS_NVAR(_20);
-		zephir_read_property(&_20, partObj, SL("parts"), PH_NOISY_CC);
-		zephir_get_arrval(_38, _20);
-		zephir_is_iterable(_38, &_40, &_39, 0, 0, "phady/mail/mailreader.zep", 390);
+	if (_32) {
+		ZEPHIR_OBS_NVAR(_19);
+		zephir_read_property(&_19, partObj, SL("parts"), PH_NOISY_CC);
+		zephir_get_arrval(_36, _19);
+		zephir_is_iterable(_36, &_38, &_37, 0, 0, "phady/mail/mailreader.zep", 390);
 		for (
-		  ; zephir_hash_get_current_data_ex(_40, (void**) &_41, &_39) == SUCCESS
-		  ; zephir_hash_move_forward_ex(_40, &_39)
+		  ; zephir_hash_get_current_data_ex(_38, (void**) &_39, &_37) == SUCCESS
+		  ; zephir_hash_move_forward_ex(_38, &_37)
 		) {
-			ZEPHIR_GET_HMKEY(partno2, _40, _39);
-			ZEPHIR_GET_HVALUE(part2, _41);
-			ZEPHIR_SINIT_NVAR(_32);
-			ZVAL_LONG(&_32, (zephir_get_numberval(partno2) + 1));
+			ZEPHIR_GET_HMKEY(partno2, _38, _37);
+			ZEPHIR_GET_HVALUE(part2, _39);
+			ZEPHIR_SINIT_NVAR(_31);
+			ZVAL_LONG(&_31, (zephir_get_numberval(partno2) + 1));
 			ZEPHIR_INIT_NVAR(part2Length);
-			ZVAL_LONG(part2Length, zephir_fast_strlen_ev(&_32));
+			ZVAL_LONG(part2Length, zephir_fast_strlen_ev(&_31));
 			ZEPHIR_INIT_NVAR(partNoAll);
 			ZVAL_LONG(partNoAll, ((partno * zephir_get_numberval(part2Length)) + ((zephir_get_numberval(partno2) + 1))));
-			ZEPHIR_SINIT_NVAR(_42);
-			ZVAL_LONG(&_42, messageId);
-			ZEPHIR_CALL_METHOD(NULL, this_ptr, "getmessagepart", &_43, 48, &_42, part2, partNoAll);
+			ZEPHIR_SINIT_NVAR(_40);
+			ZVAL_LONG(&_40, messageId);
+			ZEPHIR_CALL_METHOD(NULL, this_ptr, "getmessagepart", &_41, 53, &_40, part2, partNoAll);
 			zephir_check_call_status();
 		}
 	}
@@ -934,7 +934,7 @@ PHP_METHOD(Phady_Mail_MailReader, parseMessage) {
 	ZVAL_LONG(_0, messageId);
 	ZEPHIR_CALL_METHOD(NULL, this_ptr, "getmessage", NULL, 0, _0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "makeresult", NULL, 49);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "makeresult", NULL, 54);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 

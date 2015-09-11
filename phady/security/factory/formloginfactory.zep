@@ -88,7 +88,9 @@ class FormLoginFactory extends AbstractFactory
         let entryPointId = "security.authentication.form_entry_point.".id;
         let args = ["config" : config];
         let entryPointFunc = call_user_func_array(function(config) {
-             return new \Phady\Security\Http\EntryPoint\FormAuthenticationEntryPoint(config["login_path"], config["use_forward"]);
+            var use_forward;
+            let use_forward = (array_key_exists("use_forward", config) && isset(config["use_forward"])) ? config["use_forward"] : "";
+             return new \Phady\Security\Http\EntryPoint\FormAuthenticationEntryPoint(config["login_path"], use_forward);
         }, args);
         this->getDI()->set(entryPointId, entryPointFunc);
 

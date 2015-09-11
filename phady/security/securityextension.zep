@@ -66,7 +66,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
         this->createFirewalls(config);
         this->createAuthorization(config);
-        //this->createRoleHierarchy(config, container);
+        this->createRoleHierarchy(config);
 
     }
 
@@ -242,15 +242,12 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
         var authManagerFunc, argsManagerFunc;
         //Register component security.authentication.manager
+        this->container->remove("security.authentication.manager");
         let argsManagerFunc = ["authenticationProvidersRef" : authenticationProvidersRef];
         let authManagerFunc = call_user_func_array(function(authenticationProvidersRef) {
              return new \Phady\Security\Core\Authentication\AuthenticationProviderManager(authenticationProvidersRef);
         }, argsManagerFunc);
         this->container->set("security.authentication.manager", authManagerFunc);
-
-        /*if (this->container->has("security.authentication.manager")){
-            this->container->get("security.authentication.manager")->setProviders(authenticationProvidersRef);
-        }*/
         //echo "<pre>"; print_r(this->container->get("security.authentication.manager"));die();
 
     }
@@ -304,14 +301,33 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
         let listeners = array_merge(listeners, createAuthListeners[0]);
 
+        //security.access.decision_manager
+        var argsAccessMng, accessMngFunc;
+        let argsAccessMng = ["container" : this->container];
+        let accessMngFunc = call_user_func_array(function(container) {
+             return new \Phady\Security\Core\Authorization\AccessDecisionManager(
+               [container->get("security.access.simple_role_voter")]
+             );
+        }, argsAccessMng);
+        this->container->set("security.access.decision_manager", accessMngFunc);
+
         // Access listener
-        this->container->set("security.access_listener", function () {
-            return new \Phady\Security\Http\Firewall\AccessListener();
-        });
+        var args, userFunc;
+        let args = ["container" : this->container];
+        let userFunc = call_user_func_array(function(container) {
+             return new \Phady\Security\Http\Firewall\AccessListener(
+                container->get("security.token_storage"),
+                container->get("security.access.decision_manager")
+             );
+        }, args);
+        this->container->set("security.access_listener", userFunc);
+
+        //security.access.role_hierarchy_voter
         //let listeners[] = "security.access_listener";
 
         // Exception listener
-        let exceptionListener = this->createExceptionListener(firewall, id, (configuredEntryPoint) ? configuredEntryPoint : createAuthListeners[1], firewall["stateless"]);
+        let exceptionListener = this->createExceptionListener(firewall, id, (configuredEntryPoint) ? configuredEntryPoint : createAuthListeners[1],
+            (array_key_exists("stateless", firewall) && isset(firewall["stateless"])) ? firewall["stateless"] : "");
 
         return [matcher, listeners, exceptionListener];
     }
@@ -357,6 +373,22 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         return providerIds;
     }
 
+    /**
+     * Loads the web configuration.
+     *
+     * @param array            config    An array of configuration settings
+     */
+    private function createRoleHierarchy(config)
+    {
+        if (array_key_exists("role_hierarchy", config) && !isset(config["role_hierarchy"])) {
+            this->container->remove("security.access.role_hierarchy_voter");
+            return;
+        }
+
+        //container->setParameter("security.role_hierarchy.roles", config["role_hierarchy"]);
+        this->container->remove("security.access.simple_role_voter");
+    }
+
     private function createAuthenticationListeners(id, firewall, defaultProvider, defaultEntryPoint)
     {
         var listeners, hasListeners, position, factory, key, userProvider, provider, listenerId, createFactory;
@@ -383,24 +415,32 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
 
         // Anonymous
-        /*if (isset(firewall["anonymous"])) {
-            listenerId = "security.authentication.listener.anonymous.".id;
-            container
-                ->setDefinition(listenerId, new DefinitionDecorator("security.authentication.listener.anonymous"))
-                ->replaceArgument(1, firewall["anonymous"]["key"])
-            ;
+        if (isset(firewall["anonymous"])) {
+            //Auth listener
+            let listenerId = "security.authentication.listener.anonymous.".id;
+            var args, userFunc;
+            let args = ["id" : firewall["anonymous"]["key"], "container" : this->container];
+            let userFunc = call_user_func_array(function(id, container) {
+                 return new \Phady\Security\Http\Firewall\AnonymousAuthenticationListener(
+                    container->get("security.token_storage"), id
+                 );
+            }, args);
+            this->container->set(listenerId, userFunc);
 
-            listeners[] = new Reference(listenerId);
+            let listeners[] = listenerId;
 
-            providerId = "security.authentication.provider.anonymous.".id;
-            container
-                ->setDefinition(providerId, new DefinitionDecorator("security.authentication.provider.anonymous"))
-                ->replaceArgument(0, firewall["anonymous"]["key"])
-            ;
+            //Auth provider
+            var providerId, argsProvider, providerFunc;
+            let providerId = "security.authentication.provider.anonymous.".id;
+            let argsProvider = ["id" : firewall["anonymous"]["key"]];
+            let providerFunc = call_user_func_array(function(id, container) {
+                 return new \Phady\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider(id);
+            }, argsProvider);
+            this->container->set(providerId, providerFunc);
 
-            authenticationProviders[] = providerId;
-            hasListeners = true;
-        }*/
+            let this->authenticationProviders[] = providerId;
+            let hasListeners = true;
+        }
 
         if (!hasListeners) {
             throw new InvalidConfigurationException(sprintf("No authentication listener registered for firewall %s.", id));

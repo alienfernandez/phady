@@ -38,19 +38,14 @@ class AccessListener extends \Phalcon\Di\Injectable implements ListenerInterface
     private map;
     private authManager;
 
-    public function AccessListener()
-    {
-
-    }
-
-    /*public function __construct(<TokenStorageInterface> tokenStorage, <AccessDecisionManagerInterface> accessDecisionManager,
-                                <AccessMapInterface> map, <AuthenticationManagerInterface> authManager)
+    //,<AccessMapInterface> map, <AuthenticationManagerInterface> authManager
+    public function __construct(<TokenStorageInterface> tokenStorage, <AccessDecisionManagerInterface> accessDecisionManager)
     {
         let this->tokenStorage = tokenStorage;
         let this->accessDecisionManager = accessDecisionManager;
-        let this->map = map;
-        let this->authManager = authManager;
-    }*/
+        //let this->map = map;
+        //let this->authManager = authManager;
+    }
 
 
     /**
@@ -98,6 +93,9 @@ class AccessListener extends \Phalcon\Di\Injectable implements ListenerInterface
      */
     public function handle()
     {
+        let this->map = this->getDI()->get("security.access_map");
+        let this->authManager = this->getDI()->get("security.authentication.manager");
+
         var token, request, patterns, attributes;
         let token = this->tokenStorage->getToken();
         if (null === token) {

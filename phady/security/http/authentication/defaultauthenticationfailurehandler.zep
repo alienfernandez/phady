@@ -103,7 +103,6 @@ class DefaultAuthenticationFailureHandler extends \Phalcon\Di\Injectable impleme
        }
 
        this->getDI()->get("session")->set(Security::AUTHENTICATION_ERROR, exception);
-
         return this->getDI()->get("response")->redirect(this->options["failure_path"]);
    }
 }

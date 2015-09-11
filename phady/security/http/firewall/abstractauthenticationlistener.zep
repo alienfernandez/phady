@@ -107,6 +107,15 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
     }
 
     /**
+     * Sets the authenticationManager.
+     *
+     */
+    public function setauthenticationManager(authenticationManager)
+    {
+        let this->authenticationManager = authenticationManager;
+    }
+
+    /**
      * Handles form based authentication.
      *
      *
@@ -115,6 +124,7 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
      */
     final public function handle()
     {
+
         var request, returnValue, response, e;
         let request = this->getDI()->get("request");
 
@@ -125,7 +135,6 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
         if (!this->getDI()->has("session")) {
             throw new \RuntimeException("This authentication method requires a session.");
         }
-
         try {
             /*
             if (this->options["require_previous_session"] && !request->hasPreviousSession()) {
@@ -134,7 +143,6 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
 
             let returnValue = this->attemptAuthentication(request);
 
-            die("OK");
             if (null === returnValue) {
                 return;
             }
@@ -182,10 +190,6 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
                 return false;
             }
         }*/
-        echo "<pre>"; print_r(rawurldecode(request->getURI()));
-        echo "<pre>"; print_r("--------------");
-        echo "<pre>"; print_r(this->options["check_path"]);
-
         return this->options["check_path"] === rawurldecode(request->getURI());
     }
 
@@ -200,7 +204,7 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
      */
     abstract protected function attemptAuthentication(<Request> request);
 
-    private function onFailure(<Request> request, <AuthenticationException> failed)
+    public function onFailure(<Request> request, <AuthenticationException> failed)
     {
         var response, token;
         /*

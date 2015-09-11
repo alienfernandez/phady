@@ -53,9 +53,9 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
     public function setProviders(providers)
     {
         var provider;
-        if (!providers) {
+        /*if (!providers) {
             throw new \InvalidArgumentException("You must at least add one authentication provider.");
-        }
+        }*/
         for provider in providers {
             if (!(provider instanceof AuthenticationProviderInterface)) {
                 throw new \InvalidArgumentException(sprintf("Provider %s must implement the AuthenticationProviderInterface.", get_class(provider)));
