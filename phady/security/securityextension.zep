@@ -132,7 +132,8 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
     private function createAuthorization(config)
     {
-        var access, matcher, attributes, requires_channel, args, userFuncAccessMap;
+        var access, matcher, attributes, requires_channel, args, userFuncAccessMap, accessMapParams;
+        let accessMapParams = [];
         if (!config["access_control"]) {
             return;
         }
@@ -151,16 +152,40 @@ class SecurityExtension extends \Phalcon\Di\Injectable
                 attributes[] = this->createExpression(container, access["allow_if"]);
             }*/
             let requires_channel = (array_key_exists("requires_channel", access)) ? access["requires_channel"] : null;
+            if (attributes){
+                let attributes = (is_array(attributes)) ? attributes : [attributes];
+            }
 
             let args = ["matcher" : matcher, "attributes" : attributes, "requires_channel" : requires_channel];
-            let userFuncAccessMap = call_user_func_array(function(matcher, attributes, requires_channel) {
-                 var access_Map;
-                 let access_Map = new \Phady\Security\Http\AccessMap();
-                 access_Map->add(matcher, attributes, requires_channel);
-                 return access_Map;
-            }, args);
-            this->container->set("security.access_map", userFuncAccessMap);
+            let accessMapParams[] = args;
         }
+
+        //AccessMap
+        var accessParam;
+        this->container->setShared("security.access_map", [
+            "className" : "Phady\\Security\\Http\\AccessMap"
+        ]);
+        for accessParam in accessMapParams {
+            this->container->get("security.access_map")->add(accessParam["matcher"], accessParam["attributes"], accessParam["requires_channel"]);
+        }
+
+        //AuthorizationChecker
+        this->container->set("security.authorization.checker", [
+            "className" : "Phady\\Security\\Core\\Authorization\\AuthorizationChecker",
+            "arguments" : [
+                ["type" : "service", "name" : "security.token_storage"],
+                ["type" : "service", "name" : "security.authentication.manager"],
+                ["type" : "service", "name" : "security.access.decision_manager"],
+                ["type" : "parameter", "value" : false]
+            ]
+        ]);
+        //AccessDeniedListener
+        this->container->set("security.access_denied.handler", [
+            "className" : "Phady\\Security\\Http\\Authorization\\AccessDeniedListener",
+            "arguments" : [
+                ["type" : "service", "name" : "security.authorization.checker"]
+            ]
+        ]);
     }
 
     private function createRequestMatcher(path = null, host = null, methods = [], ip = null, array attributes = [])

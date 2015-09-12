@@ -130,7 +130,6 @@ class AccessDecisionManager implements AccessDecisionManagerInterface
                     break;
             }
         }
-
         if (deny > 0) {
             return false;
         }

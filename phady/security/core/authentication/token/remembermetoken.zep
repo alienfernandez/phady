@@ -14,57 +14,55 @@
 namespace Phady\Security\Core\Authentication\Token;
 
 use Phady\Security\Core\Authentication\Token\AbstractToken;
+use Phady\Security\Core\User\UserInterface;
 
 /**
- * Phady\Security\Core\Authentication\Token\UsernamePasswordToken
+ * Phady\Security\Core\Authentication\Token\RememberMeToken
  *
- * Interface
  */
-class UsernamePasswordToken extends AbstractToken
+class RememberMeToken extends AbstractToken
 {
-
-    private credentials;
+    private key;
     private providerKey;
 
     /**
      * Constructor.
      *
-     * @param string|object            user        The username (like a nickname, email address, etc.), or a UserInterface instance or an object implementing a __toString method.
-     * @param string                   credentials This usually is the password of the user
-     * @param string                   providerKey The provider key
-     * @param RoleInterface[]|string[] roles       An array of roles
+     * @param UserInterface user
+     * @param string        providerKey
+     * @param string        key
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(user, credentials, providerKey, array roles = [])
+    public function __construct(<UserInterface> user, providerKey, key)
     {
-        parent::__construct(roles);
+        parent::__construct(user->getRoles());
+
+        if (empty(key)) {
+            throw new \InvalidArgumentException("key must not be empty.");
+        }
+
         if (empty(providerKey)) {
             throw new \InvalidArgumentException("providerKey must not be empty.");
         }
-        this->setUser(user);
-        let this->credentials = credentials;
+
         let this->providerKey = providerKey;
-        parent::setAuthenticated(count(roles) > 0);
+        let this->key = key;
+
+        this->setUser(user);
+        parent::setAuthenticated(true);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setAuthenticated(isAuthenticated)
+    public function setAuthenticated(authenticated)
     {
-        if (isAuthenticated) {
-            throw new \LogicException("Cannot set this token to trusted after instantiation.");
+        if (authenticated) {
+            throw new \LogicException("You cannot set this token to authenticated after creation.");
         }
-        parent::setAuthenticated(false);
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCredentials()
-    {
-        return this->credentials;
+        parent::setAuthenticated(false);
     }
 
     /**
@@ -78,19 +76,33 @@ class UsernamePasswordToken extends AbstractToken
     }
 
     /**
+     * Returns the key.
+     *
+     * @return string The Key
+     */
+    public function getKey()
+    {
+        return this->key;
+    }
+
+    /**
      * {@inheritdoc}
      */
-    public function eraseCredentials()
+    public function getCredentials()
     {
-        parent::eraseCredentials();
-        let this->credentials = null;
+        return "";
     }
+
     /**
      * {@inheritdoc}
      */
     public function serialize()
     {
-        return serialize([this->credentials, this->providerKey, parent::serialize()]);
+        return serialize([
+            this->key,
+            this->providerKey,
+            parent::serialize()
+        ]);
     }
 
     /**
@@ -100,10 +112,10 @@ class UsernamePasswordToken extends AbstractToken
     {
         var unserializeData, parentStr;
         let unserializeData = unserialize(serialized);
-        let this->credentials = unserializeData[0];
+        let this->key = unserializeData[0];
         let this->providerKey = unserializeData[1];
         let parentStr = unserializeData[2];
-        //list(this->credentials, this->providerKey, parentStr) = unserialize(serialized);
+        //list(this->key, this->providerKey, parentStr)
         parent::unserialize(parentStr);
     }
 }

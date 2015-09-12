@@ -70,12 +70,13 @@ class SecurityListener extends \Phalcon\Di\Injectable
              return new \Phady\Security\Core\Authorization\Voter\RoleVoter("ROLE_");
         });
 
-        /*
-        this->container->set("security.authentication.trust_resolver", function() {
-             return new \Phady\Security\Core\Authentication\AuthenticationTrustResolver(
 
+        this->container->setShared("security.authentication.trust_resolver", function() {
+             return new \Phady\Security\Core\Authentication\AuthenticationTrustResolver(
+                "Phady\Security\Core\Authentication\Token\AnonymousToken",
+                "Phady\Security\Core\Authentication\Token\RememberMeToken"
              );
-        });*/
+        });
 
         let this->securityExtension = new SecurityExtension();
 

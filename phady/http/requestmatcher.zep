@@ -172,6 +172,7 @@ class RequestMatcher implements RequestMatcherInterface
                 return false;
             }
         }
+
         if (null !== this->path && !preg_match("{".this->path."}", rawurldecode(request->getURI()))) {
             return false;
         }
@@ -179,6 +180,10 @@ class RequestMatcher implements RequestMatcherInterface
         if (null !== this->host && !preg_match("{".this->host."}i", request->getHttpHost())) {
             return false;
         }
+
+        //print_r(" :client addres: " . request->getClientAddress());
+        //print_r(this->ips);
+        //die();
 
         if (IpUtils::checkIp(request->getClientAddress(), this->ips)) {
             return true;

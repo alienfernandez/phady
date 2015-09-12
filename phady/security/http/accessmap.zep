@@ -47,6 +47,7 @@ class AccessMap implements AccessMapInterface
     public function getPatterns(<Request> request)
     {
         var elements;
+
         for elements in this->map {
             if (null === elements[0] || elements[0]->matches(request)) {
                 return [elements[1], elements[2]];

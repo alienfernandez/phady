@@ -35,12 +35,12 @@ PHP_METHOD(phady_3__closure, __invoke) {
 
 	ZEPHIR_INIT_VAR(routeCore);
 	object_init_ex(routeCore, phady_route_router_ce);
-	ZEPHIR_CALL_METHOD(NULL, routeCore, "__construct", NULL, 152);
+	ZEPHIR_CALL_METHOD(NULL, routeCore, "__construct", NULL, 154);
 	zephir_check_call_status();
 	zephir_array_fetch_string(&_0, _SERVER, SL("rootDirOk"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 282 TSRMLS_CC);
-	ZEPHIR_CALL_METHOD(NULL, routeCore, "setsystemroutes", NULL, 153, _0);
+	ZEPHIR_CALL_METHOD(NULL, routeCore, "setsystemroutes", NULL, 155, _0);
 	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_METHOD(routeCore, "getrouter", NULL, 154);
+	ZEPHIR_RETURN_CALL_METHOD(routeCore, "getrouter", NULL, 156);
 	zephir_check_call_status();
 	RETURN_MM();
 

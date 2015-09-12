@@ -93,7 +93,7 @@ PHP_METHOD(Phady_Config_Yaml, parse) {
 
 	ZEPHIR_SINIT_VAR(_0);
 	ZVAL_STRING(&_0, "yaml", 0);
-	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", NULL, 7, &_0);
+	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", NULL, 12, &_0);
 	zephir_check_call_status();
 	if (!(zephir_is_true(_1))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phady_exception_ce, "Yaml extension not loaded", "phady/config/yaml.zep", 42);

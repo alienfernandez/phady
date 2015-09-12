@@ -300,7 +300,7 @@ class User extends \Phady\Common\Entities\ModelBase implements UserInterface
     public function getRoles()
     {
         var roles;
-        let roles = this->roles;
+        let roles = (!is_array(this->roles)) ? [] : this->roles;
 
         // we need to make sure to have at least one role
         let roles[] = "ROLE_DEFAULT";

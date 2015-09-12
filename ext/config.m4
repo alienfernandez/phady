@@ -15,14 +15,14 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/http/firewall/listenerinterface.zep.c
 	phady/security/core/user/userinterface.zep.c
 	phady/security/core/authentication/provider/authenticationproviderinterface.zep.c
+	phady/security/core/authentication/token/tokeninterface.zep.c
 	phady/security/core/authorization/voter/voterinterface.zep.c
 	phady/security/core/exception/accountstatusexception.zep.c
 	phady/security/core/user/userproviderinterface.zep.c
-	phady/security/core/authentication/token/tokeninterface.zep.c
+	phady/security/core/authentication/token/abstracttoken.zep.c
 	phady/security/core/encoder/passwordencoderinterface.zep.c
 	phady/security/core/user/advanceduserinterface.zep.c
 	phady/core/kernel.zep.c
-	phady/security/core/authentication/token/abstracttoken.zep.c
 	phady/security/core/encoder/basepasswordencoder.zep.c
 	phady/security/core/role/roleinterface.zep.c
 	phady/security/core/user/factory/userproviderfactoryinterface.zep.c
@@ -47,9 +47,11 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/http/accessmapinterface.zep.c
 	phady/security/http/authentication/authenticationfailurehandlerinterface.zep.c
 	phady/security/http/authentication/authenticationsuccesshandlerinterface.zep.c
+	phady/security/http/authorization/accessdeniedhandlerinterface.zep.c
 	phady/security/http/entrypoint/authenticationentrypointinterface.zep.c
 	phady/security/http/firewall/abstractauthenticationlistener.zep.c
 	phady/cache/cachehandler.zep.c
+	phady/common/controllers/accessdeniedcontroller.zep.c
 	phady/common/controllers/controllerbase.zep.c
 	phady/config/yaml.zep.c
 	phady/console/command.zep.c
@@ -80,6 +82,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/authentication/provider/userprovider.zep.c
 	phady/security/core/authentication/simpleauthenticatorinterface.zep.c
 	phady/security/core/authentication/token/anonymoustoken.zep.c
+	phady/security/core/authentication/token/remembermetoken.zep.c
 	phady/security/core/authentication/token/storage/tokenstorage.zep.c
 	phady/security/core/authentication/token/usernamepasswordtoken.zep.c
 	phady/security/core/authenticationevents.zep.c
@@ -99,6 +102,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/exception/badcredentialsexception.zep.c
 	phady/security/core/exception/credentialsexpiredexception.zep.c
 	phady/security/core/exception/disabledexception.zep.c
+	phady/security/core/exception/insufficientauthenticationexception.zep.c
 	phady/security/core/exception/invalidcsrftokenexception.zep.c
 	phady/security/core/exception/lockedexception.zep.c
 	phady/security/core/exception/providernotfoundexception.zep.c
@@ -136,7 +140,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/http/accessmap.zep.c
 	phady/security/http/authentication/defaultauthenticationfailurehandler.zep.c
 	phady/security/http/authentication/defaultauthenticationsuccesshandler.zep.c
-	phady/security/http/authorization/accessdeniedhandlerinterface.zep.c
+	phady/security/http/authorization/accessdeniedlistener.zep.c
 	phady/security/http/entrypoint/formauthenticationentrypoint.zep.c
 	phady/security/http/event/interactiveloginevent.zep.c
 	phady/security/http/firewall/accesslistener.zep.c

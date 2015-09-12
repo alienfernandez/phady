@@ -14,12 +14,15 @@
 namespace Phady\Security;
 
 use Phalcon\Http\Request;
+use Phalcon\Http\Response;
 use Phady\Security\Http\Firewall\ExceptionListener;
 use Phady\Security\Http\FirewallMapInterface;
 use Phalcon\Events\Event;
 use Phalcon\Mvc\Dispatcher;
 use Phady\Security\Core\Exception\AuthenticationException;
 use Phady\Security\Core\Exception\AccountStatusException;
+use Phady\Security\Core\Exception\AccessDeniedException;
+use Phady\Security\Core\Exception\InsufficientAuthenticationException;
 
 /**
   * @class Phady\Security\Firewall
@@ -36,7 +39,9 @@ class Firewall extends \Phalcon\Di\Injectable
     private exceptionListeners;
     private authenticationEntryPoint;
     private tokenStorage;
-
+    private authenticationTrustResolver;
+    private accessDeniedHandler;
+    private errorPage;
 
     /**
      * Constructor.
@@ -48,6 +53,7 @@ class Firewall extends \Phalcon\Di\Injectable
     public function __construct()
     {
         let this->exceptionListeners = new \SplObjectStorage();
+        let this->errorPage = "/access_denied";
     }
 
     /**
@@ -72,6 +78,8 @@ class Firewall extends \Phalcon\Di\Injectable
         let this->map = this->getDI()->get("security.firewall.map");
         let this->authenticationEntryPoint = this->getDI()->get("security.authentication.form_entry_point");
         let this->tokenStorage = this->getDI()->get("security.token_storage");
+        let this->authenticationTrustResolver = this->getDI()->get("security.authentication.trust_resolver");
+        let this->accessDeniedHandler = this->getDI()->get("security.access_denied.handler");
 
         /*let controllerName = dispatcher->getControllerName();
         let actionName = dispatcher->getActionName();
@@ -90,13 +98,60 @@ class Firewall extends \Phalcon\Di\Injectable
             }
         }
         catch \Exception, exception {
-            print_r(get_class(exception) . " - " . exception->getMessage());die();
+            //print_r(get_class(exception) . " - " . exception->getMessage());die();
             if (exception instanceof AuthenticationException) {
                 this->handleAuthenticationException(request, exception);
-            }
+            } elseif (exception instanceof AccessDeniedException) {
+                 return this->handleAccessDeniedException(request, exception);
+             }
         }
     }
 
+    private function handleAccessDeniedException(<Request> request, <AccessDeniedException> exception)
+    {
+        //event->setException(new AccessDeniedHttpException(exception->getMessage(), exception));
+        var token, insufficientAuthenticationException, e, response;
+        let token = this->tokenStorage->getToken();
+
+        if (!this->authenticationTrustResolver->isFullFledged(token)) {
+            /*if (null !== this->logger) {
+                this->logger->debug("Access denied, the user is not fully authenticated; redirecting to authentication entry point.", array("exception" => exception));
+            }*/
+
+            let insufficientAuthenticationException = new InsufficientAuthenticationException("Full authentication is required to access this resource.", 0, exception);
+            insufficientAuthenticationException->setToken(token);
+            this->startAuthentication(request, insufficientAuthenticationException);
+            return;
+        }
+
+        /*if (null !== this->logger) {
+            this->logger->debug("Access denied, the user is neither anonymous, nor remember-me.", ["exception" => exception]);
+        }*/
+
+        try {
+
+            if (null !== this->accessDeniedHandler) {
+                let response = this->accessDeniedHandler->handle(request, exception);
+                if (response instanceof Response) {
+                    ///event->setResponse(response);
+                } else {
+                    this->getDI()->get("response")->redirect(this->errorPage);
+                }
+            } elseif (null !== this->errorPage) {
+                this->getDI()->get("response")->redirect(this->errorPage);
+                /*subRequest = this->httpUtils->createRequest(event->getRequest(), this->errorPage);
+                subRequest->attributes->set(Security::ACCESS_DENIED_ERROR, exception);
+
+                event->setResponse(event->getKernel()->handle(subRequest, HttpKernelInterface::SUB_REQUEST, true));*/
+            }
+        } catch \Exception, e {
+            /*if (null !== this->logger) {
+                this->logger->error("An exception was thrown when handling an AccessDeniedException.", ["exception" : e]);
+            }*/
+
+            throw new \RuntimeException("Exception thrown when handling an exception.", 0, e);
+        }
+    }
 
     public function handleAuthenticationException(<Request> request, <AuthenticationException> exception)
     {

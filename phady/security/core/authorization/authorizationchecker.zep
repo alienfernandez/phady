@@ -54,6 +54,14 @@ class AuthorizationChecker implements AuthorizationCheckerInterface
 
     /**
      * {@inheritdoc}
+     */
+    public function getTokenStorage()
+    {
+        return this->tokenStorage;
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @throws AuthenticationCredentialsNotFoundException when the token storage has no authentication token.
      */

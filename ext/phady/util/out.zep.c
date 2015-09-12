@@ -136,14 +136,14 @@ PHP_METHOD(Phady_Util_Out, htmlentities) {
 	if (preserve_encoded_entities) {
 		ZEPHIR_SINIT_VAR(_0);
 		ZVAL_STRING(&_0, "HHVM_VERSION", 0);
-		ZEPHIR_CALL_FUNCTION(&_1, "defined", NULL, 128, &_0);
+		ZEPHIR_CALL_FUNCTION(&_1, "defined", NULL, 130, &_0);
 		zephir_check_call_status();
 		if (zephir_is_true(_1)) {
 			ZEPHIR_SINIT_NVAR(_0);
 			ZVAL_LONG(&_0, 1);
 			ZEPHIR_SINIT_VAR(_2);
 			ZVAL_LONG(&_2, 3);
-			ZEPHIR_CALL_FUNCTION(&translation_table, "get_html_translation_table", &_3, 129, &_0, &_2);
+			ZEPHIR_CALL_FUNCTION(&translation_table, "get_html_translation_table", &_3, 131, &_0, &_2);
 			zephir_check_call_status();
 		} else {
 			ZEPHIR_CALL_SELF(&_4, "mbinternalencoding", NULL, 0);
@@ -152,23 +152,23 @@ PHP_METHOD(Phady_Util_Out, htmlentities) {
 			ZVAL_LONG(&_0, 1);
 			ZEPHIR_SINIT_NVAR(_2);
 			ZVAL_LONG(&_2, 3);
-			ZEPHIR_CALL_FUNCTION(&translation_table, "get_html_translation_table", &_3, 129, &_0, &_2, _4);
+			ZEPHIR_CALL_FUNCTION(&translation_table, "get_html_translation_table", &_3, 131, &_0, &_2, _4);
 			zephir_check_call_status();
 		}
 		ZEPHIR_SINIT_NVAR(_0);
 		ZVAL_LONG(&_0, 38);
-		ZEPHIR_CALL_FUNCTION(&_4, "chr", NULL, 130, &_0);
+		ZEPHIR_CALL_FUNCTION(&_4, "chr", NULL, 132, &_0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(_5);
 		ZVAL_LONG(_5, '&');
 		zephir_array_update_zval(&translation_table, _4, &_5, PH_COPY | PH_SEPARATE);
-		ZEPHIR_CALL_FUNCTION(&_6, "strtr", NULL, 131, text, translation_table);
+		ZEPHIR_CALL_FUNCTION(&_6, "strtr", NULL, 133, text, translation_table);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(_7);
 		ZVAL_STRING(_7, "/&(?![A-Za-z]{0,4}\\w{2,3};|#[0-9]{2,3};)/", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_VAR(_8);
 		ZVAL_STRING(_8, "&amp;", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_RETURN_CALL_FUNCTION("preg_replace", NULL, 132, _7, _8, _6);
+		ZEPHIR_RETURN_CALL_FUNCTION("preg_replace", NULL, 134, _7, _8, _6);
 		zephir_check_temp_parameter(_7);
 		zephir_check_temp_parameter(_8);
 		zephir_check_call_status();
@@ -178,7 +178,7 @@ PHP_METHOD(Phady_Util_Out, htmlentities) {
 	zephir_check_call_status();
 	ZEPHIR_SINIT_NVAR(_0);
 	ZVAL_LONG(&_0, 3);
-	ZEPHIR_RETURN_CALL_FUNCTION("htmlentities", NULL, 133, text, &_0, _1);
+	ZEPHIR_RETURN_CALL_FUNCTION("htmlentities", NULL, 135, text, &_0, _1);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -208,10 +208,10 @@ PHP_METHOD(Phady_Util_Out, mbInternalEncoding) {
 	if ((zephir_function_exists_ex(SS("mb_internal_encoding") TSRMLS_CC) == SUCCESS)) {
 		ZEPHIR_INIT_VAR(_0);
 		if (zephir_is_true(encoding)) {
-			ZEPHIR_CALL_FUNCTION(&_0, "mb_internal_encoding", &_1, 134, encoding);
+			ZEPHIR_CALL_FUNCTION(&_0, "mb_internal_encoding", &_1, 136, encoding);
 			zephir_check_call_status();
 		} else {
-			ZEPHIR_CALL_FUNCTION(&_0, "mb_internal_encoding", &_1, 134);
+			ZEPHIR_CALL_FUNCTION(&_0, "mb_internal_encoding", &_1, 136);
 			zephir_check_call_status();
 		}
 		RETURN_CCTOR(_0);

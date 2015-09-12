@@ -62,7 +62,6 @@ class RoleVoter implements VoterInterface
         var result, role, roles, attribute;
         let result = VoterInterface::ACCESS_ABSTAIN;
         let roles = this->extractRoles(token);
-
         for attribute in attributes {
             if (!this->supportsAttribute(attribute)) {
                 continue;
