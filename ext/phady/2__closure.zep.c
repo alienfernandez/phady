@@ -14,7 +14,6 @@
 #include "kernel/main.h"
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
-#include "kernel/array.h"
 
 
 ZEPHIR_INIT_CLASS(phady_2__closure) {
@@ -28,21 +27,17 @@ ZEPHIR_INIT_CLASS(phady_2__closure) {
 PHP_METHOD(phady_2__closure, __invoke) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *routeCore, *_SERVER, *_0;
+	zval *securityListener;
 
 	ZEPHIR_MM_GROW();
-	zephir_get_global(&_SERVER, SS("_SERVER") TSRMLS_CC);
 
-	ZEPHIR_INIT_VAR(routeCore);
-	object_init_ex(routeCore, phady_route_router_ce);
-	ZEPHIR_CALL_METHOD(NULL, routeCore, "__construct", NULL, 148);
+	ZEPHIR_INIT_VAR(securityListener);
+	object_init_ex(securityListener, phady_security_eventlistener_securitylistener_ce);
+	ZEPHIR_CALL_METHOD(NULL, securityListener, "__construct", NULL, 150);
 	zephir_check_call_status();
-	zephir_array_fetch_string(&_0, _SERVER, SL("rootDirOk"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 276 TSRMLS_CC);
-	ZEPHIR_CALL_METHOD(NULL, routeCore, "setsystemroutes", NULL, 149, _0);
+	ZEPHIR_CALL_METHOD(NULL, securityListener, "addsecuritylisteners", NULL, 151);
 	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_METHOD(routeCore, "getrouter", NULL, 150);
-	zephir_check_call_status();
-	RETURN_MM();
+	RETURN_CCTOR(securityListener);
 
 }
 

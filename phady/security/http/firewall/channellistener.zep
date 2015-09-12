@@ -32,13 +32,14 @@ class ChannelListener extends \Phalcon\Di\Injectable implements ListenerInterfac
     private authenticationEntryPoint;
     private logger;
 
-    /*public function __construct(<AccessMapInterface> map, <AuthenticationEntryPointInterface> authenticationEntryPoint)
+    //<AccessMapInterface> map,
+    public function __construct(<AuthenticationEntryPointInterface> authenticationEntryPoint)
     {
-        let this->map = map;
         let this->authenticationEntryPoint = authenticationEntryPoint;
+        //let this->map = map;
+        //let this->authenticationEntryPoint = authenticationEntryPoint;
         //let this->logger = logger;
-    }*/
-
+    }
 
     /**
      * Set map
@@ -68,7 +69,6 @@ class ChannelListener extends \Phalcon\Di\Injectable implements ListenerInterfac
         var request, patterns, channel, response;
         let request = this->getDI()->get("request");
 
-        echo "<pre>";print_r(this->map->getPatterns(request));die();
         //list(, channel) = this->map->getPatterns(request);
         let patterns = this->map->getPatterns(request);
         let channel = patterns[1];

@@ -41,22 +41,24 @@ class SecurityListener extends \Phalcon\Di\Injectable
         //TODO delete _SERVER
 
         //Register component security.user_checker
-        this->container->set("security.user_checker", function () {
+        this->container->setShared("security.user_checker", function () {
             return new \Phady\Security\Core\User\UserChecker();
         });
 
         //Register component security.token_storage
-        this->container->set("security.token_storage", function () {
-            return new \Phady\Security\Core\Authentication\Token\Storage\TokenStorage();
-        });
+        if (!this->container->has("security.token_storage")){
+            this->container->setShared("security.token_storage", function () {
+                return new \Phady\Security\Core\Authentication\Token\Storage\TokenStorage();
+            });
+        }
 
         //Register component security.authentication.success_handler
-        this->container->set("security.authentication.success_handler", function () {
+        this->container->setShared("security.authentication.success_handler", function () {
             return new \Phady\Security\Http\Authentication\DefaultAuthenticationSuccessHandler();
         });
 
         //Register component security.authentication.failure_handler
-        this->container->set("security.authentication.failure_handler", function () {
+        this->container->setShared("security.authentication.failure_handler", function () {
             return new \Phady\Security\Http\Authentication\DefaultAuthenticationFailureHandler();
         });
 
@@ -64,7 +66,7 @@ class SecurityListener extends \Phalcon\Di\Injectable
              return new \Phady\Security\Core\Authentication\AuthenticationProviderManager([]);
         });
 
-        this->container->set("security.access.simple_role_voter", function() {
+        this->container->setShared("security.access.simple_role_voter", function() {
              return new \Phady\Security\Core\Authorization\Voter\RoleVoter("ROLE_");
         });
 

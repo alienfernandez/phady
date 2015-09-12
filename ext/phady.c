@@ -28,8 +28,8 @@
 
 
 zend_class_entry *phady_security_core_authentication_authenticationmanagerinterface_ce;
-zend_class_entry *phady_security_core_user_userinterface_ce;
 zend_class_entry *phady_security_http_firewall_listenerinterface_ce;
+zend_class_entry *phady_security_core_user_userinterface_ce;
 zend_class_entry *phady_security_core_authentication_provider_authenticationproviderinterface_ce;
 zend_class_entry *phady_security_core_authorization_voter_voterinterface_ce;
 zend_class_entry *phady_security_core_user_userproviderinterface_ce;
@@ -104,6 +104,8 @@ zend_class_entry *phady_34__closure_ce;
 zend_class_entry *phady_35__closure_ce;
 zend_class_entry *phady_36__closure_ce;
 zend_class_entry *phady_37__closure_ce;
+zend_class_entry *phady_38__closure_ce;
+zend_class_entry *phady_39__closure_ce;
 zend_class_entry *phady_3__closure_ce;
 zend_class_entry *phady_4__closure_ce;
 zend_class_entry *phady_5__closure_ce;
@@ -198,6 +200,7 @@ zend_class_entry *phady_security_http_event_interactiveloginevent_ce;
 zend_class_entry *phady_security_http_firewall_accesslistener_ce;
 zend_class_entry *phady_security_http_firewall_anonymousauthenticationlistener_ce;
 zend_class_entry *phady_security_http_firewall_channellistener_ce;
+zend_class_entry *phady_security_http_firewall_contextlistener_ce;
 zend_class_entry *phady_security_http_firewall_exceptionlistener_ce;
 zend_class_entry *phady_security_http_firewall_usernamepasswordformauthenticationlistener_ce;
 zend_class_entry *phady_security_http_firewallmap_ce;
@@ -238,8 +241,8 @@ static PHP_MINIT_FUNCTION(phady)
 #endif
 	REGISTER_INI_ENTRIES();
 	ZEPHIR_INIT(Phady_Security_Core_Authentication_AuthenticationManagerInterface);
-	ZEPHIR_INIT(Phady_Security_Core_User_UserInterface);
 	ZEPHIR_INIT(Phady_Security_Http_Firewall_ListenerInterface);
+	ZEPHIR_INIT(Phady_Security_Core_User_UserInterface);
 	ZEPHIR_INIT(Phady_Security_Core_Authentication_Provider_AuthenticationProviderInterface);
 	ZEPHIR_INIT(Phady_Security_Core_Authorization_Voter_VoterInterface);
 	ZEPHIR_INIT(Phady_Security_Core_User_UserProviderInterface);
@@ -371,6 +374,7 @@ static PHP_MINIT_FUNCTION(phady)
 	ZEPHIR_INIT(Phady_Security_Http_Firewall_AccessListener);
 	ZEPHIR_INIT(Phady_Security_Http_Firewall_AnonymousAuthenticationListener);
 	ZEPHIR_INIT(Phady_Security_Http_Firewall_ChannelListener);
+	ZEPHIR_INIT(Phady_Security_Http_Firewall_ContextListener);
 	ZEPHIR_INIT(Phady_Security_Http_Firewall_ExceptionListener);
 	ZEPHIR_INIT(Phady_Security_Http_Firewall_UsernamePasswordFormAuthenticationListener);
 	ZEPHIR_INIT(Phady_Security_Http_SecurityEvents);
@@ -415,6 +419,8 @@ static PHP_MINIT_FUNCTION(phady)
 	ZEPHIR_INIT(phady_35__closure);
 	ZEPHIR_INIT(phady_36__closure);
 	ZEPHIR_INIT(phady_37__closure);
+	ZEPHIR_INIT(phady_38__closure);
+	ZEPHIR_INIT(phady_39__closure);
 	ZEPHIR_INIT(phady_3__closure);
 	ZEPHIR_INIT(phady_4__closure);
 	ZEPHIR_INIT(phady_5__closure);

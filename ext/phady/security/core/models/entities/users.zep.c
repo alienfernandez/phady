@@ -122,7 +122,7 @@ PHP_METHOD(Phady_Security_Core_Models_Entities_Users, init) {
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_CALL_PARENT(NULL, phady_security_core_models_entities_users_ce, this_ptr, "init", &_0, 82);
+	ZEPHIR_CALL_PARENT(NULL, phady_security_core_models_entities_users_ce, this_ptr, "init", &_0, 81);
 	zephir_check_call_status();
 	_1 = zephir_fetch_nproperty_this(this_ptr, SL("_set"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_2);
@@ -150,7 +150,7 @@ PHP_METHOD(Phady_Security_Core_Models_Entities_Users, init) {
 	ZEPHIR_INIT_VAR(_13);
 	ZVAL_STRING(_13, "last_login", ZEPHIR_TEMP_PARAM_COPY);
 	Z_SET_ISREF_P(_1);
-	ZEPHIR_CALL_FUNCTION(NULL, "array_push", &_14, 83, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13);
+	ZEPHIR_CALL_FUNCTION(NULL, "array_push", &_14, 82, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13);
 	zephir_check_temp_parameter(_2);
 	zephir_check_temp_parameter(_3);
 	zephir_check_temp_parameter(_4);
@@ -191,7 +191,7 @@ PHP_METHOD(Phady_Security_Core_Models_Entities_Users, init) {
 	ZEPHIR_INIT_NVAR(_13);
 	ZVAL_STRING(_13, "last_login", ZEPHIR_TEMP_PARAM_COPY);
 	Z_SET_ISREF_P(_15);
-	ZEPHIR_CALL_FUNCTION(NULL, "array_push", &_14, 83, _15, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13);
+	ZEPHIR_CALL_FUNCTION(NULL, "array_push", &_14, 82, _15, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13);
 	zephir_check_temp_parameter(_2);
 	zephir_check_temp_parameter(_3);
 	zephir_check_temp_parameter(_4);

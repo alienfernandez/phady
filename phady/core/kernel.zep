@@ -253,7 +253,7 @@ abstract class Kernel
         let _SERVER["environment"] = this->environment;
 
         //Register the security firewall
-        this->container->setShared("security.firewall", function () {
+        this->container->set("security.firewall", function () {
             return new \Phady\Security\Firewall();
         });
 
@@ -264,11 +264,17 @@ abstract class Kernel
         }, ["parameters" : this->getCoreParameters()]);
         this->container->set("parameters", parametersFunc);
 
-        var securityListener;
-        let securityListener = new \Phady\Security\EventListener\SecurityListener();
-        securityListener->addSecurityListeners();
 
         if (this->scope == self::SCOPE_MVC) {
+            this->container->set("security.listeners", function () {
+                var securityListener;
+                let securityListener = new \Phady\Security\EventListener\SecurityListener();
+                securityListener->addSecurityListeners();
+                return securityListener;
+            });
+            this->container->get("security.listeners");
+
+
             this->container->set("router", function () {
                 var routeCore;
                 let routeCore = new \Phady\Route\Router();
@@ -294,7 +300,7 @@ abstract class Kernel
                     /**
                      * Check if the user is allowed to access certain action using the AuthenticationListener
                      */
-                    //eventsManager->attach("dispatch:beforeDispatch", this->container->get("security.firewall"));
+                    eventsManager->attach("dispatch:beforeExecuteRoute", this->container->get("security.firewall"));
                     this->container->get("dispatcher")->setEventsManager(eventsManager);
                     //eventsManager->fire("dispatch:beforeDispatch", this->container->get("dispatcher"));
                 }
@@ -305,7 +311,7 @@ abstract class Kernel
         //Register component database service
 
         let _SERVER["configApp"] = this->config;
-        this->container->set("db", function () {
+        this->container->setShared("db", function () {
             var dbCore, exception;
             try {
                 let dbCore = new \Phady\Db\DatabaseHandler(_SERVER["configApp"]);
@@ -386,16 +392,11 @@ abstract class Kernel
             return cookies;
         });
 
-        //Init registry service
-        this->container->set("registry", function () {
-            return new \Phalcon\Registry();
-        });
-
         /**
          * Init session service
          * Inicia la sesión la primera vez que algun componente solicita el servicio "session"
          */
-        this->container->set("session", function () {
+        this->container->setShared("session", function () {
             var session;
             let session = new \Phalcon\Session\Adapter\Files();
             return session;

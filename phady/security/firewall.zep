@@ -34,7 +34,9 @@ class Firewall extends \Phalcon\Di\Injectable
     private map = [];
     private dispatcher;
     private exceptionListeners;
-    
+    private authenticationEntryPoint;
+    private tokenStorage;
+
 
     /**
      * Constructor.
@@ -45,9 +47,6 @@ class Firewall extends \Phalcon\Di\Injectable
      //<FirewallMapInterface> map
     public function __construct()
     {
-        //let this->map = map;
-        //let this->map = this->getDI()->get("security.firewall.map");
-        let this->dispatcher = this->getDI()->get("dispatcher");
         let this->exceptionListeners = new \SplObjectStorage();
     }
 
@@ -60,42 +59,85 @@ class Firewall extends \Phalcon\Di\Injectable
         let this->map = map;
     }
 
-
     /**
      * Handles security.
      *
-     * @param GetResponseEvent event An GetResponseEvent instance
      */
-    public function beforeDispatch(<Event> event, <Dispatcher> dispatcher, exception)
-    //public function beforeExecuteRoute(<Event> event, <Dispatcher> dispatcher, exception)
-    {
-
-        echo "<pre>"; print_r("beforeDispatch!!!");
-        /*
-        if (!event->isMasterRequest()) {
-            return;
-        }*/
-        var request, listeners, exceptionListener, listenersMap, listener;
+    public function beforeExecuteRoute(<Event> event, <Dispatcher> dispatcher, exception1) {
+        //Symfony\Component\Security\Http\Firewall\ChannelListener - Symfony\Component\Security\Http\Firewall\ContextListener
+        //- Symfony\Component\Security\Http\Firewall\LogoutListener - Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener
+        //- Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener - Symfony\Component\Security\Http\Firewall\AccessListener -
+        var exception, request, listeners, exceptionListener, listenersMap, listener;
         let request = this->getDI()->get("request");
-        // register listeners for this firewall
-        //list(listeners, exceptionListener) = this->map->getListeners(request);
-        let listenersMap = this->map->getListeners(request);
-        //echo "<pre>"; print_r(listenersMap);
+        let this->map = this->getDI()->get("security.firewall.map");
+        let this->authenticationEntryPoint = this->getDI()->get("security.authentication.form_entry_point");
+        let this->tokenStorage = this->getDI()->get("security.token_storage");
 
-        /*if (null !== exceptionListener) {
-            this->exceptionListeners[event->getRequest()] = listenersMap[1];
-            exceptionListener->register(this->dispatcher);
+        /*let controllerName = dispatcher->getControllerName();
+        let actionName = dispatcher->getActionName();
+        */
+        // register listeners for this firewall
+        let listenersMap = this->map->getListeners(request);
+
+        try {
+            //If uri is entry point
+            if (this->authenticationEntryPoint->getLoginPath() != request->getURI()){
+                // initiate the listener
+                for listener in listenersMap[0] {
+                    //echo "<pre>"; print_r(this->getDI()->get(listener)); die();
+                    this->getDI()->get(listener)->handle();
+                }
+            }
+        }
+        catch \Exception, exception {
+            print_r(get_class(exception) . " - " . exception->getMessage());die();
+            if (exception instanceof AuthenticationException) {
+                this->handleAuthenticationException(request, exception);
+            }
+        }
+    }
+
+
+    public function handleAuthenticationException(<Request> request, <AuthenticationException> exception)
+    {
+        /*if (null !== this->logger) {
+            this->logger->info("An AuthenticationException was thrown; redirecting to authentication entry point.", array("exception" => exception));
+        }*/
+        this->startAuthentication(request, exception);
+    }
+
+    /**
+     * @param Request                 request
+     * @param AuthenticationException authException
+     *
+     * @return Response
+     *
+     * @throws AuthenticationException
+     */
+    private function startAuthentication(<Request> request, <AuthenticationException> authException)
+    {
+        if (null === this->authenticationEntryPoint) {
+            throw authException;
+        }
+
+        /*if (null !== this->logger) {
+            this->logger->debug("Calling Authentication entry point.");
         }*/
 
-        // initiate the listener chain
-        for listener in listenersMap[0] {
+        /*
+        if (!this->stateless) {
+            this->setTargetPath(request);
+        }*/
 
-            //echo "<pre>"; print_r(this->getDI()->get(listener)); die();
-            this->getDI()->get(listener)->handle();
+        if (authException instanceof AccountStatusException) {
+            // remove the security token to prevent infinite redirect loops
+            this->tokenStorage->setToken(null);
 
-            //if (null !== this->getDI()->get("response")) {
-            //    break;
-           // }
+            /*if (null !== this->logger) {
+                this->logger->info("The security token was removed due to an AccountStatusException.", array("exception" => authException));
+            }*/
         }
-    }        
+
+        return this->authenticationEntryPoint->start(request, authException);
+    }
 }

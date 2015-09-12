@@ -95,10 +95,14 @@ class AccessListener extends \Phalcon\Di\Injectable implements ListenerInterface
     {
         let this->map = this->getDI()->get("security.access_map");
         let this->authManager = this->getDI()->get("security.authentication.manager");
+        let this->tokenStorage = this->getDI()->get("security.token_storage");
 
         var token, request, patterns, attributes;
         let token = this->tokenStorage->getToken();
+
+
         if (null === token) {
+            //print_r(token);die();
             throw new AuthenticationCredentialsNotFoundException("A Token was not found in the TokenStorage.");
         }
 
@@ -106,15 +110,19 @@ class AccessListener extends \Phalcon\Di\Injectable implements ListenerInterface
 
         //list(attributes) = this->map->getPatterns(request);
         let patterns = this->map->getPatterns(request);
+
         let attributes = patterns[0];
 
         if (null === attributes) {
             return;
         }
 
+
         if (!token->isAuthenticated()) {
             let token = this->authManager->authenticate(token);
             this->tokenStorage->setToken(token);
+            //this->getDI()->remove("security.token_storage");
+            this->getDI()->setShared("security.token_storage", this->tokenStorage);
         }
 
         if (!this->accessDecisionManager->decide(token, attributes, request)) {

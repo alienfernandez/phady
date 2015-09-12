@@ -151,6 +151,20 @@ abstract class AbstractToken implements TokenInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function unserialize(serialized)
+    {
+        var unserializedData;
+        let unserializedData = unserialize(serialized);
+        let this->user = unserializedData[0];
+        let this->authenticated = unserializedData[1];
+        let this->roles = unserializedData[2];
+        let this->attributes = unserializedData[3];
+         //list(this->user, this->authenticated, this->roles, this->attributes)
+    }
+
+    /**
      * Returns the token attributes.
      *
      * @return array The token attributes

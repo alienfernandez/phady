@@ -14,6 +14,8 @@
 #include "kernel/main.h"
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
+#include "kernel/array.h"
+#include "ext/phalcon/phalcon/flash/session.zep.h"
 
 
 ZEPHIR_INIT_CLASS(phady_8__closure) {
@@ -27,20 +29,23 @@ ZEPHIR_INIT_CLASS(phady_8__closure) {
 PHP_METHOD(phady_8__closure, __invoke) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *config, *cache;
+	zval *_0;
+	zval *flash;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &config);
 
-
-
-	ZEPHIR_INIT_VAR(cache);
-	object_init_ex(cache, phady_cache_cachehandler_ce);
-	ZEPHIR_CALL_METHOD(NULL, cache, "__construct", NULL, 153, config);
-	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_METHOD(cache, "getadapter", NULL, 154);
-	zephir_check_call_status();
-	RETURN_MM();
+	ZEPHIR_INIT_VAR(flash);
+	object_init_ex(flash, phalcon_flash_session_ce);
+	if (zephir_has_constructor(flash TSRMLS_CC)) {
+		ZEPHIR_INIT_VAR(_0);
+		zephir_create_array(_0, 3, 0 TSRMLS_CC);
+		add_assoc_stringl_ex(_0, SS("error"), SL("alert alert-danger"), 1);
+		add_assoc_stringl_ex(_0, SS("success"), SL("alert alert-success"), 1);
+		add_assoc_stringl_ex(_0, SS("notice"), SL("alert alert-info"), 1);
+		ZEPHIR_CALL_METHOD(NULL, flash, "__construct", NULL, 0, _0);
+		zephir_check_call_status();
+	}
+	RETURN_CCTOR(flash);
 
 }
 

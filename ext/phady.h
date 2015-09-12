@@ -7,8 +7,8 @@
 #include "phady/security/core/exception/authenticationexception.zep.h"
 #include "phady/common/entities/modelbase.zep.h"
 #include "phady/security/core/authentication/authenticationmanagerinterface.zep.h"
-#include "phady/security/core/user/userinterface.zep.h"
 #include "phady/security/http/firewall/listenerinterface.zep.h"
+#include "phady/security/core/user/userinterface.zep.h"
 #include "phady/security/core/authentication/provider/authenticationproviderinterface.zep.h"
 #include "phady/security/core/authorization/voter/voterinterface.zep.h"
 #include "phady/security/core/exception/accountstatusexception.zep.h"
@@ -137,6 +137,7 @@
 #include "phady/security/http/firewall/accesslistener.zep.h"
 #include "phady/security/http/firewall/anonymousauthenticationlistener.zep.h"
 #include "phady/security/http/firewall/channellistener.zep.h"
+#include "phady/security/http/firewall/contextlistener.zep.h"
 #include "phady/security/http/firewall/exceptionlistener.zep.h"
 #include "phady/security/http/firewall/usernamepasswordformauthenticationlistener.zep.h"
 #include "phady/security/http/firewallmap.zep.h"
@@ -189,5 +190,7 @@
 #include "phady/35__closure.zep.h"
 #include "phady/36__closure.zep.h"
 #include "phady/37__closure.zep.h"
+#include "phady/38__closure.zep.h"
+#include "phady/39__closure.zep.h"
 
 #endif

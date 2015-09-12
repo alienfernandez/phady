@@ -12,8 +12,8 @@ if test "$PHP_PHADY" = "yes"; then
 	phady_sources="phady.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c phady/security/core/exception/authenticationexception.zep.c
 	phady/common/entities/modelbase.zep.c
 	phady/security/core/authentication/authenticationmanagerinterface.zep.c
-	phady/security/core/user/userinterface.zep.c
 	phady/security/http/firewall/listenerinterface.zep.c
+	phady/security/core/user/userinterface.zep.c
 	phady/security/core/authentication/provider/authenticationproviderinterface.zep.c
 	phady/security/core/authorization/voter/voterinterface.zep.c
 	phady/security/core/exception/accountstatusexception.zep.c
@@ -142,6 +142,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/http/firewall/accesslistener.zep.c
 	phady/security/http/firewall/anonymousauthenticationlistener.zep.c
 	phady/security/http/firewall/channellistener.zep.c
+	phady/security/http/firewall/contextlistener.zep.c
 	phady/security/http/firewall/exceptionlistener.zep.c
 	phady/security/http/firewall/usernamepasswordformauthenticationlistener.zep.c
 	phady/security/http/firewallmap.zep.c
@@ -193,7 +194,9 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/34__closure.zep.c
 	phady/35__closure.zep.c
 	phady/36__closure.zep.c
-	phady/37__closure.zep.c "
+	phady/37__closure.zep.c
+	phady/38__closure.zep.c
+	phady/39__closure.zep.c "
 	PHP_NEW_EXTENSION(phady, $phady_sources, $ext_shared,, )
 	PHP_SUBST(PHADY_SHARED_LIBADD)
 

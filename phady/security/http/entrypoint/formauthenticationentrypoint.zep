@@ -45,6 +45,14 @@ class FormAuthenticationEntryPoint  extends \Phalcon\Di\Injectable implements Au
     /**
      * {@inheritdoc}
      */
+    public function getLoginPath()
+    {
+        return this->loginPath;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function start(<Request> request, <AuthenticationException> authException = null)
     {
         /*

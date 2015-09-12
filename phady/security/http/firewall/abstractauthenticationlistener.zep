@@ -26,6 +26,7 @@ use Phady\Security\Core\Authentication\Token\TokenInterface;
 use Phady\Security\Core\Security;
 use Phady\Security\Http\Event\InteractiveLoginEvent;
 use Phady\Security\Http\SecurityEvents;
+use Phady\Security\Core\Authentication\Token\AnonymousToken;
 
 /**
   * @class Phady\Security\Http\Firewall\AbstractAuthenticationListener
@@ -215,6 +216,8 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
         let token = this->tokenStorage->getToken();
         if (token instanceof UsernamePasswordToken && this->providerKey === token->getProviderKey()) {
             this->tokenStorage->setToken(null);
+            this->getDI()->remove("security.token_storage");
+            this->getDI()->set("security.token_storage", this->tokenStorage);
         }
 
         let response = this->failureHandler->onAuthenticationFailure(request, failed);
@@ -235,11 +238,22 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
         //}
 
         this->tokenStorage->setToken(token);
+        this->getDI()->remove("security.token_storage");
+        this->getDI()->set("security.token_storage", this->tokenStorage);
 
         let session = this->getDI()->get("session");
         session->remove(Security::AUTHENTICATION_ERROR);
         session->remove(Security::LAST_USERNAME);
 
+
+        if ((null === token) || (token instanceof AnonymousToken)) {
+            session->remove("_security_main");
+        } else {
+            session->set("_security_main", serialize(token));
+            /*if (null !== this->logger) {
+                this->logger->debug("Stored the security token in the session.", array("key" => this->sessionKey));
+            }*/
+        }
 
         if (this->getDI()->has("dispatcher")) {
             let loginEvent = new InteractiveLoginEvent(request, token);

@@ -37,6 +37,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
     private userProviderFactories = [];
     private container;
     private authenticationProviders;
+    private contextListeners = [];
 
     public function __construct()
     {
@@ -64,10 +65,24 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
         this->addSecurityListenerFactory(new FormLoginFactory());
 
+        this->createEntryPoint(config);
         this->createFirewalls(config);
         this->createAuthorization(config);
         this->createRoleHierarchy(config);
 
+    }
+
+    private function createEntryPoint(config)
+    {
+        var login_path;
+        let login_path = "/login";
+        // Channel listener
+        var argsEntryPoint, entryPointFunc;
+        let argsEntryPoint = ["login_path" : login_path];
+        let entryPointFunc = call_user_func_array(function(login_path) {
+             return new \Phady\Security\Http\EntryPoint\FormAuthenticationEntryPoint(login_path, false);
+        }, argsEntryPoint);
+        this->container->set("security.authentication.form_entry_point", entryPointFunc);
     }
 
     private function createEncoders(encoders)
@@ -117,7 +132,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
     private function createAuthorization(config)
     {
-        var access, matcher, attributes, accessParams, requires_channel, args, userFunc;
+        var access, matcher, attributes, requires_channel, args, userFuncAccessMap;
         if (!config["access_control"]) {
             return;
         }
@@ -136,18 +151,15 @@ class SecurityExtension extends \Phalcon\Di\Injectable
                 attributes[] = this->createExpression(container, access["allow_if"]);
             }*/
             let requires_channel = (array_key_exists("requires_channel", access)) ? access["requires_channel"] : null;
-            let accessParams = [matcher, attributes, requires_channel];
 
-            let args = ["matcher" : attributes, "attributes" : attributes, "requires_channel" : requires_channel];
-            let userFunc = call_user_func_array(function(matcher, attributes, requires_channel) {
+            let args = ["matcher" : matcher, "attributes" : attributes, "requires_channel" : requires_channel];
+            let userFuncAccessMap = call_user_func_array(function(matcher, attributes, requires_channel) {
                  var access_Map;
                  let access_Map = new \Phady\Security\Http\AccessMap();
                  access_Map->add(matcher, attributes, requires_channel);
                  return access_Map;
             }, args);
-            this->container->set("security.access_map", userFunc);
-             //print_r(this->container->get("security.access_map", [accessParams]));
-             //die();
+            this->container->set("security.access_map", userFuncAccessMap);
         }
     }
 
@@ -204,7 +216,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         var contextId, name, firewall, newFirewall, listeners, exceptionListener;
         for name, firewall in firewalls {
             //list(matcher, listeners, exceptionListener) = this->createFirewall(name, firewall, providerIds);
-            let newFirewall = this->createFirewall(name, firewall, providerIds);
+            let newFirewall = this->createFirewall(name, firewall, providerIds, userProviders);
 
             let contextId = "security.firewall.map.context.".name;
             let listeners = newFirewall[1];
@@ -253,7 +265,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
     }
 
 
-    private function createFirewall(id, firewall, providerIds)
+    private function createFirewall(id, firewall, providerIds, userProviders)
     {
         var matcher, pattern, host, methods, listeners, defaultProvider, contextKey, configuredEntryPoint, createAuthListeners, exceptionListener;
         // Matcher
@@ -282,15 +294,26 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         // Register listeners
         let listeners = [];
 
-        // Channel listener
-        this->container->set("security.channel_listener", function () {
-            return new \Phady\Security\Http\Firewall\ChannelListener();
-        });
-        if (this->container->has("security.channel_listener")){
-            //this->container->get("security.channel_listener")->setMap()
-        }
-        //let listeners[] = "security.channel_listener";
+        var argsChannel, channelFunc;
+        let argsChannel = ["container" : this->container];
+        let channelFunc = call_user_func_array(function(container) {
+             return new \Phady\Security\Http\Firewall\ChannelListener(
+                container->get("security.authentication.form_entry_point")
+             );
+        }, argsChannel);
+        this->container->set("security.channel_listener", channelFunc);
 
+        let listeners[] = "security.channel_listener";
+
+        // Context serializer listener
+        if (!array_key_exists("stateless", firewall) || false === firewall["stateless"]) {
+            let contextKey = id;
+            if (array_key_exists("context", firewall) && isset(firewall["context"])) {
+                let contextKey = firewall["context"];
+            }
+
+            let listeners[] = this->createContextListener(contextKey, userProviders);
+        }
 
         // Determine default entry point
         let configuredEntryPoint = isset(firewall["entry_point"]) ? firewall["entry_point"] : null;
@@ -320,16 +343,35 @@ class SecurityExtension extends \Phalcon\Di\Injectable
                 container->get("security.access.decision_manager")
              );
         }, args);
-        this->container->set("security.access_listener", userFunc);
+        this->container->setShared("security.access_listener", userFunc);
 
         //security.access.role_hierarchy_voter
-        //let listeners[] = "security.access_listener";
+        let listeners[] = "security.access_listener";
 
         // Exception listener
         let exceptionListener = this->createExceptionListener(firewall, id, (configuredEntryPoint) ? configuredEntryPoint : createAuthListeners[1],
             (array_key_exists("stateless", firewall) && isset(firewall["stateless"])) ? firewall["stateless"] : "");
 
         return [matcher, listeners, exceptionListener];
+    }
+
+    private function createContextListener(contextKey, userProviders)
+    {
+        var listenerId;
+        if (isset(this->contextListeners[contextKey])) {
+            return this->contextListeners[contextKey];
+        }
+
+        let listenerId = "security.context_listener." . count(this->contextListeners);
+
+        var args, userFunc;
+        let args = ["contextKey" : contextKey, "userProviders" : userProviders];
+        let userFunc = call_user_func_array(function(contextKey, userProviders) {
+             return new \Phady\Security\Http\Firewall\ContextListener(contextKey, userProviders);
+        }, args);
+        this->container->setShared(listenerId, userFunc);
+        let this->contextListeners[contextKey] = listenerId;
+        return this->contextListeners[contextKey];
     }
 
     private function createExceptionListener(config, id, defaultEntryPoint, stateless)
