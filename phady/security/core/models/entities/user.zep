@@ -117,17 +117,7 @@ class User extends \Phady\Common\Entities\ModelBase implements UserInterface
      * @var \DateTime
      */
     protected credentialsExpireAt;
-/*
-    public function __construct()
-    {
-        let this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
-        let this->enabled = false;
-        let this->locked = false;
-        let this->expired = false;
-        let this->roles = [];
-        let this->credentialsExpired = false;
-    }
-*/
+
 	public function initialize() {
 
 	}

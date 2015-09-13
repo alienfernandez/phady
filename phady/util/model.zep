@@ -11,18 +11,30 @@
 +------------------------------------------------------------------------+
 */
 
-namespace Phady\Security\Core\Role;
-
+namespace Phady\Util;
 
 /**
-  * @class Phady\Security\Core\Role\Roles -  Core roles for app
+  * @class Phady\Util\Model - Util class for model
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
-  * @package Core
+  * @package Util
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class Roles extends \Phalcon\Mvc\User\Component
+class Model
 {
 
+    /**
+     * Generates version 1: MAC address
+     */
+    public static function asssignData(objectAssign, array arrData)
+    {
+        var key, value;
+        for key, value in arrData {
+            //Verifify exist property in model
+            if (property_exists(objectAssign, key)) {
+                let objectAssign->{key} = value;
+            }
+        }
+    }
 }

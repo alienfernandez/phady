@@ -127,7 +127,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
                     ["type" : "parameter", "value" : config["iterations"]]
                 ]
             ]);
-            //print_r(this->container->get("security.encoder.sha512")->encodePassword("alien", "igvlqypg3y808480wwco4ksogs04040"));die();
+            //print_r(this->container->get("security.encoder.sha512")->encodePassword("test", "bm50dxhx39s8kk0o8w00okk404ws4kc"));die();
             return this->container->get("security.encoder.sha512");
         }
 

@@ -70,6 +70,13 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/messaging/messaging.zep.c
 	phady/report/excel/template/excelmultitable.zep.c
 	phady/route/router.zep.c
+	phady/security/bundle/model/entity/roles.zep.c
+	phady/security/bundle/model/entity/userrole.zep.c
+	phady/security/bundle/model/repository/rolerepository.zep.c
+	phady/security/bundle/model/repository/userrepository.zep.c
+	phady/security/bundle/model/rolecore.zep.c
+	phady/security/bundle/model/usercore.zep.c
+	phady/security/bundle/services/userservice.zep.c
 	phady/security/core/authentication/authenticationprovidermanager.zep.c
 	phady/security/core/authentication/authenticationtrustresolver.zep.c
 	phady/security/core/authentication/authhandler.zep.c
@@ -108,6 +115,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/exception/insufficientauthenticationexception.zep.c
 	phady/security/core/exception/invalidcsrftokenexception.zep.c
 	phady/security/core/exception/lockedexception.zep.c
+	phady/security/core/exception/logoutexception.zep.c
 	phady/security/core/exception/providernotfoundexception.zep.c
 	phady/security/core/exception/unsupporteduserexception.zep.c
 	phady/security/core/exception/usernamenotfoundexception.zep.c
@@ -116,14 +124,10 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/models/entities/modules.zep.c
 	phady/security/core/models/entities/permissions.zep.c
 	phady/security/core/models/entities/resources.zep.c
-	phady/security/core/models/entities/roles.zep.c
 	phady/security/core/models/entities/user.zep.c
-	phady/security/core/models/entities/userrole.zep.c
-	phady/security/core/models/entities/users.zep.c
 	phady/security/core/models/exception.zep.c
 	phady/security/core/models/repositories/users.zep.c
 	phady/security/core/role/rolehierarchyinterface.zep.c
-	phady/security/core/role/roles.zep.c
 	phady/security/core/role/switchuserrole.zep.c
 	phady/security/core/security.zep.c
 	phady/security/core/user/chainuserprovider.zep.c
@@ -133,7 +137,6 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/user/inmemoryuserprovider.zep.c
 	phady/security/core/user/user.zep.c
 	phady/security/core/user/userchecker.zep.c
-	phady/security/core/user/users.zep.c
 	phady/security/eventlistener/securitylistener.zep.c
 	phady/security/exception.zep.c
 	phady/security/factory/formloginfactory.zep.c
@@ -161,6 +164,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/securityextension.zep.c
 	phady/util/datetime.zep.c
 	phady/util/file.zep.c
+	phady/util/model.zep.c
 	phady/util/out.zep.c
 	phady/util/random.zep.c
 	phady/util/text.zep.c

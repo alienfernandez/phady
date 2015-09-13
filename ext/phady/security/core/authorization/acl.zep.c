@@ -119,7 +119,7 @@ PHP_METHOD(Phady_Security_Core_Authorization_Acl, __construct) {
 	ZEPHIR_INIT_ZVAL_NREF(_3);
 	ZVAL_STRING(_3, "common", 1);
 	zephir_update_property_this(this_ptr, SL("moduleName"), _3 TSRMLS_CC);
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "loadresources", NULL, 76);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "loadresources", NULL, 86);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 

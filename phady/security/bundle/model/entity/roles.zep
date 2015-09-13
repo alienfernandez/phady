@@ -11,35 +11,49 @@
 +------------------------------------------------------------------------+
 */
 
-namespace Phady\Security\Core\Models\Entities;
+namespace Phady\Security\Bundle\Model\Entity;
 
 /**
- * Phady\Security\Models\Core\Entities\UserRole
+ * Phady\Security\Bundle\Model\Entity\Roles
  *
- * Model for Users relation Roles
+ * Model for Users
  */
-class UserRole extends \Phady\Common\Entities\ModelBase
+class Roles extends \Phady\Common\Entities\ModelBase
 {
 
     /**
 	 * @Primary
 	 * @var integer
 	 */
-	protected user_role_id;
-
-    /**
-	 * @var integer
-	 */
 	protected role_id;
 
     /**
-	 * @var integer
+	 * @var string
 	 */
-	protected user_id;
+	protected name;
+
+    /**
+	 * @var string
+	 */
+	protected alias;
+
+    /**
+	 * @var string
+	 */
+	protected description;
+
+    /**
+	 * @var string
+	 */
+	protected role_code;
+
+    /**
+	 * @var string
+	 */
+	protected init_path;
 
 	public function initialize() {
-		this->belongsTo("role_id", "Phady\Security\Models\Core\Entities\Roles", "role_id", ["alias" : "Roles"]);
-		this->belongsTo("user_id", "Phady\Security\Models\Core\Entities\Users", "user_id", ["alias" : "Users"]);
+
 	}
 
 	/**
@@ -48,7 +62,7 @@ class UserRole extends \Phady\Common\Entities\ModelBase
 	 * @return string
 	 */
 	public function getSource() {
-		return "phd_sec_user_role";
+		return "phd_security_roles";
 	}
 
 	/**
@@ -56,8 +70,8 @@ class UserRole extends \Phady\Common\Entities\ModelBase
 	 */
 	protected function init() {
 		parent::init();
-		array_push(this->_set, "user_role_id", "role_id", "user_id");
-		array_push(this->_get, "user_role_id", "role_id", "user_id");
+		array_push(this->_set, "role_id", "name", "alias", "description", "role_code", "init_path");
+		array_push(this->_get, "role_id", "name", "alias", "description", "role_code", "init_path");
 	}
 
 }

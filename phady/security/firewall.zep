@@ -23,6 +23,7 @@ use Phady\Security\Core\Exception\AuthenticationException;
 use Phady\Security\Core\Exception\AccountStatusException;
 use Phady\Security\Core\Exception\AccessDeniedException;
 use Phady\Security\Core\Exception\InsufficientAuthenticationException;
+use Phady\Security\Core\Exception\LogoutException;
 
 /**
   * @class Phady\Security\Firewall
@@ -103,7 +104,12 @@ class Firewall extends \Phalcon\Di\Injectable
                 this->handleAuthenticationException(request, exception);
             } elseif (exception instanceof AccessDeniedException) {
                  return this->handleAccessDeniedException(request, exception);
-             }
+            } elseif (exception instanceof LogoutException) {
+                 return this->handleLogoutException(exception);
+            } elseif (exception instanceof InvalidCsrfTokenException) {
+                  //return this->handleAccessDeniedException(request, exception);
+            }
+
         }
     }
 
@@ -139,10 +145,6 @@ class Firewall extends \Phalcon\Di\Injectable
                 }
             } elseif (null !== this->errorPage) {
                 this->getDI()->get("response")->redirect(this->errorPage);
-                /*subRequest = this->httpUtils->createRequest(event->getRequest(), this->errorPage);
-                subRequest->attributes->set(Security::ACCESS_DENIED_ERROR, exception);
-
-                event->setResponse(event->getKernel()->handle(subRequest, HttpKernelInterface::SUB_REQUEST, true));*/
             }
         } catch \Exception, e {
             /*if (null !== this->logger) {
@@ -195,4 +197,13 @@ class Firewall extends \Phalcon\Di\Injectable
 
         return this->authenticationEntryPoint->start(request, authException);
     }
+
+    private function handleLogoutException(<LogoutException> exception)
+    {
+        /*
+        if (null !== this->logger) {
+            this->logger->info("A LogoutException was thrown.", ["exception" : exception]);
+        }*/
+    }
+
 }

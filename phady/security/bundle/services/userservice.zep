@@ -11,36 +11,34 @@
 +------------------------------------------------------------------------+
 */
 
-namespace Phady\Security\Core\User;
+namespace Phady\Security\Bundle\Services;
 
+use Phady\Security\Bundle\Model\UserCore;
 
 /**
-  * @class Phady\Security\Core\User\Users -  Core users for app
+  * @class Phady\Security\Bundle\Model\UserService
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class Users extends \Phalcon\Mvc\User\Component
+class UserService extends \Phalcon\DI\Injectable
 {
+    private userCore;
+
+    public function __construct(){
+        let this->userCore = new UserCore();
+    }
 
     /**
-     * @name getUsers - Get user data
-     * @param array arrData - Data to filters
-     * @param boolean getTotal - Get the total with the filter applied
+     * @name getUsers - Get users
+     * @param array arrData - Data to filter
+     * @param boolean getTotal - Get total users to filter applied
      * @return array
      */
-    public function getUsers(array arrDataFilter, boolean getTotal = false) {
-        var arrData, userRepository, arrUsers, arrTotalUsers;
-        //let arrData = [];
-        let userRepository = new \Phady\Security\Core\Models\Repositories\Users();
-        let arrUsers = userRepository->getUsers(arrDataFilter);
-        let arrData = ["data" : arrUsers];
-        if (getTotal) {
-            let arrTotalUsers = userRepository->getTotalUsers(arrData);
-            let arrData["total"] = arrTotalUsers;
-        }
-        return arrData;
+    public function getUsers(array arrData, getTotal = false) -> array {
+        return this->userCore->getUsers(arrData, getTotal);
     }
 }
+

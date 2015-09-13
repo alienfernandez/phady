@@ -52,14 +52,11 @@ class EntityUserProvider implements UserProviderInterface
     {
         var user;
         if (null !== this->property) {
-
-            let user = this->classUser->findFirst([this->property : username]);
-
+            let user = this->classUser->findFirst([this->property . "= '" .username . "'"]);
         } else {
             if (!(this->classUser instanceof UserProviderInterface)) {
                 throw new \InvalidArgumentException(sprintf("The User Class %s must implement UserProviderInterface.", get_class(this->classUser)));
             }
-
             //user = this->repository->loadUserByUsername(username);
         }
 

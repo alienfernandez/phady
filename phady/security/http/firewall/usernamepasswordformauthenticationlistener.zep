@@ -77,9 +77,9 @@ class UsernamePasswordFormAuthenticationListener extends AbstractAuthenticationL
         var username, password, di;
         let di = this->getDI();
         let this->authenticationManager = di->get("security.authentication.manager");
-        //if (!di->get("security")->checkToken()) {
-         //    throw new InvalidCsrfTokenException("Invalid CSRF token.");
-       // }
+        if (!di->get("security")->checkToken()) {
+             throw new InvalidCsrfTokenException("Invalid CSRF token.");
+        }
 
         if (this->options["post_only"]) {
             let username = trim(request->getPost(this->options["username_parameter"], null, true));
