@@ -33,9 +33,9 @@ PHP_METHOD(phady_2__closure, __invoke) {
 
 	ZEPHIR_INIT_VAR(securityListener);
 	object_init_ex(securityListener, phady_security_eventlistener_securitylistener_ce);
-	ZEPHIR_CALL_METHOD(NULL, securityListener, "__construct", NULL, 152);
+	ZEPHIR_CALL_METHOD(NULL, securityListener, "__construct", NULL, 156);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, securityListener, "addsecuritylisteners", NULL, 153);
+	ZEPHIR_CALL_METHOD(NULL, securityListener, "addsecuritylisteners", NULL, 157);
 	zephir_check_call_status();
 	RETURN_CCTOR(securityListener);
 

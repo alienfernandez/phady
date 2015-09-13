@@ -446,6 +446,7 @@ abstract class Kernel
         //parameters->setParameter("pdf", this->config["pdf"]);
         //parameters->setParameter("files", this->config["files"]);
         parameters->setParameter("security", this->security["security"]);
+        parameters->setParameter("context_session", this->security["security"]["context_session"]);
         parameters->setParameter("container", this->container);
         return parameters;
     }

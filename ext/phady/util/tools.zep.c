@@ -316,9 +316,9 @@ PHP_METHOD(Phady_Util_Tools, getMemoryLimit) {
 
 	ZEPHIR_SINIT_VAR(_0);
 	ZVAL_STRING(&_0, "memory_limit", 0);
-	ZEPHIR_CALL_FUNCTION(&memory_limit, "ini_get", NULL, 147, &_0);
+	ZEPHIR_CALL_FUNCTION(&memory_limit, "ini_get", NULL, 151, &_0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(NULL, "print_r", NULL, 95, memory_limit);
+	ZEPHIR_CALL_FUNCTION(NULL, "print_r", NULL, 99, memory_limit);
 	zephir_check_call_status();
 	ZEPHIR_CALL_SELF(&getOctect, "getoctets", NULL, 0, memory_limit);
 	zephir_check_call_status();
@@ -361,7 +361,7 @@ PHP_METHOD(Phady_Util_Tools, getOctets) {
 		ZVAL_STRING(_9, "/m/i", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_VAR(_10);
 		ZVAL_STRING(_10, "", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&_11, "preg_replace", NULL, 134, _9, _10, option);
+		ZEPHIR_CALL_FUNCTION(&_11, "preg_replace", NULL, 138, _9, _10, option);
 		zephir_check_temp_parameter(_9);
 		zephir_check_temp_parameter(_10);
 		zephir_check_call_status();
@@ -371,7 +371,7 @@ PHP_METHOD(Phady_Util_Tools, getOctets) {
 		ZVAL_STRING(_9, "/m/i", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_NVAR(_10);
 		ZVAL_STRING(_10, "", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&_11, "preg_replace", NULL, 134, _9, _10, option);
+		ZEPHIR_CALL_FUNCTION(&_11, "preg_replace", NULL, 138, _9, _10, option);
 		zephir_check_temp_parameter(_9);
 		zephir_check_temp_parameter(_10);
 		zephir_check_call_status();
@@ -381,7 +381,7 @@ PHP_METHOD(Phady_Util_Tools, getOctets) {
 		ZVAL_STRING(_9, "/g/i", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_NVAR(_10);
 		ZVAL_STRING(_10, "", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&_11, "preg_replace", NULL, 134, _9, _10, option);
+		ZEPHIR_CALL_FUNCTION(&_11, "preg_replace", NULL, 138, _9, _10, option);
 		zephir_check_temp_parameter(_9);
 		zephir_check_temp_parameter(_10);
 		zephir_check_call_status();
@@ -407,9 +407,9 @@ PHP_METHOD(Phady_Util_Tools, getHostName) {
 
 	ZEPHIR_SINIT_VAR(_0);
 	ZVAL_STRING(&_0, "COMPUTERNAME", 0);
-	ZEPHIR_CALL_FUNCTION(&computerName, "getenv", NULL, 148, &_0);
+	ZEPHIR_CALL_FUNCTION(&computerName, "getenv", NULL, 152, &_0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_1, "gethostname", NULL, 149);
+	ZEPHIR_CALL_FUNCTION(&_1, "gethostname", NULL, 153);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(hostname);
 	ZEPHIR_CONCAT_VSV(hostname, _1, "|", computerName);

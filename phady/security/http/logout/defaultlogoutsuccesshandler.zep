@@ -17,7 +17,7 @@ use Phalcon\Http\Request;
 use Phady\Security\Http\Logout\LogoutSuccessHandlerInterface;
 
 /**
-  * @class Phady\Security\Http\Logout\DefaultLogoutSuccessHandler
+  * @class Phady\Security\Http\\Logout\ChannelListener
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core
@@ -41,6 +41,6 @@ class DefaultLogoutSuccessHandler extends \Phalcon\Di\Injectable implements Logo
      */
     public function onLogoutSuccess(<Request> request)
     {
-        return this->getDI()->get("response")->redirect(this->targetUrl);
+        this->getDI()->get("response")->redirect(this->targetUrl);
     }
 }

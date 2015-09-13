@@ -102,29 +102,41 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
     private function createEncoder(array config)
     {
-        var args, userFunc;
-        // a custom encoder service
-        /*
-        if (isset(config["id"])) {
-            return new Reference(config["id"]);
-        }*/
-
+        if (array_key_exists("id", config) && isset(config["id"])) {
+            return new this->container->get(config["id"]);
+        }
         // bcrypt encoder
         if (array_key_exists("algorithm", config) && "bcrypt" === config["algorithm"]) {
-            let args = ["config" : config];
-            let userFunc = call_user_func_array(function(config) {
-                 return new \Phady\Security\Core\Encoder\BCryptPasswordEncoder(config["cost"]);
-            }, args);
-            this->container->set("security.encoder.bcrypt.class", userFunc);
-            return this->container->get("security.encoder.bcrypt.class");
+            //bcrypt encoder
+            this->container->set("security.encoder.bcrypt", [
+                "className" : "Phady\\Security\\Core\\Encoder\\BCryptPasswordEncoder",
+                "arguments" : [
+                    ["type" : "parameter", "value" : config["cost"]]
+                ]
+            ]);
+            return this->container->get("security.encoder.bcrypt");
+        }
+        // sha512 encoder
+        if (array_key_exists("algorithm", config) && "sha512" === config["algorithm"]) {
+            //sha512 encoder
+            this->container->set("security.encoder.sha512", [
+                "className" : "Phady\\Security\\Core\\Encoder\\MessageDigestPasswordEncoder",
+                "arguments" : [
+                    ["type" : "parameter", "value" : config["algorithm"]],
+                    ["type" : "parameter", "value" : config["encode_as_base64"]],
+                    ["type" : "parameter", "value" : config["iterations"]]
+                ]
+            ]);
+            //print_r(this->container->get("security.encoder.sha512")->encodePassword("alien", "igvlqypg3y808480wwco4ksogs04040"));die();
+            return this->container->get("security.encoder.sha512");
         }
 
         // plaintext encoder
         //if ("plaintext" === config["algorithm"]) {
-            this->container->set("security.encoder.plain.class", function () {
+            this->container->set("security.encoder.plain", function () {
                 return new \Phady\Security\Core\Encoder\PlaintextPasswordEncoder(false);
              });
-            return this->container->get("security.encoder.plain.class");
+            return this->container->get("security.encoder.plain");
         //}
 
     }
@@ -132,7 +144,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
     private function createAuthorization(config)
     {
-        var access, matcher, attributes, requires_channel, args, userFuncAccessMap, accessMapParams;
+        var access, matcher, attributes, requires_channel, args, accessMapParams;
         let accessMapParams = [];
         if (!config["access_control"]) {
             return;
@@ -190,7 +202,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
     private function createRequestMatcher(path = null, host = null, methods = [], ip = null, array attributes = [])
     {
-        var serialized, id, arguments;
+        var serialized, id;
         if (methods) {
             let methods = array_map("strtoupper", (array) methods);
         }
@@ -340,6 +352,59 @@ class SecurityExtension extends \Phalcon\Di\Injectable
             let listeners[] = this->createContextListener(contextKey, userProviders);
         }
 
+        // Logout listener
+        var logoutSuccessHandlerId, logoutTarget, optionsListener, handlerId, listenerId;
+        if (array_key_exists("logout", firewall) && isset(firewall["logout"])) {
+            // add logout success handler
+            if (array_key_exists("success_handler", firewall["logout"]) && isset(firewall["logout"]["success_handler"])) {
+                let logoutSuccessHandlerId = firewall["logout"]["success_handler"];
+            } else {
+                let logoutSuccessHandlerId = "security.logout.success_handler.".id;
+                let logoutTarget = (array_key_exists("target", firewall["logout"])) ? firewall["logout"]["target"] : "/";
+                this->container->set(logoutSuccessHandlerId, [
+                    "className" : "Phady\\Security\\Http\\Logout\\DefaultLogoutSuccessHandler",
+                    "arguments" : [
+                        ["type" : "parameter", "value" : logoutTarget]
+                    ]
+                ]);
+            }
+
+            let listenerId = "security.logout_listener.".id;
+            //Listener
+            let optionsListener = [
+                  "csrf_parameter" : (array_key_exists("csrf_parameter", firewall["logout"])) ? firewall["logout"]["csrf_parameter"] : "",
+                  "intention" : (array_key_exists("csrf_token_id", firewall["logout"])) ? firewall["logout"]["csrf_token_id"] : "",
+                  "logout_path" : (array_key_exists("path", firewall["logout"])) ? firewall["logout"]["path"] : ""
+            ];
+            this->container->setShared(listenerId, [
+                "className" : "Phady\\Security\\Http\\Firewall\\LogoutListener",
+                "arguments" : [
+                    ["type" : "service", "name" : "security.token_storage"],
+                    ["type" : "service", "name" : logoutSuccessHandlerId],
+                    ["type" : "parameter", "value" : optionsListener]
+                ]
+            ]);
+
+            //Phady\Security\Http\Logout\DefaultLogoutSuccessHandler
+            // add session logout handler
+            //if (true === firewall["logout"]["invalidate_session"] && array_key_exists("stateless", firewall) && false === firewall["stateless"]) {
+                this->container->setShared("security.logout.handler.session", [
+                    "className" : "Phady\\Security\\Http\\Logout\\SessionLogoutHandler"
+                ]);
+                this->container->get(listenerId)->addHandler(this->container->get("security.logout.handler.session"));
+            //}
+
+            // add custom handlers
+            if (array_key_exists("handlers", firewall["logout"])){
+                for handlerId in firewall["logout"]["handlers"] {
+                    this->container->get(listenerId)->addHandler(this->container->get(handlerId));
+                }
+            }
+
+            let listeners[] = listenerId;
+            //print_r(this->container->get(listenerId)); die();
+        }
+
         // Determine default entry point
         let configuredEntryPoint = isset(firewall["entry_point"]) ? firewall["entry_point"] : null;
 
@@ -376,7 +441,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         // Exception listener
         let exceptionListener = this->createExceptionListener(firewall, id, (configuredEntryPoint) ? configuredEntryPoint : createAuthListeners[1],
             (array_key_exists("stateless", firewall) && isset(firewall["stateless"])) ? firewall["stateless"] : "");
-
+        //print_r(listeners);die();
         return [matcher, listeners, exceptionListener];
     }
 
@@ -458,7 +523,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
 
     private function createAuthenticationListeners(id, firewall, defaultProvider, defaultEntryPoint)
     {
-        var listeners, hasListeners, position, factory, key, userProvider, provider, listenerId, createFactory;
+        var listeners, hasListeners, position, factory, key, userProvider, listenerId, createFactory;
         let listeners = [];
         let hasListeners = false;
 
@@ -510,7 +575,7 @@ class SecurityExtension extends \Phalcon\Di\Injectable
         }
 
         if (!hasListeners) {
-            throw new InvalidConfigurationException(sprintf("No authentication listener registered for firewall %s.", id));
+            throw new \Exception(sprintf("No authentication listener registered for firewall %s.", id));
         }
 
         return [listeners, defaultEntryPoint];

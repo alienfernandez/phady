@@ -34,8 +34,7 @@ interface LogoutHandlerInterface
      * cookies, etc.
      *
      * @param Request        request
-     * @param Response       response
      * @param TokenInterface token
      */
-    public function logout(<Request> request, <Response> response, <TokenInterface> token);
+    public function logout(<Request> request, <TokenInterface> token);
 }

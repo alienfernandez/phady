@@ -247,7 +247,7 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
 
 
         if ((null === token) || (token instanceof AnonymousToken)) {
-            session->remove("_security_main");
+            session->remove(this->getDI()->get("parameters")->security["context_session"]);
         } else {
             session->set("_security_main", serialize(token));
             /*if (null !== this->logger) {

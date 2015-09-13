@@ -15,8 +15,7 @@ namespace Phady\Security\Http\Firewall;
 
 use Phady\Security\Http\Firewall\ListenerInterface;
 use Phalcon\Http\Request;
-
-
+use Phalcon\Http\Response;
 use Phady\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Phady\Security\Http\Logout\LogoutSuccessHandlerInterface;
 use Phady\Security\Http\Logout\LogoutHandlerInterface;
@@ -29,7 +28,7 @@ use Phady\Security\Http\Logout\LogoutHandlerInterface;
   * @copyright (c) 2015
   * @version 1.0.0
   */
-class LogoutListener extends \Phalcon\Di\Injectable implements LogoutSuccessHandlerInterface
+class LogoutListener extends \Phalcon\Di\Injectable implements ListenerInterface
 {
     private tokenStorage;
     private options;
@@ -55,11 +54,11 @@ class LogoutListener extends \Phalcon\Di\Injectable implements LogoutSuccessHand
         }*/
 
         let this->tokenStorage = tokenStorage;
-        let this->options = array_merge(array(
-            "csrf_parameter" => "_csrf_token",
-            "intention" => "logout",
-            "logout_path" => "/logout",
-        ), options);
+        let this->options = array_merge([
+            "csrf_parameter" : "_csrf_token",
+            "intention" : "logout",
+            "logout_path" : "/logout"
+        ], options);
         let this->successHandler = successHandler;
         //this->csrfTokenManager = csrfTokenManager;
         let this->handlers = [];
@@ -86,13 +85,12 @@ class LogoutListener extends \Phalcon\Di\Injectable implements LogoutSuccessHand
      */
     public function handle()
     {
-        var request;
+        var request, token, handler;
         let request = this->getDI()->get("request");
 
         if (!this->requiresLogout(request)) {
             return;
         }
-
         /*if (null !== this->csrfTokenManager) {
             csrfToken = request->get(this->options["csrf_parameter"], null, true);
 
@@ -101,21 +99,18 @@ class LogoutListener extends \Phalcon\Di\Injectable implements LogoutSuccessHand
             }
         }*/
 
-        let response = this->successHandler->onLogoutSuccess(request);
-        if (!(response instanceof Response)) {
-            throw new \RuntimeException("Logout Success Handler did not return a Response.");
-        }
-
         let token = this->tokenStorage->getToken();
         // handle multiple logout attempts gracefully
         if (token) {
             for handler in this->handlers {
-                handler->logout(request, response, token);
+                handler->logout(request, token);
             }
         }
 
         this->tokenStorage->setToken(null);
-        //event->setResponse(response);
+
+        //echo "<pre>"; print_r(this->successHandler);die();
+        this->successHandler->onLogoutSuccess(request);
     }
 
     /**

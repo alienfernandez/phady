@@ -19,7 +19,7 @@ use Phady\Security\Core\Authentication\Token\TokenInterface;
 use Phady\Security\Http\Logout\LogoutHandlerInterface;
 
 /**
-  * @class Phady\Security\Http\Logout\DefaultLogoutSuccessHandler
+  * @class Phady\Security\Http\Logout\SessionLogoutHandler
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core
@@ -36,8 +36,10 @@ class SessionLogoutHandler extends \Phalcon\Di\Injectable implements LogoutHandl
      * @param Response       response
      * @param TokenInterface token
      */
-    public function logout(<Request> request, <Response> response, <TokenInterface> token)
+    public function logout(<Request> request, <TokenInterface> token)
     {
-        this->getDI()->get("session")->destroy();
+
+        //echo "<pre>"; print_r(this->getDI()->get("parameters"));die();
+        this->getDI()->get("session")->remove(this->getDI()->get("parameters")->security["context_session"]);
     }
 }

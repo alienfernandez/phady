@@ -646,7 +646,7 @@ PHP_METHOD(Phady_Core_Kernel, getCoreParameters) {
 	int ZEPHIR_LAST_CALL_STATUS;
 	HashTable *_2, *_5;
 	HashPosition _1, _4;
-	zval *modules, *module = NULL, *parameters, *url, *name = NULL, *data = NULL, *tools, *_0, **_3, **_6, *_7, *_8, *_9 = NULL, *_10 = NULL, *_11 = NULL, *_12 = NULL, *_13 = NULL, *_14, *_15, *_16, *_17, *_18, *_19, *_20, *_21, *_22, *_23, *_24;
+	zval *modules, *module = NULL, *parameters, *url, *name = NULL, *data = NULL, *tools, *_0, **_3, **_6, *_7, *_8, *_9 = NULL, *_10 = NULL, *_11 = NULL, *_12 = NULL, *_13 = NULL, *_14, *_15, *_16, *_17, *_18, *_19, *_20, *_21, *_22, *_23, *_24, *_25, *_26, *_27;
 
 	ZEPHIR_MM_GROW();
 
@@ -777,10 +777,18 @@ PHP_METHOD(Phady_Core_Kernel, getCoreParameters) {
 	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 17, _10, _23);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
-	_24 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
+	_24 = zephir_fetch_nproperty_this(this_ptr, SL("security"), PH_NOISY_CC);
+	zephir_array_fetch_string(&_25, _24, SL("security"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 449 TSRMLS_CC);
+	zephir_array_fetch_string(&_26, _25, SL("context_session"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 449 TSRMLS_CC);
+	ZEPHIR_INIT_NVAR(_10);
+	ZVAL_STRING(_10, "context_session", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 17, _10, _26);
+	zephir_check_temp_parameter(_10);
+	zephir_check_call_status();
+	_27 = zephir_fetch_nproperty_this(this_ptr, SL("container"), PH_NOISY_CC);
 	ZEPHIR_INIT_NVAR(_10);
 	ZVAL_STRING(_10, "container", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 17, _10, _24);
+	ZEPHIR_CALL_METHOD(NULL, parameters, "setparameter", NULL, 17, _10, _27);
 	zephir_check_temp_parameter(_10);
 	zephir_check_call_status();
 	RETURN_CCTOR(parameters);
@@ -802,16 +810,16 @@ PHP_METHOD(Phady_Core_Kernel, getRootDir) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("rootDir"), PH_NOISY_CC);
 	if (Z_TYPE_P(_0) == IS_NULL) {
 		ZEPHIR_OBS_VAR(document_root);
-		zephir_array_fetch_string(&document_root, _SERVER, SL("DOCUMENT_ROOT"), PH_NOISY, "phady/core/kernel.zep", 462 TSRMLS_CC);
+		zephir_array_fetch_string(&document_root, _SERVER, SL("DOCUMENT_ROOT"), PH_NOISY, "phady/core/kernel.zep", 463 TSRMLS_CC);
 		ZEPHIR_INIT_VAR(document_root_spl);
 		zephir_fast_explode_str(document_root_spl, SL("web"), document_root, LONG_MAX TSRMLS_CC);
 		if (zephir_fast_count_int(document_root_spl TSRMLS_CC) > 0) {
-			zephir_array_fetch_long(&_1, document_root_spl, 0, PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 465 TSRMLS_CC);
+			zephir_array_fetch_long(&_1, document_root_spl, 0, PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 466 TSRMLS_CC);
 			ZEPHIR_INIT_VAR(_2);
 			ZEPHIR_CONCAT_VS(_2, _1, "app");
 			zephir_update_property_this(this_ptr, SL("rootDir"), _2 TSRMLS_CC);
 		} else {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phady_exception_ce, "No found root directory.", "phady/core/kernel.zep", 467);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phady_exception_ce, "No found root directory.", "phady/core/kernel.zep", 468);
 			return;
 		}
 	}

@@ -11,19 +11,19 @@ if test "$PHP_PHADY" = "yes"; then
 	AC_DEFINE(HAVE_PHADY, 1, [Whether you have Phady])
 	phady_sources="phady.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c phady/security/core/exception/authenticationexception.zep.c
 	phady/common/entities/modelbase.zep.c
-	phady/security/core/authentication/authenticationmanagerinterface.zep.c
 	phady/security/http/firewall/listenerinterface.zep.c
+	phady/security/core/authentication/authenticationmanagerinterface.zep.c
 	phady/security/core/user/userinterface.zep.c
 	phady/security/core/authentication/provider/authenticationproviderinterface.zep.c
 	phady/security/core/authentication/token/tokeninterface.zep.c
 	phady/security/core/authorization/voter/voterinterface.zep.c
+	phady/security/core/encoder/passwordencoderinterface.zep.c
 	phady/security/core/exception/accountstatusexception.zep.c
 	phady/security/core/user/userproviderinterface.zep.c
 	phady/security/core/authentication/token/abstracttoken.zep.c
-	phady/security/core/encoder/passwordencoderinterface.zep.c
+	phady/security/core/encoder/basepasswordencoder.zep.c
 	phady/security/core/user/advanceduserinterface.zep.c
 	phady/core/kernel.zep.c
-	phady/security/core/encoder/basepasswordencoder.zep.c
 	phady/security/core/role/roleinterface.zep.c
 	phady/security/core/user/factory/userproviderfactoryinterface.zep.c
 	phady/security/factory/securityfactoryinterface.zep.c
@@ -50,6 +50,8 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/http/authorization/accessdeniedhandlerinterface.zep.c
 	phady/security/http/entrypoint/authenticationentrypointinterface.zep.c
 	phady/security/http/firewall/abstractauthenticationlistener.zep.c
+	phady/security/http/logout/logouthandlerinterface.zep.c
+	phady/security/http/logout/logoutsuccesshandlerinterface.zep.c
 	phady/cache/cachehandler.zep.c
 	phady/common/controllers/accessdeniedcontroller.zep.c
 	phady/common/controllers/controllerbase.zep.c
@@ -95,6 +97,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/encoder/bcryptpasswordencoder.zep.c
 	phady/security/core/encoder/encoderawareinterface.zep.c
 	phady/security/core/encoder/encoderfactory.zep.c
+	phady/security/core/encoder/messagedigestpasswordencoder.zep.c
 	phady/security/core/encoder/plaintextpasswordencoder.zep.c
 	phady/security/core/exception/accessdeniedexception.zep.c
 	phady/security/core/exception/accountexpiredexception.zep.c
@@ -148,8 +151,11 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/http/firewall/channellistener.zep.c
 	phady/security/http/firewall/contextlistener.zep.c
 	phady/security/http/firewall/exceptionlistener.zep.c
+	phady/security/http/firewall/logoutlistener.zep.c
 	phady/security/http/firewall/usernamepasswordformauthenticationlistener.zep.c
 	phady/security/http/firewallmap.zep.c
+	phady/security/http/logout/defaultlogoutsuccesshandler.zep.c
+	phady/security/http/logout/sessionlogouthandler.zep.c
 	phady/security/http/securityevents.zep.c
 	phady/security/phadyuserextension.zep.c
 	phady/security/securityextension.zep.c
@@ -199,8 +205,7 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/35__closure.zep.c
 	phady/36__closure.zep.c
 	phady/37__closure.zep.c
-	phady/38__closure.zep.c
-	phady/39__closure.zep.c "
+	phady/38__closure.zep.c "
 	PHP_NEW_EXTENSION(phady, $phady_sources, $ext_shared,, )
 	PHP_SUBST(PHADY_SHARED_LIBADD)
 

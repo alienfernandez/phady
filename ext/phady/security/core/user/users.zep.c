@@ -65,13 +65,13 @@ PHP_METHOD(Phady_Security_Core_User_Users, getUsers) {
 		ZEPHIR_CALL_METHOD(NULL, userRepository, "__construct", NULL, 0);
 		zephir_check_call_status();
 	}
-	ZEPHIR_CALL_METHOD(&arrUsers, userRepository, "getusers", NULL, 88, arrDataFilter);
+	ZEPHIR_CALL_METHOD(&arrUsers, userRepository, "getusers", NULL, 92, arrDataFilter);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(arrData);
 	zephir_create_array(arrData, 1, 0 TSRMLS_CC);
 	zephir_array_update_string(&arrData, SL("data"), &arrUsers, PH_COPY | PH_SEPARATE);
 	if (getTotal) {
-		ZEPHIR_CALL_METHOD(&arrTotalUsers, userRepository, "gettotalusers", NULL, 89, arrData);
+		ZEPHIR_CALL_METHOD(&arrTotalUsers, userRepository, "gettotalusers", NULL, 93, arrData);
 		zephir_check_call_status();
 		zephir_array_update_string(&arrData, SL("total"), &arrTotalUsers, PH_COPY | PH_SEPARATE);
 	}
