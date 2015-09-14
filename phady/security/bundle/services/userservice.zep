@@ -16,7 +16,7 @@ namespace Phady\Security\Bundle\Services;
 use Phady\Security\Bundle\Model\UserCore;
 
 /**
-  * @class Phady\Security\Bundle\Model\UserService
+  * @class Phady\Security\Bundle\Services\UserService
   *
   * @author  Alien Fernández Fuentes <alienfernandez85@gmail.com>
   * @package Core

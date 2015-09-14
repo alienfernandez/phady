@@ -108,15 +108,6 @@ abstract class AbstractAuthenticationListener extends \Phalcon\Di\Injectable imp
     }
 
     /**
-     * Sets the authenticationManager.
-     *
-     */
-    public function setauthenticationManager(authenticationManager)
-    {
-        let this->authenticationManager = authenticationManager;
-    }
-
-    /**
      * Handles form based authentication.
      *
      *

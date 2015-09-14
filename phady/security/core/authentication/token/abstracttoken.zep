@@ -28,6 +28,7 @@ abstract class AbstractToken implements TokenInterface
     protected roles = [];
     protected authenticated = false;
     protected attributes = [];
+
     /**
      * Constructor.
      *

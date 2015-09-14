@@ -182,7 +182,7 @@ PHP_METHOD(Phady_Version, get) {
 	zephir_array_fetch_long(&specialNumber, version, 4, PH_NOISY, "phady/version.zep", 125 TSRMLS_CC);
 	ZEPHIR_INIT_VAR(result);
 	ZEPHIR_CONCAT_VSVSVS(result, major, ".", medium, ".", minor, " ");
-	ZEPHIR_CALL_SELF(&suffix, "_getspecial", &_0, 161, special);
+	ZEPHIR_CALL_SELF(&suffix, "_getspecial", &_0, 158, special);
 	zephir_check_call_status();
 	if (!ZEPHIR_IS_STRING(suffix, "")) {
 		ZEPHIR_INIT_VAR(_1);
@@ -268,7 +268,7 @@ PHP_METHOD(Phady_Version, getPart) {
 		}
 		if (part == 3) {
 			zephir_array_fetch_long(&_1, version, 3, PH_NOISY | PH_READONLY, "phady/version.zep", 186 TSRMLS_CC);
-			ZEPHIR_CALL_SELF(&result, "_getspecial", &_0, 161, _1);
+			ZEPHIR_CALL_SELF(&result, "_getspecial", &_0, 158, _1);
 			zephir_check_call_status();
 			break;
 		}

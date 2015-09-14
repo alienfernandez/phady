@@ -24,8 +24,12 @@ namespace Phady\Security\Bundle\Model\Repository;
 class RoleRepository extends \Phalcon\DI\Injectable
 {
 
-    // Get search filter
-    static public function getFilter(array arrData, select = false) {
+    /**
+     * @name getFilter - Get filter search
+     * @param array arrDataFilter - Array filter
+     * @return array
+     */
+    static public function getFilter(array arrData, select = false) ->array {
         var arrFilter, arrValues, search, filter;
         let arrFilter = [];
         let arrValues = [];

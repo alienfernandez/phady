@@ -25,7 +25,7 @@ class Model
 {
 
     /**
-     * Generates version 1: MAC address
+     * Assign data to object model
      */
     public static function asssignData(objectAssign, array arrData)
     {

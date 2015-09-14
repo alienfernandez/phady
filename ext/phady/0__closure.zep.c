@@ -31,7 +31,7 @@ PHP_METHOD(phady_0__closure, __invoke) {
 	ZEPHIR_MM_GROW();
 
 	object_init_ex(return_value, phady_security_firewall_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 162);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 159);
 	zephir_check_call_status();
 	RETURN_MM();
 

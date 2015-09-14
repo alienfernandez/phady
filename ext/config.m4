@@ -32,7 +32,6 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/http/requestmatcherinterface.zep.c
 	phady/messaging/adapter/messaginginterface.zep.c
 	phady/security/core/authentication/authenticationtrustresolverinterface.zep.c
-	phady/security/core/authentication/loginmanagerinterface.zep.c
 	phady/security/core/authentication/model/userinterface.zep.c
 	phady/security/core/authentication/provider/userauthenticationprovider.zep.c
 	phady/security/core/authentication/token/storage/tokenstorageinterface.zep.c
@@ -79,9 +78,6 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/bundle/services/userservice.zep.c
 	phady/security/core/authentication/authenticationprovidermanager.zep.c
 	phady/security/core/authentication/authenticationtrustresolver.zep.c
-	phady/security/core/authentication/authhandler.zep.c
-	phady/security/core/authentication/eventlistener/authenticationlistener.zep.c
-	phady/security/core/authentication/loginmanager.zep.c
 	phady/security/core/authentication/model/user.zep.c
 	phady/security/core/authentication/model/usermanagerinterface.zep.c
 	phady/security/core/authentication/provider/anonymousauthenticationprovider.zep.c
@@ -96,7 +92,6 @@ if test "$PHP_PHADY" = "yes"; then
 	phady/security/core/authentication/token/usernamepasswordtoken.zep.c
 	phady/security/core/authenticationevents.zep.c
 	phady/security/core/authorization/accessdecisionmanager.zep.c
-	phady/security/core/authorization/acl.zep.c
 	phady/security/core/authorization/authorizationchecker.zep.c
 	phady/security/core/authorization/voter/abstractvoter.zep.c
 	phady/security/core/authorization/voter/authenticatedvoter.zep.c

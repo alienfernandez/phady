@@ -113,22 +113,22 @@ class UserCore extends \Phalcon\DI\Injectable
     
     /**
      * @name setEnabledStatusUser - Active or deactive user
-     * @param array arrData User dato to active
-     * @param \DateTime now Date
+     * @param userId User dato to active
+     * @param integer status 0 | 1
      * @return bool
      */
-    public function setEnabledStatusUser(userId, status = 1) {
+     public function setEnabledStatusUser(userId, status = 1) {
         var user;
         let user = User::findFirst(["id = '" . userId . "'"]);
         let user->enabled = status;
         //user->FechaExpiracionToken = now->add(\DateInterval::createFromDateString("-8 day"))->format(this->parameters->datetime["default_format"]);
         return user->save();
-    }
+     }
 
 
     /**
-     * @name changePassword - Cambiar clave
-     * @param array arrData Array de datos
+     * @name changePassword - Change password
+     * @param array arrData Data to change password
      * @return bool
      */
     public function changePassword(array arrData) {
@@ -177,7 +177,7 @@ class UserCore extends \Phalcon\DI\Injectable
 
     /**
      * @name deleteUser - Delete user
-     * @param  User id to delete 
+     * @param  userId - User id to delete
      * @return bool
      */
     public function deleteUser(userId) {
@@ -195,8 +195,8 @@ class UserCore extends \Phalcon\DI\Injectable
 
     /**
      * @name setLockedStatusUser - locked user
-     * @param array arrData User dato to active
-     * @param \DateTime now Date
+     * @param userId User dato to active
+     * @param integer status 0 | 1
      * @return bool
      */
     public function setLockedStatusUser(userId, status = 1) {
