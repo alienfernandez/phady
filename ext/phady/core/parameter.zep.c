@@ -135,7 +135,7 @@ PHP_METHOD(Phady_Core_Parameter, setParameter) {
 	zephir_get_strval(param, param_param);
 
 
-	ZEPHIR_CALL_FUNCTION(&_0, "property_exists", NULL, 23, this_ptr, param);
+	ZEPHIR_CALL_FUNCTION(&_0, "property_exists", NULL, 34, this_ptr, param);
 	zephir_check_call_status();
 	if (zephir_is_true(_0)) {
 		zephir_update_property_zval_zval(this_ptr, param, value TSRMLS_CC);

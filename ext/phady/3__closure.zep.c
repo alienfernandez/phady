@@ -15,7 +15,6 @@
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
 #include "kernel/array.h"
-#include "ext/phalcon/phalcon/mvc/view.zep.h"
 
 
 ZEPHIR_INIT_CLASS(phady_3__closure) {
@@ -28,22 +27,22 @@ ZEPHIR_INIT_CLASS(phady_3__closure) {
 
 PHP_METHOD(phady_3__closure, __invoke) {
 
-	zval *_0;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *view;
+	zval *routeCore, *_SERVER, *_0;
 
 	ZEPHIR_MM_GROW();
+	zephir_get_global(&_SERVER, SS("_SERVER") TSRMLS_CC);
 
-	ZEPHIR_INIT_VAR(view);
-	object_init_ex(view, phalcon_mvc_view_ce);
-	ZEPHIR_CALL_METHOD(NULL, view, "__construct", NULL, 0);
+	ZEPHIR_INIT_VAR(routeCore);
+	object_init_ex(routeCore, phady_route_router_ce);
+	ZEPHIR_CALL_METHOD(NULL, routeCore, "__construct", NULL, 162);
 	zephir_check_call_status();
-	ZEPHIR_INIT_VAR(_0);
-	zephir_create_array(_0, 1, 0 TSRMLS_CC);
-	add_assoc_stringl_ex(_0, SS(".volt"), SL("volt"), 1);
-	ZEPHIR_CALL_METHOD(NULL, view, "registerengines", NULL, 0, _0);
+	zephir_array_fetch_string(&_0, _SERVER, SL("rootDirOk"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 282 TSRMLS_CC);
+	ZEPHIR_CALL_METHOD(NULL, routeCore, "setsystemroutes", NULL, 163, _0);
 	zephir_check_call_status();
-	RETURN_CCTOR(view);
+	ZEPHIR_RETURN_CALL_METHOD(routeCore, "getrouter", NULL, 164);
+	zephir_check_call_status();
+	RETURN_MM();
 
 }
 

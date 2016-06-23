@@ -108,7 +108,7 @@ PHP_METHOD(Phady_Util_Uuid, v4) {
 	ZVAL_LONG(&_23, zephir_mt_rand(zephir_get_intval(&_12), zephir_get_intval(&_13) TSRMLS_CC));
 	ZEPHIR_SINIT_VAR(_24);
 	ZVAL_LONG(&_24, zephir_mt_rand(zephir_get_intval(&_14), zephir_get_intval(&_15) TSRMLS_CC));
-	ZEPHIR_RETURN_CALL_FUNCTION("sprintf", NULL, 24, &_16, &_17, &_18, &_19, &_20, &_21, &_22, &_23, &_24);
+	ZEPHIR_RETURN_CALL_FUNCTION("sprintf", NULL, 8, &_16, &_17, &_18, &_19, &_20, &_21, &_22, &_23, &_24);
 	zephir_check_call_status();
 	RETURN_MM();
 

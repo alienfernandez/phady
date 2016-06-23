@@ -204,7 +204,7 @@ PHP_METHOD(Phady_Common_Entities_ModelBase, __set) {
 		ZVAL_STRING(_5, "_", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_VAR(_6);
 		ZVAL_STRING(_6, "", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&_7, "str_ireplace", NULL, 1, _5, _6, attribute);
+		ZEPHIR_CALL_FUNCTION(&_7, "str_ireplace", NULL, 2, _5, _6, attribute);
 		zephir_check_temp_parameter(_5);
 		zephir_check_temp_parameter(_6);
 		zephir_check_call_status();
@@ -220,9 +220,9 @@ PHP_METHOD(Phady_Common_Entities_ModelBase, __set) {
 		} else {
 			ZEPHIR_INIT_VAR(reflectionClass);
 			object_init_ex(reflectionClass, zephir_get_internal_ce(SS("reflectionclass") TSRMLS_CC));
-			ZEPHIR_CALL_METHOD(NULL, reflectionClass, "__construct", NULL, 2, this_ptr);
+			ZEPHIR_CALL_METHOD(NULL, reflectionClass, "__construct", NULL, 3, this_ptr);
 			zephir_check_call_status();
-			ZEPHIR_CALL_METHOD(&reflectionProperty, reflectionClass, "getproperty", NULL, 3, attribute);
+			ZEPHIR_CALL_METHOD(&reflectionProperty, reflectionClass, "getproperty", NULL, 4, attribute);
 			zephir_check_call_status();
 			ZEPHIR_INIT_NVAR(_5);
 			ZVAL_BOOL(_5, 1);
@@ -277,7 +277,7 @@ PHP_METHOD(Phady_Common_Entities_ModelBase, __get) {
 		ZVAL_STRING(_6, "_", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_VAR(_7);
 		ZVAL_STRING(_7, "", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&_8, "str_ireplace", NULL, 1, _6, _7, attribute);
+		ZEPHIR_CALL_FUNCTION(&_8, "str_ireplace", NULL, 2, _6, _7, attribute);
 		zephir_check_temp_parameter(_6);
 		zephir_check_temp_parameter(_7);
 		zephir_check_call_status();
@@ -322,7 +322,7 @@ PHP_METHOD(Phady_Common_Entities_ModelBase, beforeValidationOnCreate) {
 	zephir_update_property_this(this_ptr, SL("create_user"), _2 TSRMLS_CC);
 	ZEPHIR_SINIT_VAR(_3);
 	ZVAL_STRING(&_3, "Y-m-d H:i:s", 0);
-	ZEPHIR_CALL_FUNCTION(&_4, "date", NULL, 4, &_3);
+	ZEPHIR_CALL_FUNCTION(&_4, "date", NULL, 5, &_3);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("create_at"), _4 TSRMLS_CC);
 	ZEPHIR_INIT_NVAR(_1);
@@ -356,7 +356,7 @@ PHP_METHOD(Phady_Common_Entities_ModelBase, beforeUpdate) {
 	zephir_update_property_this(this_ptr, SL("modify_user"), _2 TSRMLS_CC);
 	ZEPHIR_SINIT_VAR(_3);
 	ZVAL_STRING(&_3, "Y-m-d H:i:s", 0);
-	ZEPHIR_CALL_FUNCTION(&_4, "date", NULL, 4, &_3);
+	ZEPHIR_CALL_FUNCTION(&_4, "date", NULL, 5, &_3);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("modify_at"), _4 TSRMLS_CC);
 	ZEPHIR_INIT_NVAR(_1);

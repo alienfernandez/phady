@@ -15,6 +15,9 @@
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
 #include "kernel/array.h"
+#include "kernel/concat.h"
+#include "kernel/operators.h"
+#include "ext/phalcon/phalcon/mvc/view/engine/volt.zep.h"
 
 
 ZEPHIR_INIT_CLASS(phady_7__closure) {
@@ -28,19 +31,35 @@ ZEPHIR_INIT_CLASS(phady_7__closure) {
 PHP_METHOD(phady_7__closure, __invoke) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *cache, *_SERVER, *_0;
+	zval *view, *di, *volt, *voltOptions, *_SERVER, *_0, *_1, *_2, *_3;
 
 	ZEPHIR_MM_GROW();
 	zephir_get_global(&_SERVER, SS("_SERVER") TSRMLS_CC);
+	zephir_fetch_params(1, 2, 0, &view, &di);
 
-	ZEPHIR_INIT_VAR(cache);
-	object_init_ex(cache, phady_cache_cachehandler_ce);
-	zephir_array_fetch_string(&_0, _SERVER, SL("configApp"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 332 TSRMLS_CC);
-	ZEPHIR_CALL_METHOD(NULL, cache, "__construct", NULL, 85, _0);
+
+
+	ZEPHIR_INIT_VAR(volt);
+	object_init_ex(volt, phalcon_mvc_view_engine_volt_ce);
+	if (zephir_has_constructor(volt TSRMLS_CC)) {
+		ZEPHIR_CALL_METHOD(NULL, volt, "__construct", NULL, 0, view, di);
+		zephir_check_call_status();
+	}
+	ZEPHIR_INIT_VAR(voltOptions);
+	zephir_create_array(voltOptions, 2, 0 TSRMLS_CC);
+	zephir_array_fetch_string(&_0, _SERVER, SL("rootDirOk"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 357 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, _SERVER, SL("environment"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 357 TSRMLS_CC);
+	ZEPHIR_INIT_VAR(_2);
+	ZEPHIR_CONCAT_VSVS(_2, _0, "/cache/", _1, "/volt/");
+	zephir_array_update_string(&voltOptions, SL("compiledPath"), &_2, PH_COPY | PH_SEPARATE);
+	add_assoc_stringl_ex(voltOptions, SS("compiledSeparator"), SL("_"), 1);
+	zephir_array_fetch_string(&_3, _SERVER, SL("environment"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 360 TSRMLS_CC);
+	if (ZEPHIR_IS_STRING(_3, "dev")) {
+		zephir_array_update_string(&voltOptions, SL("compileAlways"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
+	}
+	ZEPHIR_CALL_METHOD(NULL, volt, "setoptions", NULL, 0, voltOptions);
 	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_METHOD(cache, "getadapter", NULL, 86);
-	zephir_check_call_status();
-	RETURN_MM();
+	RETURN_CCTOR(volt);
 
 }
 

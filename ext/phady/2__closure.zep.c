@@ -14,9 +14,6 @@
 #include "kernel/main.h"
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
-#include "kernel/array.h"
-#include "kernel/object.h"
-#include "kernel/exit.h"
 
 
 ZEPHIR_INIT_CLASS(phady_2__closure) {
@@ -30,37 +27,17 @@ ZEPHIR_INIT_CLASS(phady_2__closure) {
 PHP_METHOD(phady_2__closure, __invoke) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *dbCore, *exception = NULL, *_SERVER, *_0, *_1 = NULL;
+	zval *securityListener;
 
 	ZEPHIR_MM_GROW();
-	zephir_get_global(&_SERVER, SS("_SERVER") TSRMLS_CC);
 
-
-	/* try_start_1: */
-
-		ZEPHIR_INIT_VAR(dbCore);
-		object_init_ex(dbCore, phady_db_databasehandler_ce);
-		zephir_array_fetch_string(&_0, _SERVER, SL("configApp"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 277 TSRMLS_CC);
-		ZEPHIR_CALL_METHOD(NULL, dbCore, "__construct", NULL, 83, _0);
-		zephir_check_call_status_or_jump(try_end_1);
-		ZEPHIR_RETURN_CALL_METHOD(dbCore, "getadapter", NULL, 84);
-		zephir_check_call_status_or_jump(try_end_1);
-		RETURN_MM();
-
-	try_end_1:
-
-	if (EG(exception)) {
-		ZEPHIR_CPY_WRT(exception, EG(exception));
-		if (zephir_instance_of_ev(exception, phady_exception_ce TSRMLS_CC)) {
-			zend_clear_exception(TSRMLS_C);
-			ZEPHIR_CALL_METHOD(&_1, exception, "getmessage", NULL, 0);
-			zephir_check_call_status();
-			zend_print_zval(_1, 0);
-			zephir_exit_empty();
-			ZEPHIR_MM_RESTORE();
-		}
-	}
-	ZEPHIR_MM_RESTORE();
+	ZEPHIR_INIT_VAR(securityListener);
+	object_init_ex(securityListener, phady_security_eventlistener_securitylistener_ce);
+	ZEPHIR_CALL_METHOD(NULL, securityListener, "__construct", NULL, 160);
+	zephir_check_call_status();
+	ZEPHIR_CALL_METHOD(NULL, securityListener, "addsecuritylisteners", NULL, 161);
+	zephir_check_call_status();
+	RETURN_CCTOR(securityListener);
 
 }
 

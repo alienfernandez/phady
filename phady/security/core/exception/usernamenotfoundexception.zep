@@ -26,12 +26,48 @@ use Phalcon\Exception;
 class UsernameNotFoundException extends \Exception
 {
 
+    private username;
+
     /**
      * Rewrite the error message
      * @return string
      */
     public function __toString() {
         return sprintf("[Phady Security Error] %s", this->getMessage());
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getMessageKey()
+    {
+        return "Username could not be found.";
+    }
+    /**
+     * Get the username.
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return this->username;
+    }
+    /**
+     * Set the username.
+     *
+     * @param string username
+     */
+    public function setUsername(string username)
+    {
+        let this->username = username;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMessageData()
+    {
+        return ["{{ username }}" : this->username];
     }
 
 }

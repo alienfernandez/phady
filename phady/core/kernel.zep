@@ -251,9 +251,30 @@ abstract class Kernel
         //Si el ambito es de aplicacion web
         let _SERVER["rootDirOk"] = this->rootDir;
         let _SERVER["environment"] = this->environment;
-        let _SERVER["configApp"] = this->config;
+
+        //Register the security firewall
+        this->container->set("security.firewall", function () {
+            return new \Phady\Security\Firewall();
+        });
+
+        //Init parameters data service
+        var parametersFunc;
+        let parametersFunc = call_user_func_array(function(parameters) {
+             return parameters;
+        }, ["parameters" : this->getCoreParameters()]);
+        this->container->set("parameters", parametersFunc);
+
 
         if (this->scope == self::SCOPE_MVC) {
+            this->container->set("security.listeners", function () {
+                var securityListener;
+                let securityListener = new \Phady\Security\EventListener\SecurityListener();
+                securityListener->addSecurityListeners();
+                return securityListener;
+            });
+            this->container->get("security.listeners");
+
+
             this->container->set("router", function () {
                 var routeCore;
                 let routeCore = new \Phady\Route\Router();
@@ -269,9 +290,28 @@ abstract class Kernel
                 //dispatcher->setEventsManager(eventsManager);
                 return dispatcher;
             });
+
+            //set event manager
+            if (this->container->has("dispatcher")) {
+                if (!this->container->get("dispatcher")->getEventsManager()) {
+                    var eventsManager;
+                    let eventsManager = new \Phalcon\Events\Manager();
+
+                    /**
+                     * Check if the user is allowed to access certain action using the AuthenticationListener
+                     */
+                    eventsManager->attach("dispatch:beforeExecuteRoute", this->container->get("security.firewall"));
+                    this->container->get("dispatcher")->setEventsManager(eventsManager);
+                    //eventsManager->fire("dispatch:beforeDispatch", this->container->get("dispatcher"));
+                }
+            }
         }
+
+
         //Register component database service
-        this->container->set("db", function () {
+
+        let _SERVER["configApp"] = this->config;
+        this->container->setShared("db", function () {
             var dbCore, exception;
             try {
                 let dbCore = new \Phady\Db\DatabaseHandler(_SERVER["configApp"]);
@@ -283,6 +323,21 @@ abstract class Kernel
                  exit();
              }
         });
+/*
+        var dbFunc;
+        let dbFunc = call_user_func_array(function(config) {
+             var dbCore, exception;
+             try {
+                 let dbCore = new \Phady\Db\DatabaseHandler(config);
+                 //Get Adapter DB
+                 return dbCore->getAdapter();
+             } catch Exception, exception {
+                  // handle exception
+                  echo exception->getMessage();
+                  exit();
+              }
+        }, ["config" : this->config]);
+        this->container->set("db", dbFunc);*/
 
         //Register component view service
         this->container->set("view", function () {
@@ -320,18 +375,14 @@ abstract class Kernel
             return flash;
         });
 
-        //Init parameters data service
-        this->container->set("parameters", function () {
-            //return this->getCoreParameters();
-            return true;
-        });
-        
-        //Init parameters data service
-        this->container->set("cache", function () {
-            var cache;
-            let cache = new \Phady\Cache\CacheHandler(_SERVER["configApp"]);
-            return cache->getAdapter();
-        });
+        //Init cache service
+        var cacheFunc;
+        let cacheFunc = call_user_func_array(function(config) {
+             var cache;
+             let cache = new \Phady\Cache\CacheHandler(config);
+             return cache->getAdapter();
+        }, ["config" : this->config]);
+        this->container->set("cache", cacheFunc);
 
         //Init cookies service
         this->container->set("cookies", function () {
@@ -345,14 +396,18 @@ abstract class Kernel
          * Init session service
          * Inicia la sesión la primera vez que algun componente solicita el servicio "session"
          */
-        /*this->container->set("session", function () {
+        this->container->setShared("session", function () {
             var session;
             let session = new \Phalcon\Session\Adapter\Files();
-            if (session_id() == "") {
-                session->start();
-            }
             return session;
-        });*/
+        });
+
+        //The log in the first time some component to request the service 'session'
+        if (this->container->has("session")) {
+            if (!this->container->get("session")->isStarted()) {
+                this->container->get("session")->start();
+            }
+        }
 
     }
 
@@ -387,10 +442,11 @@ abstract class Kernel
         parameters->setParameter("charset", this->getCharset());
         parameters->setParameter("catalog", this->config["framework"]["catalog"]);
         parameters->setParameter("datetime", this->config["framework"]["datetime"]);
-        parameters->setParameter("mail", this->config["mail"]);
-        parameters->setParameter("pdf", this->config["pdf"]);
-        parameters->setParameter("files", this->config["files"]);
-        //parameters->setParameter("security", this->security["security"]);
+        //parameters->setParameter("mail", this->config["mail"]);
+        //parameters->setParameter("pdf", this->config["pdf"]);
+        //parameters->setParameter("files", this->config["files"]);
+        parameters->setParameter("security", this->security["security"]);
+        parameters->setParameter("context_session", this->security["security"]["context_session"]);
         parameters->setParameter("container", this->container);
         return parameters;
     }

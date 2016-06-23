@@ -72,7 +72,7 @@ PHP_METHOD(Phady_Core_KernelMvc, __construct) {
 	}
 
 
-	ZEPHIR_CALL_PARENT(NULL, phady_core_kernelmvc_ce, this_ptr, "__construct", &_0, 22, environment, (debug ? ZEPHIR_GLOBAL(global_true) : ZEPHIR_GLOBAL(global_false)), scope, modules);
+	ZEPHIR_CALL_PARENT(NULL, phady_core_kernelmvc_ce, this_ptr, "__construct", &_0, 33, environment, (debug ? ZEPHIR_GLOBAL(global_true) : ZEPHIR_GLOBAL(global_false)), scope, modules);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, phalcon_mvc_application_ce);

@@ -13,10 +13,10 @@
 
 namespace Phady\Db;
 
-use Phalcon\Db\Adapter\Pdo\Postgresql as PostgresqlAdapter;
+//use Phalcon\Db\Adapter\Pdo\Postgresql as PostgresqlAdapter;
 use Phalcon\Db\Adapter\Pdo\Mysql as MysqlAdapter;
-use Phalcon\Db\Adapter\Pdo\Sqlite as SqliteAdapter;
-use Phalcon\Db\Adapter\Pdo\Oracle as OracleAdapter;
+//use Phalcon\Db\Adapter\Pdo\Sqlite as SqliteAdapter;
+//use Phalcon\Db\Adapter\Pdo\Oracle as OracleAdapter;
 
 /**
   * @class Phady\Db\DatabaseHandler -  Database handlers for app
@@ -56,14 +56,15 @@ final class DatabaseHandler
             "password" : dbConfig["password"],
             "dbname" : dbConfig["dbname"]
         ];
-        //print_r(arrdbConfig);die;
+        //echo "<pre>"; print_r(arrdbConfig); die();
 
         switch dbConfig["driver"] {
-            case "pgsql":
-                let adapter = new PostgresqlAdapter(arrdbConfig);
-                break;
             case "mysql":
                 let adapter = new MysqlAdapter(arrdbConfig);
+                break;
+
+            case "pgsql":
+                let adapter = new PostgresqlAdapter(arrdbConfig);
                 break;
             case "sqlite":
                 let adapter = new SqliteAdapter(arrdbConfig);
@@ -72,7 +73,7 @@ final class DatabaseHandler
                 let adapter = new OracleAdapter(arrdbConfig);
                 break;
             default :
-                let adapter = new PostgresqlAdapter(arrdbConfig);
+                let adapter = new MysqlAdapter(arrdbConfig);
                 break;
         }
         return adapter;

@@ -15,7 +15,8 @@
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
 #include "kernel/array.h"
-#include "ext/phalcon/phalcon/flash/session.zep.h"
+#include "kernel/object.h"
+#include "kernel/exit.h"
 
 
 ZEPHIR_INIT_CLASS(phady_5__closure) {
@@ -29,23 +30,37 @@ ZEPHIR_INIT_CLASS(phady_5__closure) {
 PHP_METHOD(phady_5__closure, __invoke) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *_0;
-	zval *flash;
+	zval *dbCore, *exception = NULL, *_SERVER, *_0, *_1 = NULL;
 
 	ZEPHIR_MM_GROW();
+	zephir_get_global(&_SERVER, SS("_SERVER") TSRMLS_CC);
 
-	ZEPHIR_INIT_VAR(flash);
-	object_init_ex(flash, phalcon_flash_session_ce);
-	if (zephir_has_constructor(flash TSRMLS_CC)) {
-		ZEPHIR_INIT_VAR(_0);
-		zephir_create_array(_0, 3, 0 TSRMLS_CC);
-		add_assoc_stringl_ex(_0, SS("error"), SL("alert alert-danger"), 1);
-		add_assoc_stringl_ex(_0, SS("success"), SL("alert alert-success"), 1);
-		add_assoc_stringl_ex(_0, SS("notice"), SL("alert alert-info"), 1);
-		ZEPHIR_CALL_METHOD(NULL, flash, "__construct", NULL, 0, _0);
-		zephir_check_call_status();
+
+	/* try_start_1: */
+
+		ZEPHIR_INIT_VAR(dbCore);
+		object_init_ex(dbCore, phady_db_databasehandler_ce);
+		zephir_array_fetch_string(&_0, _SERVER, SL("configApp"), PH_NOISY | PH_READONLY, "phady/core/kernel.zep", 317 TSRMLS_CC);
+		ZEPHIR_CALL_METHOD(NULL, dbCore, "__construct", NULL, 165, _0);
+		zephir_check_call_status_or_jump(try_end_1);
+		ZEPHIR_RETURN_CALL_METHOD(dbCore, "getadapter", NULL, 166);
+		zephir_check_call_status_or_jump(try_end_1);
+		RETURN_MM();
+
+	try_end_1:
+
+	if (EG(exception)) {
+		ZEPHIR_CPY_WRT(exception, EG(exception));
+		if (zephir_instance_of_ev(exception, phady_exception_ce TSRMLS_CC)) {
+			zend_clear_exception(TSRMLS_C);
+			ZEPHIR_CALL_METHOD(&_1, exception, "getmessage", NULL, 0);
+			zephir_check_call_status();
+			zend_print_zval(_1, 0);
+			zephir_exit_empty();
+			ZEPHIR_MM_RESTORE();
+		}
 	}
-	RETURN_CCTOR(flash);
+	ZEPHIR_MM_RESTORE();
 
 }
 

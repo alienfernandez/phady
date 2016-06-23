@@ -47,41 +47,33 @@ final class CacheHandler implements \Phady\Cache\CacheInterface
      * @return DBAdapter Data base adapter
      */
     public function getAdapter() {
-        var arrCacheConfig, cacheConfig, adapter, frontCache;
+        var arrCacheConfig, cacheConfig, adapter, frontCache, cacheDefault;
         let cacheConfig = this->config["cache"];
 
         //print_r(arrCacheConfig);die;
         let frontCache = new CacheData([
             "lifetime" : 172800
         ]);
-        switch cacheConfig["driver"] {
-            case self::REDIS_CACHE :
-                let arrCacheConfig = [
-                    "host" : cacheConfig[self::REDIS_CACHE]["default"]["host"],
-                    "port" : cacheConfig[self::REDIS_CACHE]["default"]["port"],
-                    "persistent" : cacheConfig[self::REDIS_CACHE]["default"]["persistent"],
-                    "auth" : cacheConfig[self::REDIS_CACHE]["default"]["auth"]
-                ];
-                let adapter = new Redis(arrCacheConfig);
-                break;
-            case self::MEMCACHE_CACHE :
-                let arrCacheConfig = [
-                    "host" : cacheConfig[self::MEMCACHE_CACHE]["default"]["host"],
-                    "port" : cacheConfig[self::MEMCACHE_CACHE]["default"]["port"],
-                    "persistent" : cacheConfig[self::MEMCACHE_CACHE]["default"]["persistent"]
-                ];
-                let adapter = new Memcache(arrCacheConfig);
-                break;
-            default :
-                let arrCacheConfig = [
-                    "host" : cacheConfig[self::REDIS_CACHE]["default"]["host"],
-                    "port" : cacheConfig[self::REDIS_CACHE]["default"]["port"],
-                    "persistent" : cacheConfig[self::REDIS_CACHE]["default"]["persistent"],
-                    "auth" : cacheConfig[self::REDIS_CACHE]["default"]["auth"]
-                ];
-                let adapter = new Redis(arrCacheConfig);
-                break;
+        /*
+        if (array_key_exists(self::REDIS_CACHE, cacheConfig) && cacheConfig[self::REDIS_CACHE]) {
+            let cacheDefault = cacheConfig[self::REDIS_CACHE]["default"];
+            let arrCacheConfig = [
+                "host" : array_key_exists("host", cacheDefault) ? cacheDefault["host"] : "",
+                "port" : array_key_exists("port", cacheDefault) ? cacheDefault["port"] : "",
+                "persistent" : array_key_exists("persistent", cacheDefault) ? cacheDefault["persistent"] : "",
+                "auth" : array_key_exists("persistent", cacheDefault) ? cacheDefault["auth"] : ""
+            ];
+            let adapter = new Redis(arrCacheConfig);
         }
-        return adapter;
+        if (array_key_exists(self::MEMCACHE_CACHE, cacheConfig) && cacheConfig[self::MEMCACHE_CACHE]) {
+            let cacheDefault = cacheConfig[self::MEMCACHE_CACHE]["default"];
+            let arrCacheConfig = [
+                "host" : array_key_exists("host", cacheDefault) ? cacheDefault["host"] : "",
+                "port" : array_key_exists("port", cacheDefault) ? cacheDefault["port"] : "",
+                "persistent" : array_key_exists("persistent", cacheDefault) ? cacheDefault["persistent"] : ""
+            ];
+            let adapter = new Memcache(arrCacheConfig);
+        }
+        return adapter;*/
     }
 }

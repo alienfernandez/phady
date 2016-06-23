@@ -180,14 +180,14 @@ PHP_METHOD(Phady_Route_Router, setSystemRoutes) {
 
 	ZEPHIR_INIT_VAR(_2);
 	ZEPHIR_CONCAT_VS(_2, rootDir, "/config/config.yml");
-	ZEPHIR_CALL_CE_STATIC(&_0, phady_config_yaml_ce, "parse", &_1, 6, _2);
+	ZEPHIR_CALL_CE_STATIC(&_0, phady_config_yaml_ce, "parse", &_1, 13, _2);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("config"), _0 TSRMLS_CC);
 	ZEPHIR_CALL_METHOD(NULL, this_ptr, "setdefaultroute", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_3);
 	ZEPHIR_CONCAT_VS(_3, rootDir, "/config/routing.yml");
-	ZEPHIR_CALL_FUNCTION(&_4, "yaml_parse_file", NULL, 15, _3);
+	ZEPHIR_CALL_FUNCTION(&_4, "yaml_parse_file", NULL, 26, _3);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("configRoutes"), _4 TSRMLS_CC);
 	_5 = zephir_fetch_nproperty_this(this_ptr, SL("configRoutes"), PH_NOISY_CC);

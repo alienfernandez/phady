@@ -13,8 +13,6 @@
 
 #include "kernel/main.h"
 #include "kernel/memory.h"
-#include "kernel/fcall.h"
-#include "ext/phalcon/phalcon/mvc/dispatcher.zep.h"
 
 
 ZEPHIR_INIT_CLASS(phady_1__closure) {
@@ -27,18 +25,14 @@ ZEPHIR_INIT_CLASS(phady_1__closure) {
 
 PHP_METHOD(phady_1__closure, __invoke) {
 
-	int ZEPHIR_LAST_CALL_STATUS;
-	zval *dispatcher;
+	zval *parameters;
 
-	ZEPHIR_MM_GROW();
+	zephir_fetch_params(0, 1, 0, &parameters);
 
-	ZEPHIR_INIT_VAR(dispatcher);
-	object_init_ex(dispatcher, phalcon_mvc_dispatcher_ce);
-	if (zephir_has_constructor(dispatcher TSRMLS_CC)) {
-		ZEPHIR_CALL_METHOD(NULL, dispatcher, "__construct", NULL, 0);
-		zephir_check_call_status();
-	}
-	RETURN_CCTOR(dispatcher);
+
+
+	RETVAL_ZVAL(parameters, 1, 0);
+	return;
 
 }
 

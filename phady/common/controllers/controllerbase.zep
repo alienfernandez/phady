@@ -20,7 +20,7 @@ use Phalcon\Mvc\Controller as ControllerMVC;
  *
  * Base Controller
  */
-class ControllerBase extends ControllerMVC
+class ControllerBase extends \Phalcon\Di\Injectable
 {
 
     const LOGIN_URI = "login";
@@ -46,5 +46,10 @@ class ControllerBase extends ControllerMVC
             */
         }
     }
+    
+    public function beforeExecuteRoute(dispatcher) {
+
+    }
+
 
 }

@@ -16,7 +16,7 @@
 #include "kernel/string.h"
 #include "kernel/array.h"
 #include "kernel/operators.h"
-#include "ext/phalcon/phalcon/mvc/controller.zep.h"
+#include "ext/phalcon/phalcon/di/injectable.zep.h"
 
 
 /**
@@ -26,7 +26,7 @@
  */
 ZEPHIR_INIT_CLASS(Phady_Common_Controllers_ControllerBase) {
 
-	ZEPHIR_REGISTER_CLASS_EX(Phady\\Common\\Controllers, ControllerBase, phady, common_controllers_controllerbase, phalcon_mvc_controller_ce, phady_common_controllers_controllerbase_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS_EX(Phady\\Common\\Controllers, ControllerBase, phady, common_controllers_controllerbase, phalcon_di_injectable_ce, phady_common_controllers_controllerbase_method_entry, 0);
 
 	zend_declare_class_constant_string(phady_common_controllers_controllerbase_ce, SL("LOGIN_URI"), "login" TSRMLS_CC);
 
@@ -57,6 +57,17 @@ PHP_METHOD(Phady_Common_Controllers_ControllerBase, initialize) {
 	if (zephir_is_true(_1)) {
 	}
 	ZEPHIR_MM_RESTORE();
+
+}
+
+PHP_METHOD(Phady_Common_Controllers_ControllerBase, beforeExecuteRoute) {
+
+	zval *dispatcher;
+
+	zephir_fetch_params(0, 1, 0, &dispatcher);
+
+
+
 
 }
 

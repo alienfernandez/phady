@@ -316,4 +316,89 @@ class Text
 
         return text;
     }
+
+    /**
+     * Timing attack safe string comparison
+     *
+     * @param string knownString The string of known length to compare against
+     * @param string userString   The string that the user can control
+     *
+     * @return bool true if the two strings are the same, false otherwise
+     */
+    public static function hash_equals(knownString, userString)
+    {
+        if(function_exists("hash_equals")){
+            return hash_equals(knownString, userString);
+        } else {
+            var knownLength, userLength, i, compare;
+            if(strlen(knownString) != strlen(userString)) {
+                return false;
+            } else {
+                let knownLength = self::safeStrlen(knownString);
+                let userLength = self::safeStrlen(userString);
+                if (userLength !== knownLength) {
+                    return false;
+                }
+                let compare = 0;
+                for i in reverse range(0, knownLength) {
+                    if (compare === 0){
+                        let compare = (ord(knownString[i]) ^ ord(userString[i]));
+                    }
+                }
+                return 0 === compare;
+            }
+        }
+
+    }
+
+
+    /**
+     * Compares two strings.
+     *
+     * This method implements a constant-time algorithm to compare strings.
+     * Regardless of the used implementation, it will leak length information.
+     *
+     * @param string knownString The string of known length to compare against
+     * @param string userInput   The string that the user can control
+     *
+     * @return bool true if the two strings are the same, false otherwise
+     */
+    public static function equals(knownString, userInput)
+    {
+        // Avoid making unnecessary duplications of secret data
+        if (!is_string(knownString)) {
+            let knownString = (string) knownString;
+        }
+
+        if (!is_string(userInput)) {
+            let userInput = (string) userInput;
+        }
+        return self::hash_equals(knownString, userInput);
+    }
+    
+
+    /**
+     * Returns the number of bytes in a string.
+     *
+     * @param string string The string whose length we wish to obtain
+     *
+     * @return int
+     */
+    public static function safeStrlen(string text)
+    {
+        var funcExists;
+        // Premature optimization
+        // Since this cannot be changed at runtime, we can cache it
+        let funcExists = null;
+        if (null === funcExists) {
+            let funcExists = function_exists("mb_strlen");
+        }
+
+        if (funcExists) {
+            return mb_strlen(text, "8bit");
+        }
+
+        return strlen(text);
+    }    
+
 }
