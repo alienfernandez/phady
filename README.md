@@ -12,7 +12,6 @@ With the Phady Dev-Tools you can have a good completion of code, it is located i
 - HTTP request processing
 - Email retrieving
 - Message queuing
-- Excel report generation
 - Request routing
 - Multiple security aspect handling
 - Miscellaneous utilities
